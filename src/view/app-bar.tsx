@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
-import { Balance } from 'view/balance';
+import { Balances } from 'view/balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import MuiLink from '@material-ui/core/Link';
@@ -44,7 +44,7 @@ export const AppBar: React.FC = () => {
           {data && (
             <Box>
               <FontAwesomeIcon icon={faWallet} className={c.icon} />
-              <Balance className={c.balance} />
+              <Balances className={c.balances} />
             </Box>
           )}
 
@@ -55,7 +55,7 @@ export const AppBar: React.FC = () => {
               </Box>
             </Hidden>
           ) : (
-            <MuiLink component={Link} to="/auth">
+            <MuiLink component={Link} to="/login">
               {t('Login')}
             </MuiLink>
           )}
@@ -91,7 +91,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(1),
     },
     title: {},
-    balance: {
+    balances: {
       marginRight: theme.spacing(1.5),
       fontWeight: 500,
     },

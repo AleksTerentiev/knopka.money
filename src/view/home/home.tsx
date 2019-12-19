@@ -1,21 +1,30 @@
 import React from 'react';
-import './home.scss';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { RouteComponentProps } from '@reach/router';
-import { useTranslation } from 'react-i18next';
+import Box from '@material-ui/core/Box';
+import bgImg from './bg.png'
 
 export const Home: React.FC<RouteComponentProps> = () => {
-  const { t } = useTranslation();
+  const c = useStyles({});
 
   return (
-    <div className='Home-root'>
-      <header className='Home-header'>
-        {/* <div className='Home-header_pic'>
-          <span className='Home-header_pic_x'>X</span>
-          <span className='Home-header_pic_2'>2</span>
-        </div>
-        <h1 className='Home-header_text'>{t('Double your deposit now')}!</h1>
-        <h2 className='Home-header_text'>({t('50% per day')})</h2> */}
-      </header>
-    </div>
+    <Box className={c.root}>
+      <header className={c.header}></header>
+    </Box>
   );
 };
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {},
+    header: {
+      backgroundColor: '#9ac130',
+      backgroundImage: `url(${bgImg})`,
+      backgroundSize: 'cover',
+      boxShadow: '1px 1px 5px 0px rgba(0,0,0,0.75)',
+      padding: '40px 20px 35px',
+      color: 'white',
+      textAlign: 'center',
+    },
+  })
+);

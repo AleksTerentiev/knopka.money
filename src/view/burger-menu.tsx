@@ -51,7 +51,7 @@ export const BurgerMenu: FC<Props> = ({ ...otherProps }) => {
               </Box>
             </Box>
           ) : (
-            <MuiLink component={Link} to="/auth" onClick={close}>
+            <MuiLink component={Link} to="/login" onClick={close}>
               {t('Login')}
             </MuiLink>
           )}

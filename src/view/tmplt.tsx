@@ -5,14 +5,14 @@ import { AccountData, GET_ACCOUNT } from 'store/account';
 import { useQuery } from '@apollo/react-hooks';
 import Box from '@material-ui/core/Box';
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {}
+export interface TmpltProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const Template: FC<Props> = ({ ...otherProps }) => {
+export const Tmplt: FC<TmpltProps> = ({ ...props }) => {
   const c = useStyles({});
   const { t } = useTranslation();
   const { data } = useQuery<AccountData>(GET_ACCOUNT);
 
-  return <Box {...otherProps}></Box>;
+  return <Box {...props}></Box>;
 };
 
 const useStyles = makeStyles((theme: Theme) =>

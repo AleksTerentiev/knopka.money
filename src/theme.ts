@@ -6,11 +6,9 @@ import pink from '@material-ui/core/colors/pink';
 const breakpoints = {
   values: {
     xs: 0,
-    sm: 600,
-    // md: 960,
-    md: 980,
-    // lg: 1280,
-    lg: 1180,
+    sm: 500,
+    md: 986,
+    lg: 1100,
     xl: 1920,
   },
 };
@@ -36,13 +34,12 @@ const palette = {
   },
   background: {
     paper: '#fff',
-    default: '#fff',
-    // default: '#F0F2F7',
+    default: '#F0F2F7',
   },
 };
 
 const shape = {
-  borderRadius: 4,
+  borderRadius: 6,
 };
 
 let theme = createMuiTheme({
@@ -63,7 +60,7 @@ theme.props = {
     underline: 'none',
   },
   MuiPaper: {
-    elevation: 0,
+    elevation: 1,
   },
 };
 

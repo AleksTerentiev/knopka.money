@@ -1,7 +1,9 @@
 import gql from 'graphql-tag';
 
+export type CurrencyType = 'USD' | 'RUB';
+
 export interface Balance {
-  currencyId: string;
+  currencyId: CurrencyType;
   amount: string;
 }
 
@@ -10,7 +12,7 @@ export interface BalancesData {
 }
 
 export const GET_BALANCES = gql`
-  query Balance {
+  query Balances {
     balances {
       currencyId
       amount
