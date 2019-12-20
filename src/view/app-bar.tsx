@@ -42,7 +42,7 @@ export const AppBar: React.FC = () => {
           <Box ml="auto" />
 
           {data && (
-            <Box>
+            <Box onClick={() => navigate('/refill')}>
               <FontAwesomeIcon icon={faWallet} className={c.icon} />
               <Balances className={c.balances} />
             </Box>
