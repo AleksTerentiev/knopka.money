@@ -15,7 +15,7 @@ export const Investments: FC<RouteComponentProps> = () => {
   const { data } = useQuery<InvestmentsData>(GET_INVESTMENTS);
 
   const sortedInvestments = useMemo(() => {
-    return data ? orderBy(data.investments, ['createdAt']) : [];
+    return data ? orderBy(data.investments, ['createdAt'], ['desc']) : [];
   }, [data]);
 
   return (
