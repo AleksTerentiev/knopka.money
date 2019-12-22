@@ -2,17 +2,18 @@ import React, { FC, useMemo } from 'react';
 import { RouteComponentProps } from '@reach/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useQuery } from '@apollo/react-hooks';
-import { InvestmentsData, GET_INVESTMENTS } from 'store/investments';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { CreateInvestment } from 'view/investments/create-investment';
 import { Investment } from 'view/investments/investment';
 import { orderBy } from 'lodash';
+import { GET_INVESTMENTS } from '../../queries';
+import { GetInvestments } from '../../gql-types/GetInvestments';
 
 export const Investments: FC<RouteComponentProps> = () => {
   const c = useStyles({});
-  const { data } = useQuery<InvestmentsData>(GET_INVESTMENTS);
+  const { data } = useQuery<GetInvestments>(GET_INVESTMENTS);
 
   const sortedInvestments = useMemo(() => {
     return data ? orderBy(data.investments, ['createdAt'], ['desc']) : [];
@@ -29,7 +30,7 @@ export const Investments: FC<RouteComponentProps> = () => {
             </Typography>
             {sortedInvestments.map(investment => (
               <Box className={c.investment} key={investment.id}>
-                <Investment investment={investment} />
+                <Investment {...investment} />
               </Box>
             ))}
           </Box>

@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import { AccountData, GET_ACCOUNT } from 'store/account';
 import { useQuery } from '@apollo/react-hooks';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,14 +14,14 @@ import Divider from '@material-ui/core/Divider';
 import { LogoutLink } from 'view/auth/logout-link';
 import MuiLink from '@material-ui/core/Link';
 import { Link } from '@reach/router';
+import { GET_ACCOUNT } from '../queries';
+import { GetAccount } from '../gql-types/GetAccount';
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {}
-
-export const BurgerMenu: FC<Props> = ({ ...otherProps }) => {
+export function BurgerMenu() {
   const c = useStyles({});
   const { t } = useTranslation();
-  const { data } = useQuery<AccountData>(GET_ACCOUNT);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const { data } = useQuery<GetAccount>(GET_ACCOUNT);
+  const [isOpen, setIsOpen] = useState(false);
 
   function open() {
     setIsOpen(true);
@@ -33,7 +32,7 @@ export const BurgerMenu: FC<Props> = ({ ...otherProps }) => {
   }
 
   return (
-    <Box {...otherProps}>
+    <Box>
       <IconButton edge="end" color="inherit" aria-label="menu" onClick={open}>
         <FontAwesomeIcon icon={faBars} size="xs" />
       </IconButton>
@@ -64,7 +63,7 @@ export const BurgerMenu: FC<Props> = ({ ...otherProps }) => {
       </Drawer>
     </Box>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

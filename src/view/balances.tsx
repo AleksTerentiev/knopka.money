@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { CurrencyType, BalancesData, GET_BALANCES } from 'store/balances';
 import _ from 'lodash';
 import { Currency } from 'view/currency';
+import { GET_BALANCES } from '../queries';
+import { GetBalances } from '../gql-types/GetBalances';
 
 export interface BalancesProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const Balances: React.FC<BalancesProps> = ({ ...other }) => {
-  const { data } = useQuery<BalancesData>(GET_BALANCES);
-  const currencyId: CurrencyType = 'RUB';
+  const { data } = useQuery<GetBalances>(GET_BALANCES);
+  const currencyId = 'RUB';
 
   const balance = useMemo(() => {
     return data && _.find(data.balances, { currencyId });

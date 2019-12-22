@@ -1,5 +1,4 @@
-import ApolloClient, { InMemoryCache, gql } from 'apollo-boost';
-// import { changeBalance } from './balances';
+import ApolloClient, { InMemoryCache } from 'apollo-boost';
 
 export const apolloClient = new ApolloClient({
   uri: `${process.env.REACT_APP_API_ORIGIN}/graphql`,

@@ -1,9 +1,7 @@
-import React, { FC, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { navigate } from '@reach/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { InvestmentTariffType, CREATE_INVESTMENT, GET_INVESTMENTS } from 'store/investments';
-import { CurrencyType, BalancesData, GET_BALANCES } from 'store/balances';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -11,17 +9,19 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import _ from 'lodash';
 import bgImg from './img/bg.png';
+import { CREATE_INVESTMENT, GET_BALANCES, GET_INVESTMENTS } from '../../queries';
+import { GetBalances } from '../../gql-types/GetBalances';
 
-export const CreateInvestment: FC = () => {
-  const investmentTariffId: InvestmentTariffType = 'BASIC';
-  const currencyId: CurrencyType = 'RUB';
+export function CreateInvestment() {
+  const investmentTariffId = 'BASIC';
+  const currencyId = 'RUB';
   const amountMin = 100;
 
   const c = useStyles({});
   const [amount, setAmount] = useState('');
   const [notEnoughtMoney, setNotEnoughtMoney] = useState();
   const [errorText, setErrorText] = useState();
-  const { data: balancesData, refetch: refetchBalances } = useQuery<BalancesData>(GET_BALANCES);
+  const { data: balancesData, refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES);
   const balance = useMemo(() => balancesData && _.find(balancesData.balances, { currencyId }), [balancesData]);
 
   const [createInvestment, { loading: creating }] = useMutation(CREATE_INVESTMENT, {
@@ -32,7 +32,7 @@ export const CreateInvestment: FC = () => {
         data: { investments: [...cachedData.investments, createInvestment] },
       });
     },
-    onCompleted({ createInvestment }) {
+    onCompleted() {
       setAmount('');
       refetchBalances();
     },
@@ -89,7 +89,7 @@ export const CreateInvestment: FC = () => {
       </Box>
     </Paper>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

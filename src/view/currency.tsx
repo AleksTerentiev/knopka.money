@@ -1,15 +1,12 @@
-import React, { FC } from 'react';
-import { CurrencyType } from 'store/balances';
+import React from 'react';
 
 export interface CurrencyProps {
   amount: number | string;
-  currencyId: CurrencyType;
+  currencyId: string;
   className?: string;
 }
 
-export const Currency: FC<CurrencyProps> = props => {
-  const { amount, currencyId, className } = props;
-
+export function Currency({ amount, currencyId, className }: CurrencyProps) {
   return (
     <span className={className}>
       {currencyId === 'USD' && '$'}
@@ -17,4 +14,4 @@ export const Currency: FC<CurrencyProps> = props => {
       {currencyId === 'RUB' && '₽'}
     </span>
   );
-};
+}

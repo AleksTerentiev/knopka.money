@@ -3,7 +3,6 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { navigate, Link } from '@reach/router';
 import { useQuery } from '@apollo/react-hooks';
-import { AccountData, GET_ACCOUNT } from 'store/account';
 import Box from '@material-ui/core/Box';
 import MuiAppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,40 +17,42 @@ import Logo from 'img/logo.png';
 import { Navigation } from './navigation';
 import { AppBarAccount } from './app-bar-account';
 import { BurgerMenu } from './burger-menu';
+import { GET_ACCOUNT } from '../queries';
+import { GetAccount } from '../gql-types/GetAccount';
 
-export const AppBar: React.FC = () => {
+export function AppBar() {
   const c = useStyles({});
   const { t } = useTranslation();
-  const { data } = useQuery<AccountData>(GET_ACCOUNT);
+  const { data } = useQuery<GetAccount>(GET_ACCOUNT);
 
   return (
     <MuiAppBar className={c.root} position="static" color="inherit">
       <Container>
         <Toolbar className={c.toolbar} disableGutters>
           <div className={c.brand} onClick={() => navigate('/')}>
-            <img alt="Logo" src={Logo} className={c.logo} />
+            <img alt="Logo" src={Logo} className={c.logo}/>
             <Typography variant="h6" className={c.title}>
               Neurobet
             </Typography>
           </div>
 
           <Hidden smDown>
-            <Navigation />
+            <Navigation/>
           </Hidden>
 
-          <Box ml="auto" />
+          <Box ml="auto"/>
 
           {data && (
             <Box>
-              <FontAwesomeIcon icon={faWallet} className={c.icon} />
-              <Balances className={c.balances} />
+              <FontAwesomeIcon icon={faWallet} className={c.icon}/>
+              <Balances className={c.balances}/>
             </Box>
           )}
 
           {data ? (
             <Hidden xsDown>
               <Box ml={1}>
-                <AppBarAccount displayName={data.account.displayName} />
+                <AppBarAccount displayName={data.account.displayName}/>
               </Box>
             </Hidden>
           ) : (
@@ -62,14 +63,14 @@ export const AppBar: React.FC = () => {
 
           <Hidden mdUp>
             <Box ml={1}>
-              <BurgerMenu />
+              <BurgerMenu/>
             </Box>
           </Hidden>
         </Toolbar>
       </Container>
     </MuiAppBar>
   );
-};
+}
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({

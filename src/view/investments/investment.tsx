@@ -1,24 +1,28 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Investment as IInvestment, CLOSE_INVESTMENT } from 'store/investments';
-import { BalancesData, GET_BALANCES } from 'store/balances';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Currency } from 'view/currency';
 import Timer from 'react-compound-timer';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import { CLOSE_INVESTMENT, GET_BALANCES } from '../../queries';
+import { GetBalances } from '../../gql-types/GetBalances';
+import { InvestmentData } from '../../gql-types/InvestmentData';
 
-export interface InvestmentProps {
-  investment: IInvestment;
-}
-
-export const Investment: FC<InvestmentProps> = ({
-  investment: { id, amount, currencyId, estimatedPayoutAmount, createdAt, endsAt, isReady, payoutDate },
-}) => {
+export function Investment({
+  id,
+  amount,
+  currencyId,
+  estimatedPayoutAmount,
+  createdAt,
+  endsAt,
+  isReady,
+  payoutDate,
+}: InvestmentData) {
   const c = useStyles({});
-  const { refetch: refetchBalances } = useQuery<BalancesData>(GET_BALANCES);
+  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES);
 
   const [closeInvestment, { loading: payouting }] = useMutation(CLOSE_INVESTMENT, {
     async onCompleted() {
@@ -85,7 +89,7 @@ export const Investment: FC<InvestmentProps> = ({
       </Box>
     </Paper>
   );
-};
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
