@@ -1,13 +1,16 @@
-import React, { FC } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import { useApolloClient } from '@apollo/react-hooks';
 
-export const LogoutLink: FC<{
+export function LogoutLink({
+  size = 'medium',
+  onClick,
+}: PropsWithChildren<{
   size?: 'small' | 'medium' | 'large' | undefined;
   onClick?: () => void;
-}> = ({ size = 'medium', onClick }) => {
+}>) {
   const apolloClient = useApolloClient();
   const { t } = useTranslation();
   const c = useStyles({});
@@ -31,7 +34,7 @@ export const LogoutLink: FC<{
       {t('Logout')}
     </Button>
   );
-};
+}
 
 const useStyles = makeStyles(() =>
   createStyles({
