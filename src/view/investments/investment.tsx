@@ -21,13 +21,13 @@ export const Investment: FC<InvestmentProps> = ({
   const { refetch: refetchBalances } = useQuery<BalancesData>(GET_BALANCES);
 
   const [closeInvestment, { loading: payouting }] = useMutation(CLOSE_INVESTMENT, {
-    onCompleted({ closeInvestment }) {
-      refetchBalances();
+    async onCompleted() {
+      await refetchBalances();
     },
   });
 
-  function handlePayout() {
-    closeInvestment({ variables: { id } });
+  async function handlePayout() {
+    await closeInvestment({ variables: { id } });
   }
 
   return (
@@ -92,19 +92,17 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       boxShadow: '1px 1px 5px 0px rgba(0,0,0,0.2)',
       padding: theme.spacing(3),
-      display: 'grid',
-      gridGap: theme.spacing(1.5),
-      gridTemplateRows: '100%',
-      gridTemplateColumns: '1fr 1fr 1fr 1fr',
-      [theme.breakpoints.down('xs')]: {
-        gridTemplateRows: '1fr 1fr',
-        gridTemplateColumns: '1fr 1fr',
-      },
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     },
     column: {
       textAlign: 'center',
       display: 'flex',
       flexDirection: 'column',
+      padding: theme.spacing(1.5),
+      flexGrow: 1
     },
     label: {
       color: '#444',
