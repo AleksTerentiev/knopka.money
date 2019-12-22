@@ -8,14 +8,14 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { CreateInvestment } from 'view/investments/create-investment';
 import { Investment } from 'view/investments/investment';
-import _ from 'lodash';
+import { orderBy } from 'lodash';
 
 export const Investments: FC<RouteComponentProps> = () => {
   const c = useStyles({});
   const { data } = useQuery<InvestmentsData>(GET_INVESTMENTS);
 
   const sortedInvestments = useMemo(() => {
-    return data ? _.orderBy(data.investments, ['payoutDate', 'isReady', 'id'], ['desc', 'desc', 'asc']) : [];
+    return data ? orderBy(data.investments, ['createdAt']) : [];
   }, [data]);
 
   return (
