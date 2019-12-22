@@ -65,7 +65,7 @@ export const Login: React.FC<RouteComponentProps> = () => {
       <Container>
         <Paper className={c.root}>
           <h1>{t('Log In')}</h1>
-          <Button variant="outlined" color="inherit" onClick={handleLoginClick} style={{borderColor: '#aaa'}}>
+          <Button variant="outlined" color="inherit" onClick={handleLoginClick} style={{ borderColor: '#aaa' }}>
             <img src={googleIcon} className={c.icon} alt="logo" />
             {t('Log in with')} Google
           </Button>

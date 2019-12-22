@@ -95,14 +95,14 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     column: {
       textAlign: 'center',
       display: 'flex',
       flexDirection: 'column',
       padding: theme.spacing(1.5),
-      flexGrow: 1
+      flexGrow: 1,
     },
     label: {
       color: '#444',

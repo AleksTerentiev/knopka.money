@@ -1,20 +1,20 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { RouteComponentProps } from '@reach/router';
 import Box from '@material-ui/core/Box';
-import bgImg from './bg.png'
+import bgImg from './bg.png';
 
 export const Home: React.FC<RouteComponentProps> = () => {
   const c = useStyles({});
 
   return (
     <Box className={c.root}>
-      <header className={c.header}></header>
+      <header className={c.header}> </header>
     </Box>
   );
 };
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {},
     header: {
