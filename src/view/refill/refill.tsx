@@ -1,38 +1,27 @@
 import React, { FC, useState } from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import gql from 'graphql-tag';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { CurrencyType, BalancesData, GET_BALANCES } from 'store/balances';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
-export const CREATE_INVOICE = gql`
-  mutation CreateInvoice($amount: Float!, $currencyId: String!) {
-    createInvoice(data: { amount: $amount, currencyId: $currencyId }) {
-      id
-      accountId
-      amount
-      currencyId
-    }
-  }
-`;
+import { CREATE_INVOICE, GET_BALANCES } from '../../queries';
+import { GetBalances } from '../../gql-types/GetBalances';
 
 export const Refill: FC<RouteComponentProps> = () => {
-  const currencyId: CurrencyType = 'RUB';
+  const currencyId = 'RUB';
 
   const c = useStyles({});
   const [amount, setAmount] = useState('');
-  const { refetch: refetchBalances } = useQuery<BalancesData>(GET_BALANCES);
+  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES);
 
   const [createInvestment, { loading: creating }] = useMutation(CREATE_INVOICE, {
-    onCompleted({ createInvestment }) {
+    async onCompleted() {
       setAmount('');
-      refetchBalances();
+      await refetchBalances();
     },
   });
 
@@ -40,12 +29,12 @@ export const Refill: FC<RouteComponentProps> = () => {
     setAmount(e.target.value);
   }
 
-  function handleSubmitClick(e: React.FormEvent) {
+  async function handleSubmitClick(e: React.FormEvent) {
     e.preventDefault();
     if (!amount) {
       return;
     }
-    createInvestment({ variables: { amount: Number(amount), currencyId } });
+    await createInvestment({ variables: { amount: Number(amount), currencyId } });
   }
 
   return (
