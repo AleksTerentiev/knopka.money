@@ -33,7 +33,7 @@ export const Navigation: React.FC<NavigationProps> = props => {
         >
           <Tab label={'Главная'} value="/" />
           <Tab label={'Инвестиция'} value="/investments" />
-          {/* <Tab label={'Пополнить баланс'} value='/refill' /> */}
+          <Tab label={'Пополнить баланс'} value='/refill' />
           {/* <Tab label={'Рефералы'} value='/referral' /> */}
           {/* <Tab label={'Вывод средств'} value='/withdrawal'/> */}
         </Tabs>
