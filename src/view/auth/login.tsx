@@ -54,7 +54,7 @@ export const Login: React.FC<RouteComponentProps> = () => {
         loginWindow.close();
       }
     };
-  }, []);
+  });
 
   function handleLoginClick() {
     loginWindow = openSocialLoginPopup();
