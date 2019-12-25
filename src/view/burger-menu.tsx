@@ -12,7 +12,7 @@ import { Navigation } from './navigation';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import { LogoutLink } from 'view/auth/logout-link';
+import { LogoutLink } from 'view/account/logout-link';
 import MuiLink from '@material-ui/core/Link';
 import { Link } from '@reach/router';
 

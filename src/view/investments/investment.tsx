@@ -5,7 +5,7 @@ import { Investment as IInvestment, CLOSE_INVESTMENT } from 'store/investments';
 import { BalancesData, GET_BALANCES } from 'store/balances';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Currency } from 'view/currency';
+import { Currency } from 'view/billing/currency';
 import Timer from 'react-compound-timer';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';

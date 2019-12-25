@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Hidden from '@material-ui/core/Hidden';
-import { Balances } from 'view/balances';
+import { Balances } from 'view/billing/balances';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import MuiLink from '@material-ui/core/Link';
@@ -25,7 +25,7 @@ export const AppBar: React.FC = () => {
   const { data } = useQuery<AccountData>(GET_ACCOUNT);
 
   return (
-    <MuiAppBar className={c.root} position="static" color="inherit">
+    <MuiAppBar className={c.root} position="sticky" color="inherit">
       <Container>
         <Toolbar className={c.toolbar} disableGutters>
           <div className={c.brand} onClick={() => navigate('/')}>

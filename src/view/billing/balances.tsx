@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { CurrencyType, BalancesData, GET_BALANCES } from 'store/balances';
 import _ from 'lodash';
-import { Currency } from 'view/currency';
+import { Currency } from 'view/billing/currency';
 
 export interface BalancesProps extends React.HTMLAttributes<HTMLDivElement> {}
 
