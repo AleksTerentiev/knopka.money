@@ -13,7 +13,7 @@ export const Currency: FC<CurrencyProps> = props => {
   return (
     <span className={className}>
       {currencyId === 'USD' && '$'}
-      {Number(amount).toFixed()}
+      {Number(amount).toLocaleString()}
       {currencyId === 'RUB' && '₽'}
     </span>
   );

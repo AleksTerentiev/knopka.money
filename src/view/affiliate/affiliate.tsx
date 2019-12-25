@@ -1,5 +1,10 @@
 import React, { FC } from 'react';
-import { AffiliateTotalsData, GET_AFFILIATE_TOTALS } from 'store/affiliate';
+import {
+  AffiliateTotalsData,
+  GET_AFFILIATE_TOTALS,
+  AffiliateReferralsData,
+  GET_AFFILIATE_REFERRALS,
+} from 'store/affiliate';
 import { RouteComponentProps } from '@reach/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useQuery } from '@apollo/react-hooks';
@@ -10,13 +15,14 @@ import { Share } from 'view/affiliate/share';
 import { Currency } from 'view/billing/currency';
 import { Referrals } from 'view/affiliate/referrals';
 import { Accruals } from 'view/affiliate/accruals';
-import Divider from '@material-ui/core/Divider';
 
 export const Affiliate: FC<RouteComponentProps> = () => {
   const c = useStyles({});
 
   const { data: totalsData } = useQuery<AffiliateTotalsData>(GET_AFFILIATE_TOTALS);
   const totals = totalsData ? totalsData.affiliateTotals : [];
+  const { data } = useQuery<AffiliateReferralsData>(GET_AFFILIATE_REFERRALS);
+  const referrals = data ? data.affiliateReferrals : [];
 
   return (
     <Box className={c.root}>
@@ -42,11 +48,11 @@ export const Affiliate: FC<RouteComponentProps> = () => {
 
       <Container className={c.infoContainer}>
         <Box className={c.infoBlock}>
-          <Typography className={c.total}>1</Typography>
+          <Typography className={c.total}>{referrals.length.toLocaleString()}</Typography>
           <Typography variant="h5" gutterBottom>
             рефералы
           </Typography>
-          <Box p={1}/>
+          <Box p={1} />
           <Referrals />
         </Box>
         <Box className={c.infoBlock}>
@@ -60,7 +66,7 @@ export const Affiliate: FC<RouteComponentProps> = () => {
           <Typography variant="h5" gutterBottom>
             выплаты
           </Typography>
-          <Box p={1}/>
+          <Box p={1} />
           <Accruals />
         </Box>
       </Container>
