@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 // import { useTranslation } from 'react-i18next';
 import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
-import { LogoutLink } from 'view/auth/logout-link';
+import { LogoutLink } from 'view/account/logout-link';
 
 export const AppBarAccount: React.FC<{ displayName: string }> = ({ displayName }) => {
   const c = useStyles({});

@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Currency } from 'view/currency';
+import { Currency } from 'view/billing/currency';
 import Timer from 'react-compound-timer';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';

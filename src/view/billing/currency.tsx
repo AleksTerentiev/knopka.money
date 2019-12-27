@@ -10,7 +10,7 @@ export function Currency({ amount, currencyId, className }: CurrencyProps) {
   return (
     <span className={className}>
       {currencyId === 'USD' && '$'}
-      {Number(amount).toFixed()}
+      {Number(amount).toLocaleString()}
       {currencyId === 'RUB' && '₽'}
     </span>
   );

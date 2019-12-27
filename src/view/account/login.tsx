@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { navigate } from '@reach/router';
-import googleIcon from 'img/google.svg';
+import GoogleIcon from 'img/google.svg';
 import { useApolloClient } from '@apollo/react-hooks';
 
 function openSocialLoginPopup() {
@@ -54,7 +54,7 @@ export const Login: React.FC<RouteComponentProps> = () => {
         loginWindow.close();
       }
     };
-  });
+  }, [apolloClient]);
 
   function handleLoginClick() {
     loginWindow = openSocialLoginPopup();
@@ -66,7 +66,7 @@ export const Login: React.FC<RouteComponentProps> = () => {
         <Paper className={c.root}>
           <h1>{t('Log In')}</h1>
           <Button variant="outlined" color="inherit" onClick={handleLoginClick} style={{ borderColor: '#aaa' }}>
-            <img src={googleIcon} className={c.icon} alt="logo" />
+            <img src={GoogleIcon} className={c.icon} alt="logo" />
             {t('Log in with')} Google
           </Button>
         </Paper>

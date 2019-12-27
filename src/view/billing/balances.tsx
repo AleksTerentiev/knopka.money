@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import _ from 'lodash';
-import { Currency } from 'view/currency';
+import { Currency } from 'view/billing/currency';
 import { GET_BALANCES } from '../queries';
 import { GetBalances } from '../gql-types/GetBalances';
 
