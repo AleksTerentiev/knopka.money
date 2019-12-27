@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { makeStyles, Theme, createStyles, useTheme } from '@material-ui/core/styles';
 import { useQuery } from '@apollo/react-hooks';
-import { AccountData, GET_ACCOUNT } from 'store/account';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -25,11 +24,12 @@ import {
   // TwitterShareButton,
   // TwitterIcon,
 } from 'react-share';
-import Icon from '@material-ui/core/Icon';
+import { GET_ACCOUNT } from '../../queries';
+import { GetAccount } from '../../gql-types/GetAccount';
 
 export const Share: FC = () => {
   const c = useStyles({});
-  const { data } = useQuery<AccountData>(GET_ACCOUNT);
+  const { data } = useQuery<GetAccount>(GET_ACCOUNT);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
@@ -51,7 +51,7 @@ export const Share: FC = () => {
           endAdornment: (
             <InputAdornment position="end">
               <CopyToClipboard text={url} onCopy={() => setOpenSnackbar(true)}>
-                <IconButton edge="end" aria-label="Скопировать" color='primary'>
+                <IconButton edge="end" aria-label="Скопировать" color="primary">
                   <img src={CopyIcon} className={c.copyIcon} alt="Скопировать" />
                 </IconButton>
               </CopyToClipboard>
@@ -60,26 +60,26 @@ export const Share: FC = () => {
         }}
       />
 
-    <Box className={c.shareButtons}>
-      <VKShareButton url={url} className={c.shareButton}>
-        <VKIcon size={38} round/>
-      </VKShareButton>
-      <OKShareButton url={url} className={c.shareButton}>
-        <OKIcon size={38} round />
-      </OKShareButton>
-      <TelegramShareButton url={url} className={c.shareButton}>
-        <TelegramIcon size={38} round />
-      </TelegramShareButton>
-      <WhatsappShareButton url={url} className={c.shareButton}>
-        <WhatsappIcon size={38} round />
-      </WhatsappShareButton>
-      <FacebookShareButton url={url} className={c.shareButton}>
-        <FacebookIcon size={38} round />
-      </FacebookShareButton>
-      {/* <TwitterShareButton url={url} className={c.shareButton}>
+      <Box className={c.shareButtons}>
+        <VKShareButton url={url} className={c.shareButton}>
+          <VKIcon size={38} round />
+        </VKShareButton>
+        <OKShareButton url={url} className={c.shareButton}>
+          <OKIcon size={38} round />
+        </OKShareButton>
+        <TelegramShareButton url={url} className={c.shareButton}>
+          <TelegramIcon size={38} round />
+        </TelegramShareButton>
+        <WhatsappShareButton url={url} className={c.shareButton}>
+          <WhatsappIcon size={38} round />
+        </WhatsappShareButton>
+        <FacebookShareButton url={url} className={c.shareButton}>
+          <FacebookIcon size={38} round />
+        </FacebookShareButton>
+        {/* <TwitterShareButton url={url} className={c.shareButton}>
         <TwitterIcon size={36} round />
       </TwitterShareButton> */}
-    </Box>
+      </Box>
 
       <Snackbar
         anchorOrigin={{

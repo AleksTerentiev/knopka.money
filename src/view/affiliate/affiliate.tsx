@@ -1,10 +1,4 @@
 import React, { FC } from 'react';
-import {
-  AffiliateTotalsData,
-  GET_AFFILIATE_TOTALS,
-  AffiliateReferralsData,
-  GET_AFFILIATE_REFERRALS,
-} from 'store/affiliate';
 import { RouteComponentProps } from '@reach/router';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { useQuery } from '@apollo/react-hooks';
@@ -15,13 +9,16 @@ import { Share } from 'view/affiliate/share';
 import { Currency } from 'view/billing/currency';
 import { Referrals } from 'view/affiliate/referrals';
 import { Accruals } from 'view/affiliate/accruals';
+import { GET_AFFILIATE_REFERRALS, GET_AFFILIATE_TOTALS } from '../../queries';
+import { GetAffiliateReferrals } from '../../gql-types/GetAffiliateReferrals';
+import { GetAffiliateTotals } from '../../gql-types/GetAffiliateTotals';
 
 export const Affiliate: FC<RouteComponentProps> = () => {
   const c = useStyles({});
 
-  const { data: totalsData } = useQuery<AffiliateTotalsData>(GET_AFFILIATE_TOTALS);
+  const { data: totalsData } = useQuery<GetAffiliateTotals>(GET_AFFILIATE_TOTALS);
   const totals = totalsData ? totalsData.affiliateTotals : [];
-  const { data } = useQuery<AffiliateReferralsData>(GET_AFFILIATE_REFERRALS);
+  const { data } = useQuery<GetAffiliateReferrals>(GET_AFFILIATE_REFERRALS);
   const referrals = data ? data.affiliateReferrals : [];
 
   return (

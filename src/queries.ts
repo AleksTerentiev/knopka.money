@@ -57,12 +57,49 @@ export const CLOSE_INVESTMENT = gql`
   ${INVESTMENT_DATA}
 `;
 export const CREATE_INVOICE = gql`
-    mutation CreateInvoice($amount: Float!, $currencyId: String!) {
-        createInvoice(data: { amount: $amount, currencyId: $currencyId }) {
-            id
-            accountId
-            amount
-            currencyId
-        }
+  mutation CreateInvoice($amount: Float!, $currencyId: String!) {
+    createInvoice(data: { amount: $amount, currencyId: $currencyId }) {
+      id
+      accountId
+      amount
+      currencyId
     }
+  }
+`;
+export const GET_AFFILIATE_TOTALS = gql`
+  query GetAffiliateTotals {
+    affiliateTotals {
+      currencyId
+      total
+    }
+  }
+`;
+export const GET_AFFILIATE_REFERRALS = gql`
+  query GetAffiliateReferrals {
+    affiliateReferrals {
+      id
+      displayName
+      picture
+      totals {
+        currencyId
+        total
+      }
+    }
+  }
+`;
+export const GET_AFFILIATE_ACCRUALS = gql`
+  query GetAffiliateAccruals {
+    affiliateAccruals {
+      id
+      createdAt
+      currencyId
+      amount
+      rate
+      referral {
+        id
+        displayName
+        picture
+      }
+    }
+  }
 `;

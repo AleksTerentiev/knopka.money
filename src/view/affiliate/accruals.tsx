@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { AffiliateAccrualsData, GET_AFFILIATE_ACCRUALS } from 'store/affiliate';
 import { useQuery } from '@apollo/react-hooks';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Currency } from 'view/billing/currency';
+import { GET_AFFILIATE_ACCRUALS } from '../../queries';
+import { GetAffiliateAccruals } from '../../gql-types/GetAffiliateAccruals';
 
 export const Accruals: FC = () => {
   const c = useStyles({});
 
-  const { data } = useQuery<AffiliateAccrualsData>(GET_AFFILIATE_ACCRUALS);
+  const { data } = useQuery<GetAffiliateAccruals>(GET_AFFILIATE_ACCRUALS);
   const accruals = data ? data.affiliateAccruals : [];
 
   return (

@@ -1,16 +1,17 @@
 import React, { FC } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { AffiliateReferralsData, GET_AFFILIATE_REFERRALS } from 'store/affiliate';
 import { useQuery } from '@apollo/react-hooks';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Currency } from 'view/billing/currency';
+import { GET_AFFILIATE_REFERRALS } from '../../queries';
+import { GetAffiliateReferrals } from '../../gql-types/GetAffiliateReferrals';
 
 export const Referrals: FC = () => {
   const c = useStyles({});
 
-  const { data } = useQuery<AffiliateReferralsData>(GET_AFFILIATE_REFERRALS);
+  const { data } = useQuery<GetAffiliateReferrals>(GET_AFFILIATE_REFERRALS);
   const referrals = data ? data.affiliateReferrals : [];
 
   return (
