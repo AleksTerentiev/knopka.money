@@ -1,52 +1,69 @@
-import React, { ChangeEvent } from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { navigate, Location } from '@reach/router';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import React, { ChangeEvent } from 'react'
+import { makeStyles, Theme, createStyles, Tabs, Tab } from '@material-ui/core'
+import { useLocation, useHistory } from 'react-router-dom'
 
-export interface NavigationProps {
-  vertical?: boolean;
-  onNavigate?: () => void;
-}
-
-export const Navigation: React.FC<NavigationProps> = props => {
-  const { vertical, onNavigate } = props;
-  const c = useStyles({ vertical });
+export const Navigation = () => {
+  const c = useStyles({})
+  const location = useLocation()
+  const history = useHistory()
 
   function handleChange(e: ChangeEvent<{}>, route: string) {
-    navigate(route);
-    if (onNavigate) {
-      onNavigate();
-    }
+    history.push(route)
   }
 
   return (
-    <Location>
-      {({ location }): any => (
-        <Tabs
-          orientation={vertical ? 'vertical' : 'horizontal'}
-          className={c.root}
-          classes={{ flexContainer: c.tabsContainer }}
-          value={'/' + location.pathname.split('/')[1]}
-          onChange={handleChange}
-          TabIndicatorProps={{ hidden: true }}
-        >
-          <Tab label={'Главная'} value="/" />
-          <Tab label={'Инвестиции'} value="/investments" />
-          <Tab label={'Пополнить баланс'} value='/refill' />
-          <Tab label={'Партнерам'} value='/affiliate' />
-          {/* <Tab label={'Вывод средств'} value='/withdrawal'/> */}
-        </Tabs>
-      )}
-    </Location>
-  );
-};
+    <Tabs
+      className={c.root}
+      value={'/' + location.pathname.split('/')[1]}
+      onChange={handleChange}
+      TabIndicatorProps={{ hidden: true }}
+      variant='scrollable'
+      scrollButtons='on'
+      classes={{ scrollButtons: c.scrollButtons }}
+    >
+      <Tab label='Инвестиции' value='/investments' className={c.tab} />
+      <Tab label='Пополнить' value='/refill' className={c.tab} />
+      <Tab label='Рефералы' value='/affiliate' className={c.tab} />
+      <Tab label='Вывод' value='/withdrawal' className={c.tab} />
+    </Tabs>
+  )
+}
 
-export const useStyles = makeStyles(() =>
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
-    tabsContainer: ({ vertical }: any) => ({
-      alignItems: vertical ? 'start' : 'inherit',
-    }),
+    tab: {
+      [theme.breakpoints.down('xs')]: {
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+      },
+      '&:first-of-type': {
+        paddingLeft: 0,
+      },
+      '&:last-of-type': {
+        paddingRight: theme.spacing(3),
+      },
+    },
+    scrollButtons: {
+      width: '1.6rem',
+      color: theme.palette.primary.light,
+      '&:first-of-type': {
+        display: 'none',
+      },
+      '&:last-of-type': {
+        left: theme.spacing(0.5),
+        position: 'relative',
+        '&:before': {
+          content: '""',
+          background:
+            'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)',
+          position: 'absolute',
+          width: 20,
+          right: 30,
+          top: 0,
+          bottom: 0,
+        },
+      },
+    },
   })
-);
+)

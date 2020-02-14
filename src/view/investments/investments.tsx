@@ -1,44 +1,44 @@
-import React, { FC, useMemo } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { useQuery } from '@apollo/react-hooks';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import { CreateInvestment } from 'view/investments/create-investment';
-import { Investment } from 'view/investments/investment';
-import { orderBy } from 'lodash';
-import { GET_INVESTMENTS } from '../../queries';
-import { GetInvestments } from '../../gql-types/GetInvestments';
+import React, { useMemo } from 'react'
+import { makeStyles, Theme, createStyles, Box, Typography } from '@material-ui/core'
+import { useQuery } from '@apollo/react-hooks'
+import { CreateInvestment } from 'view/investments/create-investment'
+import { Investment } from 'view/investments/investment'
+import { orderBy } from 'lodash'
+import { GET_INVESTMENTS } from 'queries'
+import { GetInvestments } from 'gql-types/GetInvestments'
 
-export const Investments: FC<RouteComponentProps> = () => {
-  const c = useStyles({});
-  const { data } = useQuery<GetInvestments>(GET_INVESTMENTS);
+export const Investments = () => {
+  const c = useStyles({})
+  const { data } = useQuery<GetInvestments>(GET_INVESTMENTS)
 
   const sortedInvestments = useMemo(() => {
-    return data ? orderBy(data.investments, ['createdAt'], ['desc']) : [];
-  }, [data]);
+    return data ? orderBy(data.investments, ['createdAt'], ['desc']) : []
+  }, [data])
 
   return (
-    <Box py={2}>
-      <Container>
-        <CreateInvestment />
-        {sortedInvestments.length > 0 && (
-          <Box mt={4}>
-            <Typography variant="h5" style={{ marginBottom: 14 }}>
-              Мои депозиты
-            </Typography>
-            {sortedInvestments.map(investment => (
-              <Box className={c.investment} key={investment.id}>
-                <Investment {...investment} />
-              </Box>
-            ))}
-          </Box>
-        )}
-      </Container>
+    <Box>
+      <Box mb={4}>
+        <Typography variant='h2'>
+          Инвестиции
+        </Typography>
+      </Box>
+
+      <CreateInvestment />
+      {sortedInvestments.length > 0 && (
+        <Box mt={4}>
+          <Typography variant='h5' style={{ marginBottom: 14 }}>
+            Мои депозиты
+          </Typography>
+          {sortedInvestments.map(investment => (
+            <Box className={c.investment} key={investment.id}>
+              <Investment {...investment} />
+            </Box>
+          ))}
+        </Box>
+      )}
     </Box>
-  );
-};
+  )
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,4 +46,4 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(2),
     },
   })
-);
+)

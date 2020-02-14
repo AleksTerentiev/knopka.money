@@ -1,15 +1,21 @@
-import React, { FC } from 'react';
-import { makeStyles, Theme, createStyles, useTheme } from '@material-ui/core/styles';
-import { useQuery } from '@apollo/react-hooks';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import CopyIcon from 'img/copy.svg';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import CopyToClipboard from 'react-copy-to-clipboard';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import React, { FC } from 'react'
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  useTheme,
+  useMediaQuery,
+  Box,
+  TextField,
+  InputAdornment,
+  IconButton,
+  Snackbar,
+  SnackbarContent,
+} from '@material-ui/core'
+import { useQuery } from '@apollo/react-hooks'
+import CopyIcon from 'img/copy.svg'
+import CopyToClipboard from 'react-copy-to-clipboard'
+
 import {
   VKShareButton,
   VKIcon,
@@ -23,36 +29,36 @@ import {
   FacebookIcon,
   // TwitterShareButton,
   // TwitterIcon,
-} from 'react-share';
-import { GET_ACCOUNT } from '../../queries';
-import { GetAccount } from '../../gql-types/GetAccount';
+} from 'react-share'
+import { GET_ACCOUNT } from 'queries'
+import { GetAccount } from 'gql-types/GetAccount'
 
 export const Share: FC = () => {
-  const c = useStyles({});
-  const { data } = useQuery<GetAccount>(GET_ACCOUNT);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const theme = useTheme();
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const c = useStyles({})
+  const { data } = useQuery<GetAccount>(GET_ACCOUNT)
+  const [openSnackbar, setOpenSnackbar] = React.useState(false)
+  const theme = useTheme()
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
 
-  if (!data) return null;
+  if (!data) return null
 
-  const url = `https://neurobet.com?ref=${data.account.id}`;
+  const url = `https://neurobet.com?ref=${data.account.id}`
 
   return (
     <Box className={c.root}>
       <TextField
-        label="Ваша реферальная ссылка"
-        variant="outlined"
+        label='Ваша реферальная ссылка'
+        variant='outlined'
         value={url}
         // margin="dense"
         style={{ minWidth: xsDown ? 'auto' : 300, background: 'white' }}
         fullWidth={xsDown}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">
+            <InputAdornment position='end'>
               <CopyToClipboard text={url} onCopy={() => setOpenSnackbar(true)}>
-                <IconButton edge="end" aria-label="Скопировать" color="primary">
-                  <img src={CopyIcon} className={c.copyIcon} alt="Скопировать" />
+                <IconButton edge='end' aria-label='Скопировать' color='primary'>
+                  <img src={CopyIcon} className={c.copyIcon} alt='Скопировать' />
                 </IconButton>
               </CopyToClipboard>
             </InputAdornment>
@@ -90,11 +96,11 @@ export const Share: FC = () => {
         autoHideDuration={2000}
         onClose={() => setOpenSnackbar(false)}
       >
-        <SnackbarContent message="Скопировано" />
+        <SnackbarContent message='Скопировано' />
       </Snackbar>
     </Box>
-  );
-};
+  )
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -118,4 +124,4 @@ const useStyles = makeStyles((theme: Theme) =>
     //   fontSize: '1.3rem',
     // }
   })
-);
+)

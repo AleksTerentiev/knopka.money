@@ -1,10 +1,7 @@
 export default {
   translation: {
-    Main: 'Главная',
-    'Log In': 'Вход',
-    Login: 'Войти',
-    Logout: 'Выйти',
-
+    'Logout': 'Выйти',
+    'Log In': 'Войти',
     'Log in with': 'Войти через',
     'Authorization window has been blocked': 'Окно авторизации было заблокировано',
     'Double your deposit now': 'Удвой свой депозит',

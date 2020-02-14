@@ -1,18 +1,22 @@
-import React, { FC } from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { useQuery } from '@apollo/react-hooks';
-import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import { Currency } from 'view/billing/currency';
-import { GET_AFFILIATE_ACCRUALS } from '../../queries';
-import { GetAffiliateAccruals } from '../../gql-types/GetAffiliateAccruals';
+import React, { FC } from 'react'
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  Box,
+  Avatar,
+  Typography,
+} from '@material-ui/core'
+import { useQuery } from '@apollo/react-hooks'
+import { Currency } from 'view/billing/currency'
+import { GET_AFFILIATE_ACCRUALS } from 'queries'
+import { GetAffiliateAccruals } from 'gql-types/GetAffiliateAccruals'
 
 export const Accruals: FC = () => {
-  const c = useStyles({});
+  const c = useStyles({})
 
-  const { data } = useQuery<GetAffiliateAccruals>(GET_AFFILIATE_ACCRUALS);
-  const accruals = data ? data.affiliateAccruals : [];
+  const { data } = useQuery<GetAffiliateAccruals>(GET_AFFILIATE_ACCRUALS)
+  const accruals = data ? data.affiliateAccruals : []
 
   return (
     <Box className={c.root}>
@@ -20,18 +24,28 @@ export const Accruals: FC = () => {
         accruals.length > 0 &&
         accruals.map(accrual => (
           <Box key={accrual.id} className={c.accrual}>
-            <Typography variant="caption">{new Date(accrual.createdAt).toLocaleDateString()}</Typography>
+            <Typography variant='caption'>
+              {new Date(accrual.createdAt).toLocaleDateString()}
+            </Typography>
             <Box className={c.referral}>
-              <Avatar className={c.referralAvatar} src={accrual.referral.picture} alt="Аватар" />
-              <Typography variant="body2">{accrual.referral.displayName}</Typography>
+              <Avatar
+                className={c.referralAvatar}
+                src={accrual.referral.picture}
+                alt='Аватар'
+              />
+              <Typography variant='body2'>{accrual.referral.displayName}</Typography>
             </Box>
             {/* <Typography>{Number(accrual.rate) * 100}%</Typography> */}
-            <Currency className={c.total} amount={accrual.amount} currencyId={accrual.currencyId} />
+            <Currency
+              className={c.total}
+              amount={accrual.amount}
+              currencyId={accrual.currencyId}
+            />
           </Box>
         ))}
     </Box>
-  );
-};
+  )
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,4 +67,4 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     total: {},
   })
-);
+)

@@ -1,32 +1,78 @@
-import { createMuiTheme, responsiveFontSizes, darken, lighten } from '@material-ui/core/styles';
-
-import blueColor from '@material-ui/core/colors/blue';
+import {
+  createMuiTheme,
+  // responsiveFontSizes,
+  // darken,
+  // lighten,
+} from '@material-ui/core/styles'
 
 const breakpoints = {
   values: {
     xs: 0,
     sm: 500,
-    md: 986,
-    lg: 1160,
+    md: 900,
+    lg: 1120,
     xl: 1920,
   },
-};
+}
 
 const typography = {
-  fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-  fontSize: 15,
+  fontFamily: '"IBM Plex Mono", Helvetica, Arial, sans-serif',
+  fontSize: 16,
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightBold: 700,
-};
+  h1: {
+    fontWeight: 700,
+    fontSize: 32,
+    [`@media (min-width:${breakpoints.values.sm}px)`]: {
+      fontSize: 40,
+    },
+    [`@media (min-width:${breakpoints.values.md}px)`]: {
+      fontSize: 64,
+    },
+  },
+  h2: {
+    fontWeight: 700,
+    fontSize: 28,
+    [`@media (min-width:${breakpoints.values.sm}px)`]: {
+      fontSize: 32,
+    },
+    [`@media (min-width:${breakpoints.values.md}px)`]: {
+      fontSize: 48,
+    },
+  },
+  h3: {
+    fontSize: 20,
+    [`@media (min-width:${breakpoints.values.sm}px)`]: {
+      fontSize: 24,
+    },
+    [`@media (min-width:${breakpoints.values.md}px)`]: {
+      fontSize: 32,
+    },
+  },
+  body1: {
+    fontSize: 16,
+    [`@media (min-width:${breakpoints.values.sm}px)`]: {
+      fontSize: 18,
+    },
+    [`@media (min-width:${breakpoints.values.md}px)`]: {
+      fontSize: 20,
+    },
+  },
+}
 
 const palette = {
   background: {
     default: '#fff',
     paper: '#fff',
   },
-  primary: blueColor,
+  primary: {
+    light: 'rgba(247, 129, 136)',
+    main: 'rgba(251, 111, 120)',
+    dark: 'rgba(249, 84, 94)',
+    contrastText: '#fff',
+  },
   secondary: {
     light: 'rgba(100, 188, 120, 0.8)',
     main: 'rgb(100, 190, 120)',
@@ -40,12 +86,12 @@ const palette = {
     contrastText: '#fff',
   },
   text: {
-    primary: 'rgba(19, 19, 56, 1)',
-    secondary: 'rgba(19, 19, 56, 0.6)',
-    disabled: 'rgba(19, 19, 56, 0.4)',
-    hint: 'rgba(19, 19, 56, 0.4)',
+    primary: 'rgba(24, 40, 78, 1)',
+    secondary: 'rgba(24, 40, 78, 0.6)',
+    disabled: 'rgba(24, 40, 78, 0.4)',
+    hint: 'rgba(24, 40, 78, 0.4)',
   },
-  divider: 'rgba(0, 0, 0, 0.07)',
+  divider: '#EDEFF3',
   grey: {
     50: '#fafafa',
     100: '#f9f9f9',
@@ -62,18 +108,18 @@ const palette = {
     A400: '#303030',
     A700: '#616161',
   },
-};
+}
 
 const shape = {
-  borderRadius: 0,
-};
+  borderRadius: 8,
+}
 
 let theme = createMuiTheme({
   breakpoints,
   typography,
   palette,
   shape,
-});
+})
 
 theme.props = {
   MuiAppBar: {
@@ -88,35 +134,71 @@ theme.props = {
   MuiPaper: {
     elevation: 0,
   },
-};
+}
 
 theme.overrides = {
+  MuiToolbar: {
+    root: {
+      minHeight: 'auto !important',
+    },
+  },
+  MuiContainer: {
+    root: {
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
+      [theme.breakpoints.up('sm')]: {
+        paddingLeft: theme.spacing(6),
+        paddingRight: theme.spacing(6),
+      },
+      [theme.breakpoints.up('md')]: {
+        paddingLeft: theme.spacing(8),
+        paddingRight: theme.spacing(8),
+      },
+      [`@media (min-width:${breakpoints.values.lg + theme.spacing(6)}px)`]: {
+        paddingLeft: 0,
+        paddingRight: 0,
+      },
+    },
+  },
+  MuiPaper: {
+    rounded: {
+      borderRadius: theme.shape.borderRadius * 2.5,
+    },
+  },
   MuiButton: {
     root: {
       textTransform: 'none',
+      boxShadow: 'none !important',
     },
   },
   MuiTabs: {
     root: {
-      color: lighten(theme.palette.text.primary, 0.1),
-    },
-    indicator: {
-      height: '1px',
-      backgroundColor: lighten(theme.palette.text.primary, 0.4),
+      color: theme.palette.primary.main,
     },
   },
   MuiTab: {
     root: {
       textTransform: 'none',
-      '&$selected, &:hover': {
-        color: darken(theme.palette.text.primary, 0.1),
-        fontWeight: 500,
-      },
       minWidth: 'auto !important',
+      opacity: '1 !important',
+      fontWeight: 400,
+      '&$selected, &:hover': {
+        color: '#B0B7C8',
+      },
+      fontSize: 14,
+      [theme.breakpoints.up('sm')]: {
+        fontSize: 16,
+      },
+      [theme.breakpoints.up('md')]: {
+        fontSize: 18,
+      },
+      [theme.breakpoints.up('lg')]: {
+        fontSize: 20,
+      },
     },
   },
-};
+}
 
-theme = responsiveFontSizes(theme);
+// theme = responsiveFontSizes(theme);
 
-export { theme };
+export { theme }

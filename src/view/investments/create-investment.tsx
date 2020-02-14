@@ -1,67 +1,76 @@
-import React, { useState, useMemo } from 'react';
-import { navigate } from '@reach/router';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import _ from 'lodash';
-import bgImg from './img/bg.png';
-import { CREATE_INVESTMENT, GET_BALANCES, GET_INVESTMENTS } from '../../queries';
-import { GetBalances } from '../../gql-types/GetBalances';
+import React, { useState, useMemo } from 'react'
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  Box,
+  Paper,
+  Button,
+  TextField,
+} from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import _ from 'lodash'
+import { CREATE_INVESTMENT, GET_BALANCES, GET_INVESTMENTS } from 'queries'
+import { GetBalances } from 'gql-types/GetBalances'
 
 export function CreateInvestment() {
-  const investmentTariffId = 'BASIC';
-  const currencyId = 'RUB';
-  const amountMin = 100;
+  const investmentTariffId = 'BASIC'
+  const currencyId = 'RUB'
+  const amountMin = 100
+  const history = useHistory()
 
-  const c = useStyles({});
-  const [amount, setAmount] = useState('');
-  const [notEnoughtMoney, setNotEnoughtMoney] = useState();
-  const [errorText, setErrorText] = useState();
-  const { data: balancesData, refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES);
-  const balance = useMemo(() => balancesData && _.find(balancesData.balances, { currencyId }), [balancesData]);
+  const c = useStyles({})
+  const [amount, setAmount] = useState('')
+  const [notEnoughtMoney, setNotEnoughtMoney] = useState()
+  const [errorText, setErrorText] = useState()
+  const { data: balancesData, refetch: refetchBalances } = useQuery<GetBalances>(
+    GET_BALANCES
+  )
+  const balance = useMemo(
+    () => balancesData && _.find(balancesData.balances, { currencyId }),
+    [balancesData]
+  )
 
   const [createInvestment, { loading: creating }] = useMutation(CREATE_INVESTMENT, {
     update(cache, { data: { createInvestment } }) {
-      const cachedData: any = cache.readQuery({ query: GET_INVESTMENTS });
+      const cachedData: any = cache.readQuery({ query: GET_INVESTMENTS })
       cache.writeQuery({
         query: GET_INVESTMENTS,
         data: { investments: [...cachedData.investments, createInvestment] },
-      });
+      })
     },
     onCompleted() {
-      setAmount('');
-      refetchBalances();
+      setAmount('')
+      refetchBalances()
     },
-  });
+  })
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setAmount(e.target.value);
-    const notEnoughtMoney = !!balance && Number(balance.amount) < Number(e.target.value);
-    setNotEnoughtMoney(notEnoughtMoney);
-    setErrorText(notEnoughtMoney ? 'Недостаточно средств' : '');
+    setAmount(e.target.value)
+    const notEnoughtMoney = !!balance && Number(balance.amount) < Number(e.target.value)
+    setNotEnoughtMoney(notEnoughtMoney)
+    setErrorText(notEnoughtMoney ? 'Недостаточно средств' : '')
   }
 
   function handleSubmitClick(e: React.FormEvent) {
-    e.preventDefault();
+    e.preventDefault()
     if (Number(amount) < amountMin) {
-      return setErrorText(`Минимальная сумма - ${amountMin}₽`);
+      return setErrorText(`Минимальная сумма - ${amountMin}₽`)
     }
-    createInvestment({ variables: { amount: Number(amount), currencyId, investmentTariffId } });
+    createInvestment({
+      variables: { amount: Number(amount), currencyId, investmentTariffId },
+    })
   }
 
   return (
     <Paper className={c.root}>
       <Box px={3} pt={4} pb={5}>
-        <Typography variant="h4">Инвестировать</Typography>
         <form className={c.form} onSubmit={handleSubmitClick}>
           <TextField
-            type="number"
+            type='number'
             label={errorText || 'Сумма, ₽'}
-            variant="outlined"
+            variant='outlined'
             fullWidth
             className={c.amountInput}
             style={{ background: 'white' }}
@@ -77,29 +86,40 @@ export function CreateInvestment() {
             // }}
           />
           {notEnoughtMoney ? (
-            <Button color="primary" variant="text" fullWidth onClick={() => navigate('/refill')}>
+            <Button
+              color='primary'
+              variant='text'
+              fullWidth
+              onClick={() => history.push('/refill')}
+            >
               Пополнить баланс
             </Button>
           ) : (
-            <Button type="submit" disabled={creating} color="primary" size="large" variant="contained" fullWidth>
+            <Button
+              type='submit'
+              disabled={creating}
+              color='primary'
+              size='large'
+              variant='contained'
+              fullWidth
+            >
               Инвестировать
             </Button>
           )}
         </form>
       </Box>
     </Paper>
-  );
+  )
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      boxShadow: '1px 1px 5px 0px rgba(0,0,0,0.3)',
+      maxWidth: 544,
+      border: `1px solid ${theme.palette.divider}`,
       textAlign: 'center',
       display: 'flex',
       flexDirection: 'column',
-      backgroundImage: `url(${bgImg})`,
-      backgroundSize: 'contain',
     },
     form: {
       width: '100%',
@@ -116,4 +136,4 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'white',
     },
   })
-);
+)

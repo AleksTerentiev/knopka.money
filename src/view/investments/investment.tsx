@@ -1,15 +1,19 @@
-import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import { Currency } from 'view/billing/currency';
-import Timer from 'react-compound-timer';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import { CLOSE_INVESTMENT, GET_BALANCES } from '../../queries';
-import { GetBalances } from '../../gql-types/GetBalances';
-import { InvestmentData } from '../../gql-types/InvestmentData';
+import React from 'react'
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  Paper,
+  Box,
+  Typography,
+  Button,
+} from '@material-ui/core'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import { Currency } from 'view/billing/currency'
+import Timer from 'react-compound-timer'
+import { CLOSE_INVESTMENT, GET_BALANCES } from 'queries'
+import { GetBalances } from 'gql-types/GetBalances'
+import { InvestmentData } from 'gql-types/InvestmentData'
 
 export function Investment({
   id,
@@ -21,24 +25,24 @@ export function Investment({
   isReady,
   payoutDate,
 }: InvestmentData) {
-  const c = useStyles({});
-  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES);
+  const c = useStyles({})
+  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
 
   const [closeInvestment, { loading: payouting }] = useMutation(CLOSE_INVESTMENT, {
     async onCompleted() {
-      await refetchBalances();
+      await refetchBalances()
     },
-  });
+  })
 
   async function handlePayout() {
-    await closeInvestment({ variables: { id } });
+    await closeInvestment({ variables: { id } })
   }
 
   return (
     <Paper className={c.root}>
       <Box className={c.column}>
         <Typography>Id: {id}</Typography>
-        <Typography variant="caption">{new Date(createdAt).toLocaleString()}</Typography>
+        <Typography variant='caption'>{new Date(createdAt).toLocaleString()}</Typography>
       </Box>
 
       <Box className={c.column}>
@@ -48,12 +52,22 @@ export function Investment({
 
       <Box className={c.column}>
         <Typography className={c.label}>Выплата</Typography>
-        <Currency amount={estimatedPayoutAmount} currencyId={currencyId} className={c.value} />
+        <Currency
+          amount={estimatedPayoutAmount}
+          currencyId={currencyId}
+          className={c.value}
+        />
       </Box>
 
       <Box className={c.column}>
         {isReady && !payoutDate && (
-          <Button color="primary" variant="contained" size="large" disabled={payouting} onClick={handlePayout}>
+          <Button
+            color='primary'
+            variant='contained'
+            size='large'
+            disabled={payouting}
+            onClick={handlePayout}
+          >
             Забрать
           </Button>
         )}
@@ -71,7 +85,7 @@ export function Investment({
             <Typography className={c.value}>
               <Timer
                 initialTime={new Date(endsAt).getTime() - Date.now()}
-                direction="backward"
+                direction='backward'
                 formatValue={v => `${v < 10 ? '0' : ''}${v}`}
                 // TODO: request investment when timer ends ?
               >
@@ -88,7 +102,7 @@ export function Investment({
         )}
       </Box>
     </Paper>
-  );
+  )
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -117,4 +131,4 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.12rem',
     },
   })
-);
+)
