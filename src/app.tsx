@@ -23,12 +23,15 @@ export const App = () => {
     <Router>
       <AppBar />
       {data ? <Redirect from='/' to='/investments' /> : <Redirect to='/' />}
-      <Route path='/' exact component={Landing} />
-      <Container className={c.container}>
-        <Route path='/investments' component={Investments} />
-        <Route path='/refill' component={Refill} />
-        <Route path='/affiliate' component={Affiliate} />
-      </Container>
+      {data ? (
+        <Container className={c.container}>
+          <Route path='/investments' component={Investments} />
+          <Route path='/refill' component={Refill} />
+          <Route path='/affiliate' component={Affiliate} />
+        </Container>
+      ) : (
+        <Route path='/' exact component={Landing} />
+      )}
     </Router>
   )
 }

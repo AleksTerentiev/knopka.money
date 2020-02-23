@@ -64,7 +64,6 @@ export function Investment({
           <Button
             color='primary'
             variant='contained'
-            size='large'
             disabled={payouting}
             onClick={handlePayout}
           >

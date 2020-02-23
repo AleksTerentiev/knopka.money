@@ -37,7 +37,7 @@ export function AppBar() {
           <Toolbar disableGutters>
             <Box className={c.logo} onClick={() => history.push('/')}>
               <img src={logoImg} className={c.logoIcon} alt='Logo' />
-              <Typography className={c.logoText}>Neurobet</Typography>
+              <Typography className={c.logoText}>Кнопка</Typography>
             </Box>
 
             {data && (
@@ -60,7 +60,11 @@ export function AppBar() {
               </Box>
             )}
 
-            {data ? <AppBarAccount account={data.account} /> : <LoginButton />}
+            {data ? (
+              <AppBarAccount account={data.account} />
+            ) : (
+              <LoginButton style={{ borderRadius: 24 }} />
+            )}
           </Toolbar>
         </MuiAppBar>
       </Container>

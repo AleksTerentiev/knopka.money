@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import {
   makeStyles,
   Theme,
@@ -6,6 +6,7 @@ import {
   useTheme,
   useMediaQuery,
   Button,
+  ButtonProps,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
@@ -28,7 +29,7 @@ function openSocialLoginPopup() {
 
 let loginWindow: Window | null
 
-export const LoginButton = () => {
+export const LoginButton: FC<ButtonProps> = (props) => {
   const apolloClient = useApolloClient()
   const { t } = useTranslation()
   const c = useStyles({})
@@ -49,7 +50,8 @@ export const LoginButton = () => {
       if (loginWindow) {
         loginWindow.close()
       }
-      apolloClient.resetStore()
+      // apolloClient.resetStore()
+      apolloClient.reFetchObservableQueries()
       history.push('/')
     }
 
@@ -73,6 +75,7 @@ export const LoginButton = () => {
       variant='contained'
       color='primary'
       onClick={handleLoginClick}
+      {...props}
     >
       {t(mini ? 'Log In' : 'Log in with')}
       <img alt='Google' src={GoogleIcon} className={c.icon} />
@@ -82,9 +85,7 @@ export const LoginButton = () => {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      borderRadius: 25,
-    },
+    root: {},
     icon: {
       height: '1rem',
       marginLeft: 10,

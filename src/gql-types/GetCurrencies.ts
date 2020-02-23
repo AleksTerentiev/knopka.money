@@ -4,16 +4,15 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetAccount
+// GraphQL query operation: GetCurrencies
 // ====================================================
 
-export interface GetAccount_account {
-  __typename: "AccountEntity";
+export interface GetCurrencies_currencies {
+  __typename: "CurrencyEntity";
   id: string;
-  displayName: string;
-  picture: string;
+  template: string;
 }
 
-export interface GetAccount {
-  account: GetAccount_account;
+export interface GetCurrencies {
+  currencies: GetCurrencies_currencies[];
 }

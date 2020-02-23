@@ -22,6 +22,17 @@ const typography = {
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightBold: 700,
+  button: {
+    fontWeight: 400,
+    fontSize: 16,
+    [`@media (min-width:${breakpoints.values.sm}px)`]: {
+      fontSize: 18,
+    },
+    [`@media (min-width:${breakpoints.values.md}px)`]: {
+      fontWeight: 500,
+      fontSize: 22,
+    },
+  },
   h1: {
     fontWeight: 700,
     fontSize: 32,
@@ -57,6 +68,15 @@ const typography = {
       fontSize: 18,
     },
     [`@media (min-width:${breakpoints.values.md}px)`]: {
+      fontSize: 22,
+    },
+  },
+  body2: {
+    fontSize: 16,
+    [`@media (min-width:${breakpoints.values.sm}px)`]: {
+      fontSize: 18,
+    },
+    [`@media (min-width:${breakpoints.values.md}px)`]: {
       fontSize: 20,
     },
   },
@@ -74,9 +94,9 @@ const palette = {
     contrastText: '#fff',
   },
   secondary: {
-    light: 'rgba(100, 188, 120, 0.8)',
-    main: 'rgb(100, 190, 120)',
-    dark: 'rgb(80, 170, 100)',
+    light: 'rgba(20, 39, 84)',
+    main: 'rgba(24, 40, 78)',
+    dark: 'rgba(34, 50, 86)',
     contrastText: '#fff',
   },
   error: {
@@ -170,6 +190,9 @@ theme.overrides = {
       textTransform: 'none',
       boxShadow: 'none !important',
     },
+    containedSizeLarge: {
+      padding: theme.spacing(1.5, 3),
+    },
   },
   MuiTabs: {
     root: {
@@ -194,6 +217,33 @@ theme.overrides = {
       },
       [theme.breakpoints.up('lg')]: {
         fontSize: 20,
+      },
+    },
+  },
+  MuiOutlinedInput: {
+    root: {
+      fontSize: 16,
+      borderRadius: theme.shape.borderRadius,
+      fontWeight: 500,
+      [theme.breakpoints.up('sm')]: {
+        fontSize: 20,
+      },
+      [theme.breakpoints.up('md')]: {
+        padding: theme.spacing(0, 1),
+        fontSize: 22,
+        borderRadius: theme.shape.borderRadius * 2,
+      },
+    },
+    adornedEnd: {
+      paddingRight: theme.spacing(2),
+      [theme.breakpoints.up('md')]: {
+        paddingRight: theme.spacing(3),
+      },
+    },
+    notchedOutline: {
+      borderColor: '#EDEFF3',
+      [theme.breakpoints.up('md')]: {
+        borderWidth: 2,
       },
     },
   },

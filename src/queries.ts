@@ -1,5 +1,27 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
+export const GET_TARIFFS = gql`
+  query GetTariffs {
+    tariffs {
+      id
+      percent
+      days
+      constraints {
+        currencyId
+        minAmount
+        maxAmount
+      }
+    }
+  }
+`
+export const GET_CURRENCIES = gql`
+  query GetCurrencies {
+    currencies {
+      id
+      template
+    }
+  }
+`
 export const GET_ACCOUNT = gql`
   query GetAccount {
     account {
@@ -8,7 +30,7 @@ export const GET_ACCOUNT = gql`
       picture
     }
   }
-`;
+`
 export const GET_BALANCES = gql`
   query GetBalances {
     balances {
@@ -16,7 +38,7 @@ export const GET_BALANCES = gql`
       amount
     }
   }
-`;
+`
 export const INVESTMENT_DATA = gql`
   fragment InvestmentData on InvestmentViewEntity {
     id
@@ -31,7 +53,7 @@ export const INVESTMENT_DATA = gql`
     actualPayoutAmount
     payoutDate
   }
-`;
+`
 export const GET_INVESTMENTS = gql`
   query GetInvestments {
     investments {
@@ -39,15 +61,25 @@ export const GET_INVESTMENTS = gql`
     }
   }
   ${INVESTMENT_DATA}
-`;
+`
 export const CREATE_INVESTMENT = gql`
-  mutation CreateInvestment($amount: Float!, $currencyId: String!, $investmentTariffId: String!) {
-    createInvestment(data: { amount: $amount, currencyId: $currencyId, investmentTariffId: $investmentTariffId }) {
+  mutation CreateInvestment(
+    $amount: Float!
+    $currencyId: String!
+    $investmentTariffId: String!
+  ) {
+    createInvestment(
+      data: {
+        amount: $amount
+        currencyId: $currencyId
+        investmentTariffId: $investmentTariffId
+      }
+    ) {
       ...InvestmentData
     }
   }
   ${INVESTMENT_DATA}
-`;
+`
 export const CLOSE_INVESTMENT = gql`
   mutation CloseInvestment($id: String!) {
     closeInvestment(id: $id) {
@@ -55,7 +87,7 @@ export const CLOSE_INVESTMENT = gql`
     }
   }
   ${INVESTMENT_DATA}
-`;
+`
 export const CREATE_INVOICE = gql`
   mutation CreateInvoice($amount: Float!, $currencyId: String!) {
     createInvoice(data: { amount: $amount, currencyId: $currencyId }) {
@@ -65,7 +97,7 @@ export const CREATE_INVOICE = gql`
       currencyId
     }
   }
-`;
+`
 export const GET_AFFILIATE_TOTALS = gql`
   query GetAffiliateTotals {
     affiliateTotals {
@@ -73,7 +105,7 @@ export const GET_AFFILIATE_TOTALS = gql`
       total
     }
   }
-`;
+`
 export const GET_AFFILIATE_REFERRALS = gql`
   query GetAffiliateReferrals {
     affiliateReferrals {
@@ -86,7 +118,7 @@ export const GET_AFFILIATE_REFERRALS = gql`
       }
     }
   }
-`;
+`
 export const GET_AFFILIATE_ACCRUALS = gql`
   query GetAffiliateAccruals {
     affiliateAccruals {
@@ -102,4 +134,4 @@ export const GET_AFFILIATE_ACCRUALS = gql`
       }
     }
   }
-`;
+`
