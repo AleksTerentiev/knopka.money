@@ -35,7 +35,7 @@ export function AppBar() {
       <Container className={c.container} disableGutters>
         <MuiAppBar className={c.root} position='static'>
           <Toolbar disableGutters>
-            <Box className={c.logo} onClick={() => history.push('/')}>
+            <Box className={c.logo} onClick={() => history.push(data ? '/investments' : '/')}>
               <img src={logoImg} className={c.logoIcon} alt='Logo' />
               <Typography className={c.logoText}>Кнопка</Typography>
             </Box>
