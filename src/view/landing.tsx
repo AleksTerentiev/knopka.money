@@ -63,7 +63,7 @@ export const Landing = () => {
             style={{
               position: 'absolute',
               left: 20,
-              bottom: '10%',
+              bottom: '20%',
               transform: 'scaleY(-1)',
             }}
           />
@@ -81,7 +81,7 @@ export const Landing = () => {
             style={{
               position: 'absolute',
               right: 20,
-              bottom: '10%',
+              bottom: '20%',
               transform: 'scaleY(-1) scaleX(-1)',
             }}
           />
