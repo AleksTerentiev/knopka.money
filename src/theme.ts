@@ -176,13 +176,14 @@ theme.overrides = {
       fontWeight: 400,
       fontSize: 14,
       lineHeight: '20px',
-      padding: '6px 12px',
+      padding: theme.spacing(0.8, 2),
       [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(1, 2.5),
         fontSize: 18,
         lineHeight: '24px',
       },
       [theme.breakpoints.up('md')]: {
-        padding: '10px 16px',
+        padding: theme.spacing(1.2, 3),
         fontSize: 20,
         lineHeight: '28px',
         borderRadius: theme.shape.borderRadius * 2,
@@ -283,18 +284,18 @@ theme.overrides = {
         paddingBottom: 19,
       },
     },
-    // inputMarginDense: {
-    //   paddingTop: 11,
-    //   paddingBottom: 11,
-    //   [theme.breakpoints.up('sm')]: {
-    //     paddingTop: 13,
-    //     paddingBottom: 13,
-    //   },
-    //   [theme.breakpoints.up('md')]: {
-    //     paddingTop: 15,
-    //     paddingBottom: 15,
-    //   },
-    // },
+    inputMarginDense: {
+      paddingTop: 11,
+      paddingBottom: 11,
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: 13,
+        paddingBottom: 13,
+      },
+      [theme.breakpoints.up('md')]: {
+        paddingTop: 15,
+        paddingBottom: 15,
+      },
+    },
     adornedEnd: {
       paddingRight: theme.spacing(2),
       [theme.breakpoints.up('md')]: {

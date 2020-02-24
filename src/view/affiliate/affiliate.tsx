@@ -54,7 +54,7 @@ export const Affiliate = () => {
               {totals.map(total => (
                 <Currency
                   key={total.currencyId}
-                  amount={total.total}
+                  value={total.total}
                   currencyId={total.currencyId}
                 />
               ))}

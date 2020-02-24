@@ -32,7 +32,7 @@ export const Referrals: FC = () => {
             <Currency
               key={index}
               className={c.total}
-              amount={total.total}
+              value={total.total}
               currencyId={total.currencyId}
             />
           ))}

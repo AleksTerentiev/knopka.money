@@ -17,7 +17,7 @@ export const Balances: React.FC<BalancesProps> = ({ ...other }) => {
 
   return (
     <span {...other}>
-      {balance && <Currency amount={balance.amount} currencyId={currencyId} />}
+      {balance && <Currency value={balance.amount} currencyId={currencyId} />}
     </span>
   )
 }

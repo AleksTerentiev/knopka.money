@@ -1,16 +1,18 @@
 import React from 'react'
 
 export interface CurrencyProps {
-  amount: number | string
+  value: number | string
   currencyId: string
   className?: string
 }
 
-export function Currency({ amount, currencyId, className }: CurrencyProps) {
+export function Currency({ value, currencyId, className }: CurrencyProps) {
   return (
     <span style={{ whiteSpace: 'nowrap' }} className={className}>
       {currencyId === 'USD' && '$'}
-      {currencyId === 'RUB' && '₽'} {Number(amount).toLocaleString()}
+      {currencyId === 'RUB' && '₽'}
+      {' '}
+      {Number(value).toLocaleString(undefined, { minimumFractionDigits: 2 })}
     </span>
   )
 }

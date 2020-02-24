@@ -25,6 +25,7 @@ import flashIcon from 'img/flash.svg'
 import magicIcon from 'img/magic.svg'
 import { LoginButton } from 'view/auth/login-button'
 import plural from 'plural-ru'
+import { Currency } from 'view/billing/currency'
 
 export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => {
   const currencyId = 'RUB'
@@ -107,6 +108,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
       variant='outlined'
       color={secondary ? 'secondary' : 'primary'}
       fullWidth
+      margin={secondary ? 'dense' : 'normal'}
       classes={{ root: c.amountInput }}
       inputProps={{
         min: 0,
@@ -185,7 +187,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
         <Typography className={c.resultHeader}>К выплате:</Typography>
         <Box display='flex' alignItems='flex-end' justifyContent='space-between'>
           <Typography variant='h3' className={c.resultAmount} noWrap>
-            ₽ {resultAmount.toFixed(2)}
+            <Currency currencyId={currencyId} value={resultAmount} />
           </Typography>
           <Typography className={c.resultDate}>
             {new Date(Date.now() + tariff.days * 24 * 60 * 60 * 1000)

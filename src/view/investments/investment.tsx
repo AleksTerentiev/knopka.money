@@ -47,13 +47,13 @@ export function Investment({
 
       <Box className={c.column}>
         <Typography className={c.label}>Депозит</Typography>
-        <Currency amount={amount} currencyId={currencyId} className={c.value} />
+        <Currency value={amount} currencyId={currencyId} className={c.value} />
       </Box>
 
       <Box className={c.column}>
         <Typography className={c.label}>Выплата</Typography>
         <Currency
-          amount={estimatedPayoutAmount}
+          value={estimatedPayoutAmount}
           currencyId={currencyId}
           className={c.value}
         />

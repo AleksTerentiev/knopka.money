@@ -186,7 +186,7 @@ export const AppBarAccount: React.FC<AppBarAccountProps> = ({ account }) => {
         onClose={handlePopupClose}
       >
         <Box p={3}>
-          <Typography>{account.displayName}</Typography>
+          <Typography align='center'>{account.displayName}</Typography>
           <Box my={2}>
             <Divider />
           </Box>
