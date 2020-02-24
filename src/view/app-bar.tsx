@@ -24,7 +24,7 @@ import { Navigation } from './navigation'
 import { LoginButton } from 'view/auth/login-button'
 import { GetAccount_account } from 'gql-types/GetAccount'
 import defaultAvatarImg from 'img/avatar.svg'
-import { LogoutLink } from 'view/auth/logout-link'
+import { LogoutButton } from 'view/auth/logout-button'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 import { Route } from 'react-router-dom'
@@ -234,7 +234,7 @@ export const AppBarAccount: React.FC<AppBarAccountProps> = ({ account }) => {
           <Box my={2}>
             <Divider />
           </Box>
-          <LogoutLink onClick={handlePopupClose} />
+          <LogoutButton onClick={handlePopupClose} />
         </Box>
       </Popover>
     </>

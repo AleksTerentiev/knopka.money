@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react'
 import { makeStyles, createStyles, Button } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 
-export function LogoutLink({
+export function LogoutButton({
   size = 'medium',
   onClick,
 }: PropsWithChildren<{
