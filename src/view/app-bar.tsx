@@ -14,8 +14,9 @@ import {
   Divider,
 } from '@material-ui/core'
 import { useQuery } from '@apollo/react-hooks'
-import { GET_ACCOUNT } from 'queries'
+import { GET_ACCOUNT, GET_BALANCES } from 'queries'
 import { GetAccount } from 'gql-types/GetAccount'
+import { GetBalances } from 'gql-types/GetBalances'
 import { useHistory } from 'react-router-dom'
 import { Balances } from 'view/billing/balances'
 import logoImg from 'img/logo.svg'
@@ -24,23 +25,33 @@ import { LoginButton } from 'view/auth/login-button'
 import { GetAccount_account } from 'gql-types/GetAccount'
 import defaultAvatarImg from 'img/avatar.svg'
 import { LogoutLink } from 'view/auth/logout-link'
+import { Link as RouterLink } from 'react-router-dom'
+import Link from '@material-ui/core/Link'
+import { Route } from 'react-router-dom'
+import _ from 'lodash'
 
 export function AppBar() {
   const c = useStyles({})
-  const { data } = useQuery<GetAccount>(GET_ACCOUNT)
+  const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const history = useHistory()
+
+  const { data: balancesData } = useQuery<GetBalances>(GET_BALANCES)
+  const balance = _.find(balancesData?.balances, { currencyId: 'RUB' })
 
   return (
     <>
-      <Container className={c.container} disableGutters>
+      <Container className={c.container}>
         <MuiAppBar className={c.root} position='static'>
           <Toolbar disableGutters>
-            <Box className={c.logo} onClick={() => history.push(data ? '/investments' : '/')}>
+            <Box
+              className={c.logo}
+              onClick={() => history.push(accountData ? '/investments' : '/')}
+            >
               <img src={logoImg} className={c.logoIcon} alt='Logo' />
               <Typography className={c.logoText}>Кнопка</Typography>
             </Box>
 
-            {data && (
+            {accountData && (
               <Hidden smDown>
                 <Navigation />
               </Hidden>
@@ -48,7 +59,7 @@ export function AppBar() {
 
             <Box ml='auto' />
 
-            {data && (
+            {accountData && (
               <Box
                 onClick={() => history.push('/refill')}
                 display='flex'
@@ -60,25 +71,43 @@ export function AppBar() {
               </Box>
             )}
 
-            {data ? (
-              <AppBarAccount account={data.account} />
+            {accountData ? (
+              <AppBarAccount account={accountData.account} />
             ) : (
               <LoginButton style={{ borderRadius: 24 }} />
             )}
           </Toolbar>
         </MuiAppBar>
       </Container>
-      {data && (
+
+      {accountData && (
         <Hidden mdUp>
-          <Container
-            className={c.container}
-            style={{ paddingTop: 0, paddingBottom: 0 }}
-            disableGutters
-          >
+          <Container className={c.container}>
             <Navigation />
           </Container>
         </Hidden>
       )}
+
+      <Route path='/investments'>
+        {Number(balance?.amount) === 0 && (
+          <Container className={c.container}>
+            <Box className={c.alert}>
+              <Typography display='inline' variant='caption'>
+                Сперва необходимо
+              </Typography>{' '}
+              <Link
+                to={`/refill`}
+                component={RouterLink}
+                variant='caption'
+                noWrap
+                style={{ borderBottom: '1px dashed' }}
+              >
+                пополнить баланс
+              </Link>
+            </Box>
+          </Container>
+        )}
+      </Route>
     </>
   )
 }
@@ -88,18 +117,21 @@ export const useStyles = makeStyles((theme: Theme) =>
     root: {
       color: theme.palette.text.primary,
       background: '#fff',
+      paddingTop: theme.spacing(3),
+      paddingBottom: theme.spacing(3),
+      [theme.breakpoints.up('lg')]: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+      },
     },
     container: {
       borderBottom: `1px solid ${theme.palette.divider}`,
-      padding: theme.spacing(3),
-      [theme.breakpoints.up('sm')]: {
-        padding: theme.spacing(3),
-      },
+      paddingLeft: theme.spacing(3),
+      paddingRight: theme.spacing(3),
       [theme.breakpoints.up('md')]: {
         borderWidth: 2,
       },
       [theme.breakpoints.up('lg')]: {
-        padding: theme.spacing(4),
         paddingLeft: '0 !important',
         paddingRight: '0 !important',
       },
@@ -135,6 +167,18 @@ export const useStyles = makeStyles((theme: Theme) =>
         marginRight: theme.spacing(2),
       },
       fontWeight: 'normal',
+    },
+    alert: {
+      paddingTop: theme.spacing(1.5),
+      paddingBottom: theme.spacing(1.5),
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+      },
+      [theme.breakpoints.up('md')]: {
+        paddingTop: theme.spacing(3),
+        paddingBottom: theme.spacing(3),
+      },
     },
   })
 )

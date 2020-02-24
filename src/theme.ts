@@ -69,6 +69,15 @@ const typography = {
       fontSize: 20,
     },
   },
+  caption: {
+    fontSize: 14,
+    [`@media (min-width:${breakpoints.values.sm}px)`]: {
+      fontSize: 16,
+    },
+    [`@media (min-width:${breakpoints.values.md}px)`]: {
+      fontSize: 20,
+    },
+  },
 }
 
 const palette = {
