@@ -1,6 +1,12 @@
-import React, { useState, useMemo, useEffect } from 'react'
-import { Box, Button, TextField, InputAdornment, Typography } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
+import React, { FC, useState, useMemo, useEffect } from 'react'
+import {
+  useTheme,
+  Box,
+  Button,
+  TextField,
+  InputAdornment,
+  Typography,
+} from '@material-ui/core'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import _ from 'lodash'
 import {
@@ -20,11 +26,8 @@ import magicIcon from 'img/magic.svg'
 import { LoginButton } from 'view/auth/login-button'
 import plural from 'plural-ru'
 
-export function CreateInvestment() {
+export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => {
   const currencyId = 'RUB'
-  const history = useHistory()
-  const c = useStyles({})
-
   const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const { data: tariffsData } = useQuery<GetTariffs>(GET_TARIFFS)
   const [tariff, setTariff] = useState<GetTariffs_tariffs>()
@@ -32,14 +35,17 @@ export function CreateInvestment() {
   const [resultAmount, setResultAmount] = useState(0)
   const [notEnoughtMoney, setNotEnoughtMoney] = useState()
   const [errorText, setErrorText] = useState()
+  const theme = useTheme()
 
   const { data: balancesData, refetch: refetchBalances } = useQuery<GetBalances>(
     GET_BALANCES
   )
-  const balance = useMemo(
-    () => balancesData && _.find(balancesData.balances, { currencyId }),
-    [balancesData]
-  )
+  const balance = useMemo(() => _.find(balancesData?.balances, { currencyId }), [
+    balancesData,
+  ])
+
+  const disabled = accountData && Number(balance?.amount) === 0
+  const c = useStyles({ disabled, secondary })
 
   useEffect(() => {
     setTariff(tariffsData?.tariffs[0])
@@ -94,107 +100,120 @@ export function CreateInvestment() {
     return null
   }
 
+  const amountInput = (
+    <TextField
+      type='number'
+      placeholder={'Введите сумму'}
+      variant='outlined'
+      color={secondary ? 'secondary' : 'primary'}
+      fullWidth
+      classes={{ root: c.amountInput }}
+      inputProps={{
+        min: 0,
+        className: c.inputField,
+        style: { color: secondary ? 'currentColor' : '#FB6F78' },
+      }}
+      error={!!errorText}
+      value={amount}
+      onChange={handleAmountChange}
+      label={errorText}
+      disabled={disabled}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position='end'>
+            <Typography
+              color={secondary ? 'initial' : 'primary'}
+              className={c.inputAdornment}
+            >
+              ₽
+            </Typography>
+          </InputAdornment>
+        ),
+      }}
+    />
+  )
+
   return (
-    <Box className={c.root}>
-      <form className={c.form} onSubmit={handleSubmitClick}>
-        <div className={c.tariffs}>
-          {tariffsData?.tariffs.map(t => (
-            <label htmlFor={t.id} className={c.tariff} key={t.id}>
-              <input
-                type='radio'
-                name='tariff'
-                id={t.id}
-                value={t.id}
-                className={c.tariffInput}
-                checked={tariff.id === t.id}
-                onChange={handleTariffChange}
-              />
-              <div
-                className={c.tariffLabel}
-                style={{ color: tariff.id === t.id ? 'white' : '#FB6F78' }}
-              >
+    <form className={c.root} onSubmit={handleSubmitClick}>
+      {secondary && amountInput}
+
+      <div className={c.tariffs}>
+        {tariffsData?.tariffs.map(t => (
+          <label htmlFor={t.id} className={c.tariff} key={t.id}>
+            <input
+              disabled={disabled}
+              type='radio'
+              name='tariff'
+              id={t.id}
+              value={t.id}
+              className={c.tariffInput}
+              checked={tariff.id === t.id}
+              onChange={handleTariffChange}
+            />
+            <div
+              className={c.tariffLabel}
+              style={{
+                color: disabled
+                  ? theme.palette.text.disabled
+                  : tariff.id === t.id
+                  ? 'white'
+                  : theme.palette.primary.main,
+              }}
+            >
+              {!secondary && (
                 <span
                   className={c.tariffImgContainer}
-                  style={{ background: tariff.id === t.id ? 'white' : '#F9F9F9' }}
+                  style={{
+                    background: tariff.id === t.id ? 'white' : theme.palette.grey[100],
+                  }}
                 >
                   <img
                     src={t.days >= 7 ? magicIcon : t.days >= 3 ? flashIcon : fireIcon}
                     className={c.tariffImg}
                   />
                 </span>
-                {t.days} {plural(t.days, 'день', 'дня', 'дней')}
-              </div>
-            </label>
-          ))}
-        </div>
+              )}
+              {t.days} {plural(t.days, 'День', 'Дня', 'Дней')}
+            </div>
+          </label>
+        ))}
+      </div>
 
-        <TextField
-          type='number'
-          placeholder={'Введите сумму'}
-          variant='outlined'
-          color='primary'
-          fullWidth
-          classes={{ root: c.amountInput }}
-          inputProps={{ min: 0, className: c.inputField, style: { color: '#FB6F78' } }}
-          error={!!errorText}
-          value={amount}
-          onChange={handleAmountChange}
-          label={errorText}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <Typography color='primary' className={c.inputAdornment}>
-                  ₽
-                </Typography>
-              </InputAdornment>
-            ),
-          }}
-        />
+      {!secondary && amountInput}
 
-        <Box className={c.result}>
-          <Typography className={c.resultHeader}>К выплате:</Typography>
-          <Box display='flex' alignItems='flex-end' justifyContent='space-between'>
-            <Typography variant='h3' color='primary' className={c.resultAmount}>
-              ₽ {resultAmount.toFixed(2)}
-            </Typography>
-            <Typography className={c.resultDate}>
-              {new Date(Date.now() + tariff.days * 24 * 60 * 60 * 1000)
-                .toLocaleDateString('default', {
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: '2-digit',
-                })
-                .replace(/\//g, '.')}
-            </Typography>
-          </Box>
+      <Box className={c.result}>
+        <Typography className={c.resultHeader}>К выплате:</Typography>
+        <Box display='flex' alignItems='flex-end' justifyContent='space-between'>
+          <Typography variant='h3' className={c.resultAmount} noWrap>
+            ₽ {resultAmount.toFixed(2)}
+          </Typography>
+          <Typography className={c.resultDate}>
+            {new Date(Date.now() + tariff.days * 24 * 60 * 60 * 1000)
+              .toLocaleDateString('default', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit',
+              })
+              .replace(/\//g, '.')}
+          </Typography>
         </Box>
+      </Box>
 
-        {!accountData ? (
-          <LoginButton color='secondary' fullWidth />
-        ) : notEnoughtMoney ? (
-          <Button
-            color='primary'
-            variant='text'
-            fullWidth
-            style={{ justifyContent: 'flex-start' }}
-            onClick={() => history.push('/refill')}
-          >
-            Пополнить баланс
-          </Button>
-        ) : (
-          <Button
-            type='submit'
-            disabled={creating}
-            color='secondary'
-            size='large'
-            variant='contained'
-            style={{ justifyContent: 'flex-start' }}
-            fullWidth
-          >
-            Инвестировать
-          </Button>
-        )}
-      </form>
-    </Box>
+      {accountData ? (
+        <Button
+          type='submit'
+          disabled={disabled || notEnoughtMoney || creating}
+          color='secondary'
+          size='large'
+          variant='contained'
+          style={{ justifyContent: 'flex-start' }}
+          fullWidth
+        >
+          Инвестировать
+        </Button>
+      ) : (
+        <LoginButton size='large' color='secondary' fullWidth />
+      )}
+    </form>
   )
 }

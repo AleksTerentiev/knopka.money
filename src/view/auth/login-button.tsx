@@ -1,13 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  useTheme,
-  useMediaQuery,
-  Button,
-  ButtonProps,
-} from '@material-ui/core'
+import { makeStyles, Theme, createStyles, Button, ButtonProps } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router-dom'
 import GoogleIcon from 'img/google.svg'
@@ -29,14 +21,11 @@ function openSocialLoginPopup() {
 
 let loginWindow: Window | null
 
-export const LoginButton: FC<ButtonProps> = (props) => {
+export const LoginButton: FC<ButtonProps> = props => {
   const apolloClient = useApolloClient()
   const { t } = useTranslation()
   const c = useStyles({})
   const history = useHistory()
-  const theme = useTheme()
-  const mdUp = useMediaQuery(theme.breakpoints.up('md'))
-  const mini = useMediaQuery('(max-width:360px)')
 
   useEffect(() => {
     function loginWindowMessageListener(event: MessageEvent) {
@@ -71,13 +60,12 @@ export const LoginButton: FC<ButtonProps> = (props) => {
   return (
     <Button
       className={c.root}
-      size={mdUp ? 'large' : 'medium'}
       variant='contained'
       color='primary'
       onClick={handleLoginClick}
       {...props}
     >
-      {t(mini ? 'Log In' : 'Log in with')}
+      {t('Log in with')}
       <img alt='Google' src={GoogleIcon} className={c.icon} />
     </Button>
   )

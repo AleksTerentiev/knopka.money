@@ -22,17 +22,6 @@ const typography = {
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightBold: 700,
-  button: {
-    fontWeight: 400,
-    fontSize: 16,
-    [`@media (min-width:${breakpoints.values.sm}px)`]: {
-      fontSize: 18,
-    },
-    [`@media (min-width:${breakpoints.values.md}px)`]: {
-      fontWeight: 500,
-      fontSize: 22,
-    },
-  },
   h1: {
     fontWeight: 700,
     fontSize: 32,
@@ -108,14 +97,14 @@ const palette = {
   text: {
     primary: 'rgba(24, 40, 78, 1)',
     secondary: 'rgba(24, 40, 78, 0.6)',
-    disabled: 'rgba(24, 40, 78, 0.4)',
+    disabled: '#EDEFF3',
     hint: 'rgba(24, 40, 78, 0.4)',
   },
   divider: '#EDEFF3',
   grey: {
     50: '#fafafa',
     100: '#f9f9f9',
-    200: '#eeeeee',
+    200: '#EDEFF3',
     300: '#e0e0e0',
     400: '#bdbdbd',
     500: '#9e9e9e',
@@ -180,18 +169,46 @@ theme.overrides = {
       },
     },
   },
-  MuiPaper: {
-    rounded: {
-      borderRadius: theme.shape.borderRadius * 2.5,
-    },
-  },
   MuiButton: {
     root: {
       textTransform: 'none',
       boxShadow: 'none !important',
+      fontWeight: 400,
+      fontSize: 14,
+      lineHeight: '20px',
+      padding: '6px 12px',
+      [theme.breakpoints.up('sm')]: {
+        fontSize: 18,
+        lineHeight: '24px',
+      },
+      [theme.breakpoints.up('md')]: {
+        padding: '10px 16px',
+        fontSize: 20,
+        lineHeight: '28px',
+        borderRadius: theme.shape.borderRadius * 2,
+      },
     },
     containedSizeLarge: {
-      padding: theme.spacing(1.5, 3),
+      padding: theme.spacing(1, 2),
+      fontSize: 16,
+      lineHeight: '24px',
+      [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(1.25, 2.5),
+        fontSize: 18,
+        lineHeight: '28px',
+      },
+      [theme.breakpoints.up('md')]: {
+        padding: theme.spacing(1.5, 3),
+        fontWeight: 500,
+        fontSize: 22,
+        lineHeight: '32px',
+      },
+    },
+    contained: {
+      '&$disabled': {
+        backgroundColor: theme.palette.grey[200],
+        color: 'white',
+      },
     },
   },
   MuiTabs: {
@@ -220,6 +237,16 @@ theme.overrides = {
       },
     },
   },
+  MuiInputBase: {
+    root: {
+      '&$disabled': {
+        color: theme.palette.text.disabled,
+      },
+      '& input::placeholder': {
+        opacity: 1,
+      },
+    },
+  },
   MuiOutlinedInput: {
     root: {
       fontSize: 16,
@@ -229,11 +256,45 @@ theme.overrides = {
         fontSize: 20,
       },
       [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(0, 1),
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
         fontSize: 22,
         borderRadius: theme.shape.borderRadius * 2,
       },
+      '&$focused .MuiOutlinedInput-notchedOutline': {
+        borderWidth: 1,
+        [theme.breakpoints.up('md')]: {
+          borderWidth: 2,
+        },
+      },
+      '&$disabled .MuiOutlinedInput-notchedOutline': {
+        borderColor: theme.palette.divider,
+      },
     },
+    input: {
+      paddingTop: 15,
+      paddingBottom: 15,
+      [theme.breakpoints.up('sm')]: {
+        paddingTop: 17,
+        paddingBottom: 17,
+      },
+      [theme.breakpoints.up('md')]: {
+        paddingTop: 19,
+        paddingBottom: 19,
+      },
+    },
+    // inputMarginDense: {
+    //   paddingTop: 11,
+    //   paddingBottom: 11,
+    //   [theme.breakpoints.up('sm')]: {
+    //     paddingTop: 13,
+    //     paddingBottom: 13,
+    //   },
+    //   [theme.breakpoints.up('md')]: {
+    //     paddingTop: 15,
+    //     paddingBottom: 15,
+    //   },
+    // },
     adornedEnd: {
       paddingRight: theme.spacing(2),
       [theme.breakpoints.up('md')]: {
@@ -241,7 +302,7 @@ theme.overrides = {
       },
     },
     notchedOutline: {
-      borderColor: '#EDEFF3',
+      borderColor: theme.palette.divider,
       [theme.breakpoints.up('md')]: {
         borderWidth: 2,
       },
