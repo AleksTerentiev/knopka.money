@@ -1,5 +1,12 @@
 import React, { useMemo } from 'react'
-import { makeStyles, Theme, createStyles, Box, Typography } from '@material-ui/core'
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  Box,
+  Typography,
+  Divider,
+} from '@material-ui/core'
 import { useQuery } from '@apollo/react-hooks'
 import { CreateInvestment } from 'view/investments/create-investment'
 import { Investment } from 'view/investments/investment'
@@ -16,40 +23,64 @@ export const Investments = () => {
   }, [data])
 
   return (
-    <Box>
-      <Typography className={c.header} variant='h2'>
-        Инвестиции
-      </Typography>
+    <Box className={c.root}>
+      <Box>
+        <Typography variant='h2' gutterBottom>
+          Инвестиции
+        </Typography>
 
-      <Box className={c.createInvestment}>
-        <CreateInvestment secondary />
+        <Box className={c.createInvestment}>
+          <CreateInvestment secondary />
+        </Box>
       </Box>
 
-      {sortedInvestments.length > 0 && (
-        <Box mt={4}>
-          <Typography variant='h5' style={{ marginBottom: 14 }}>
-            Мои депозиты
-          </Typography>
-          {sortedInvestments.map(investment => (
-            <Box className={c.investment} key={investment.id}>
-              <Investment {...investment} />
+      <Box mt={1}>
+        <Typography variant='h3' gutterBottom>
+          <Box display='flex' alignItems='center' justifyContent='space-between'>
+            <span>Депозиты</span>
+            <span className={c.investmentsCount}>{sortedInvestments.length || ''}</span>
+          </Box>
+        </Typography>
+        {sortedInvestments.length > 0 ? (
+          <Box>
+            <Divider className={c.divider} />
+            <Box className={c.investments}>
+              {sortedInvestments.map(investment => (
+                <Box className={c.investment} key={investment.id}>
+                  <Investment {...investment} />
+                </Box>
+              ))}
             </Box>
-          ))}
-        </Box>
-      )}
+          </Box>
+        ) : (
+          <Typography>
+            <Box fontWeight='fontWeightMedium' color='text.hint'>
+              Депозитов не найдено
+            </Box>
+          </Typography>
+        )}
+      </Box>
     </Box>
   )
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    header: {
-      marginBottom: theme.spacing(2),
+    root: {
+      display: 'grid',
+      gridGap: theme.spacing(4),
       [theme.breakpoints.up('sm')]: {
-        marginBottom: theme.spacing(3),
+        gridGap: theme.spacing(8),
       },
       [theme.breakpoints.up('md')]: {
-        marginBottom: theme.spacing(4),
+        gridGap: theme.spacing(12),
+      },
+      [theme.breakpoints.up('lg')]: {
+        gridTemplateColumns: 'minmax(auto, 540px) minmax(auto, 448px)',
+        gridGap: '9vw',
+      },
+      [theme.breakpoints.up('xl')]: {
+        gridGap: theme.spacing(16),
       },
     },
     createInvestment: {
@@ -66,6 +97,22 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: theme.spacing(6),
         borderWidth: 2,
       },
+    },
+    divider: {
+      display: 'none',
+      [theme.breakpoints.up('lg')]: {
+        marginBottom: theme.spacing(4),
+        display: 'block',
+      },
+    },
+    investments: {
+      [theme.breakpoints.up('lg')]: {
+        maxHeight: 490,
+        overflowY: 'scroll',
+      },
+    },
+    investmentsCount: {
+      color: theme.palette.grey[500],
     },
     investment: {
       marginBottom: theme.spacing(2),

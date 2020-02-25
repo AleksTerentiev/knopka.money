@@ -107,7 +107,12 @@ export function Investment({
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      boxShadow: '1px 1px 5px 0px rgba(0,0,0,0.2)',
+      borderRadius: theme.shape.borderRadius * 2.5,
+      border: `1px solid ${theme.palette.divider}`,
+      [theme.breakpoints.up('md')]: {
+        borderWidth: 2,
+      },
+
       padding: theme.spacing(3),
       display: 'flex',
       flexWrap: 'wrap',
