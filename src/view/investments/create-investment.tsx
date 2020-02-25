@@ -85,12 +85,13 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
   function handleSubmitClick(e: React.FormEvent) {
     e.preventDefault()
     const constraint = _.find(tariff?.constraints, { currencyId })
-    if (!constraint) return
-    if (Number(amount) < Number(constraint.minAmount)) {
-      return setErrorText(`Минимальная сумма - ${constraint.minAmount}₽`)
+    const minAmount = Number(constraint?.minAmount) || 0
+    const maxAmount = Number(constraint?.maxAmount) || Infinity
+    if (Number(amount) < minAmount) {
+      return setErrorText(`Минимальная сумма - ${minAmount}₽`)
     }
-    if (Number(amount) > Number(constraint.maxAmount)) {
-      return setErrorText(`Максимальная сумма - ${constraint.maxAmount}₽`)
+    if (Number(amount) > maxAmount) {
+      return setErrorText(`Максимальная сумма - ${maxAmount}₽`)
     }
     createInvestment({
       variables: { amount: Number(amount), currencyId, investmentTariffId: tariff?.id },
