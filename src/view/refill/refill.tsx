@@ -40,7 +40,7 @@ export const Refill = () => {
   }
 
   return (
-    <Box>
+    <Box hidden>
       <Box mb={4}>
         <Typography variant='h2'>Пополнить счет</Typography>
       </Box>
