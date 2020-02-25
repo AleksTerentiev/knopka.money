@@ -54,6 +54,14 @@ export const INVESTMENT_DATA = gql`
     payoutDate
   }
 `
+export const GET_INVESTMENT = gql`
+  query GetInvestment($id: String!) {
+    investment(id: $id) {
+      ...InvestmentData
+    }
+  }
+  ${INVESTMENT_DATA}
+`
 export const GET_INVESTMENTS = gql`
   query GetInvestments {
     investments {

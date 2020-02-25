@@ -1,10 +1,4 @@
-import {
-  createMuiTheme,
-  // responsiveFontSizes,
-  // darken,
-  // lighten,
-} from '@material-ui/core/styles'
-import { brotliDecompress } from 'zlib'
+import { createMuiTheme } from '@material-ui/core'
 
 const breakpoints = {
   values: {
@@ -51,7 +45,7 @@ const palette = {
   },
   text: {
     primary: 'rgba(24, 40, 78, 1)',
-    secondary: 'rgba(24, 40, 78, 0.6)',
+    secondary: '#8790A4',
     disabled: '#EDEFF3',
     hint: 'rgba(24, 40, 78, 0.4)',
   },
@@ -61,7 +55,7 @@ const palette = {
     100: '#f9f9f9',
     200: '#EDEFF3',
     300: '#e0e0e0',
-    400: '#bdbdbd',
+    400: 'rgba(24, 40, 78, 0.4)',
     500: 'rgba(19,19,56,0.4)',
     600: '#757575',
     700: '#616161',
@@ -184,11 +178,13 @@ theme.overrides = {
       },
     },
   },
+
   MuiToolbar: {
     root: {
       minHeight: 'auto !important',
     },
   },
+
   MuiContainer: {
     root: {
       paddingLeft: theme.spacing(3),
@@ -207,6 +203,7 @@ theme.overrides = {
       },
     },
   },
+
   MuiButton: {
     root: {
       textTransform: 'none',
@@ -225,6 +222,22 @@ theme.overrides = {
         fontSize: 20,
         lineHeight: '28px',
         borderRadius: theme.shape.borderRadius * 2,
+      },
+    },
+    containedSizeSmall: {
+      padding: '6px 12px',
+      fontSize: 14,
+      lineHeight: '20px',
+      borderRadius: theme.shape.borderRadius,
+      [theme.breakpoints.up('sm')]: {
+        padding: '7px 14px',
+        fontSize: 15,
+        lineHeight: '22px',
+      },
+      [theme.breakpoints.up('md')]: {
+        padding: '8px 16px',
+        fontSize: 16,
+        lineHeight: '24px',
       },
     },
     containedSizeLarge: {
@@ -250,11 +263,13 @@ theme.overrides = {
       },
     },
   },
+
   MuiTabs: {
     root: {
       color: theme.palette.primary.main,
     },
   },
+
   MuiTab: {
     root: {
       textTransform: 'none',
@@ -276,6 +291,7 @@ theme.overrides = {
       },
     },
   },
+
   MuiInputBase: {
     root: {
       '&$disabled': {
@@ -286,11 +302,13 @@ theme.overrides = {
       },
     },
   },
+
   MuiFormControl: {
     root: {
       marginTop: '0 !important',
     },
   },
+
   MuiOutlinedInput: {
     root: {
       fontSize: 16,
@@ -353,6 +371,7 @@ theme.overrides = {
       },
     },
   },
+
   MuiDivider: {
     root: {
       height: 1,
@@ -362,7 +381,5 @@ theme.overrides = {
     },
   },
 }
-
-// theme = responsiveFontSizes(theme);
 
 export { theme }

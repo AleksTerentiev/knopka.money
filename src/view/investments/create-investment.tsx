@@ -26,6 +26,7 @@ import magicIcon from 'img/magic.svg'
 import { LoginButton } from 'view/auth/login-button'
 import plural from 'plural-ru'
 import { Currency } from 'view/billing/currency'
+import { FDate } from 'view/fdate'
 
 export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => {
   const currencyId = 'RUB'
@@ -191,13 +192,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
             <Currency currencyId={currencyId} value={resultAmount} />
           </Typography>
           <Typography className={c.resultDate}>
-            {new Date(Date.now() + tariff.days * 24 * 60 * 60 * 1000)
-              .toLocaleDateString('default', {
-                day: '2-digit',
-                month: '2-digit',
-                year: '2-digit',
-              })
-              .replace(/\//g, '.')}
+            <FDate date={Date.now() + tariff.days * 24 * 60 * 60 * 1000} />
           </Typography>
         </Box>
       </Box>

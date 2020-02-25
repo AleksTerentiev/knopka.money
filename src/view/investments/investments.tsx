@@ -53,11 +53,9 @@ export const Investments = () => {
             </Box>
           </Box>
         ) : (
-          <Typography>
-            <Box fontWeight='fontWeightMedium' color='text.hint'>
-              Депозитов не найдено
-            </Box>
-          </Typography>
+          <Box fontWeight='fontWeightMedium' color='text.hint'>
+            <Typography>Депозитов не найдено</Typography>
+          </Box>
         )}
       </Box>
     </Box>

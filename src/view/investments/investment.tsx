@@ -1,19 +1,16 @@
 import React from 'react'
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  Paper,
-  Box,
-  Typography,
-  Button,
-} from '@material-ui/core'
+import { Paper, Box, Typography, Button } from '@material-ui/core'
+import { useStyles } from './investment.c'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Currency } from 'view/billing/currency'
 import Timer from 'react-compound-timer'
-import { CLOSE_INVESTMENT, GET_BALANCES } from 'queries'
+import { CLOSE_INVESTMENT, GET_BALANCES, GET_INVESTMENT } from 'queries'
 import { GetBalances } from 'gql-types/GetBalances'
+import { GetInvestment } from 'gql-types/GetInvestment'
 import { InvestmentData } from 'gql-types/InvestmentData'
+import { FDate } from 'view/fdate'
+import plural from 'plural-ru'
+import moment from 'moment'
 
 export function Investment({
   id,
@@ -27,6 +24,9 @@ export function Investment({
 }: InvestmentData) {
   const c = useStyles({})
   const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
+  const { refetch: refetchInvestment } = useQuery<GetInvestment>(GET_INVESTMENT, {
+    variables: { id },
+  })
 
   const [closeInvestment, { loading: payouting }] = useMutation(CLOSE_INVESTMENT, {
     async onCompleted() {
@@ -40,99 +40,85 @@ export function Investment({
 
   return (
     <Paper className={c.root}>
-      <Box className={c.column}>
-        <Typography>Id: {id}</Typography>
-        <Typography variant='caption'>{new Date(createdAt).toLocaleString()}</Typography>
+      <Box>
+        <Typography className={c.label}>Id</Typography>
+        <Typography className={c.value}>{id}</Typography>
       </Box>
 
-      <Box className={c.column}>
+      <Box>
         <Typography className={c.label}>Депозит</Typography>
-        <Currency value={amount} currencyId={currencyId} className={c.value} />
+        <Typography className={c.value}>
+          <Currency value={amount} currencyId={currencyId} />
+        </Typography>
       </Box>
 
-      <Box className={c.column}>
+      <Box>
+        {payoutDate && (
+          <Typography className={c.value}>
+            Завершен <br />
+            <FDate date={payoutDate} />
+          </Typography>
+        )}
+
+        {!payoutDate && isReady && (
+          <Typography className={c.value}>
+            Готов <br /> к выводу
+          </Typography>
+        )}
+
+        {!payoutDate && !isReady && (
+          <Typography className={c.value} style={{ color: '#3B6EE4' }}>
+            <Timer
+              initialTime={new Date(endsAt).getTime() - Date.now()}
+              direction='backward'
+              formatValue={v => `${v < 10 ? '0' : ''}${v}`}
+              onStop={() => refetchInvestment()}
+            >
+              {() => (
+                <React.Fragment>
+                  <Timer.Days formatValue={value => value.toString()} />{' '}
+                  {plural(
+                    moment(new Date(endsAt)).diff(moment(), 'days'),
+                    'день',
+                    'дня',
+                    'дней'
+                  )}{' '}
+                  <br />
+                  <Timer.Hours />:
+                  <Timer.Minutes />:
+                  <Timer.Seconds />
+                </React.Fragment>
+              )}
+            </Timer>
+          </Typography>
+        )}
+      </Box>
+
+      <Box color='grey.400'>
+        <Typography className={c.value}>
+          <FDate date={createdAt} /> <br />
+          {new Date(createdAt).toLocaleTimeString()}
+        </Typography>
+      </Box>
+
+      <Box>
         <Typography className={c.label}>Выплата</Typography>
-        <Currency
-          value={estimatedPayoutAmount}
-          currencyId={currencyId}
-          className={c.value}
-        />
+        <Currency value={estimatedPayoutAmount} currencyId={currencyId} />
       </Box>
 
-      <Box className={c.column}>
-        {isReady && !payoutDate && (
+      {!payoutDate && (
+        <Box>
           <Button
             color='primary'
             variant='contained'
-            disabled={payouting}
+            size='small'
+            disabled={!isReady || payouting}
             onClick={handlePayout}
           >
-            Забрать
+            Вывести
           </Button>
-        )}
-
-        {isReady && payoutDate && (
-          <>
-            <Typography className={c.label}>Статус</Typography>
-            <Typography>Завершен</Typography>
-          </>
-        )}
-
-        {!isReady && !payoutDate && (
-          <>
-            <Typography className={c.label}>Осталось</Typography>
-            <Typography className={c.value}>
-              <Timer
-                initialTime={new Date(endsAt).getTime() - Date.now()}
-                direction='backward'
-                formatValue={v => `${v < 10 ? '0' : ''}${v}`}
-                // TODO: request investment when timer ends ?
-              >
-                {() => (
-                  <React.Fragment>
-                    <Timer.Hours />:
-                    <Timer.Minutes />:
-                    <Timer.Seconds />
-                  </React.Fragment>
-                )}
-              </Timer>
-            </Typography>
-          </>
-        )}
-      </Box>
+        </Box>
+      )}
     </Paper>
   )
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      borderRadius: theme.shape.borderRadius * 2.5,
-      border: `1px solid ${theme.palette.divider}`,
-      [theme.breakpoints.up('md')]: {
-        borderWidth: 2,
-      },
-
-      padding: theme.spacing(3),
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    column: {
-      textAlign: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      padding: theme.spacing(1.5),
-      flexGrow: 1,
-    },
-    label: {
-      color: '#444',
-      fontSize: '0.9rem',
-      marginBottom: 2,
-    },
-    value: {
-      fontSize: '1.12rem',
-    },
-  })
-)
