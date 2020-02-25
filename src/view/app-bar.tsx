@@ -65,7 +65,7 @@ export function AppBar() {
                 display='flex'
                 alignItems='center'
               >
-                <Typography>
+                <Typography variant='body2'>
                   <Balances className={c.balances} />
                 </Typography>
               </Box>
