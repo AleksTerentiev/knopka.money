@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { Preloader } from 'view/preloader'
 import { Landing } from 'view/landing'
 import { Investments } from 'view/investments/investments'
-import { Refill } from 'view/refill/refill'
+import { Refill } from 'view/refill'
 import { Affiliate } from 'view/affiliate/affiliate'
 
 export const App = () => {
