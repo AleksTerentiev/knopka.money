@@ -37,9 +37,6 @@ export const useStyles = makeStyles((theme: Theme) =>
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
       },
-      '&:first-of-type': {
-        paddingLeft: 0,
-      },
       '&:last-of-type': {
         paddingRight: theme.spacing(3),
       },

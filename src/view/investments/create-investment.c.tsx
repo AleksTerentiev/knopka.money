@@ -111,21 +111,22 @@ export const useStyles = makeStyles((theme: Theme) =>
     result: ({ disabled }: any) => ({
       background: disabled ? theme.palette.grey[200] : theme.palette.grey[100],
       borderRadius: theme.shape.borderRadius,
-      padding: theme.spacing(1.5, 2),
+      padding: theme.spacing(1.5, 2, 1),
       marginBottom: theme.spacing(3),
       [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(3),
+        padding: theme.spacing(2.5, 3, 2),
         borderRadius: theme.shape.borderRadius * 2,
         marginBottom: theme.spacing(6),
       },
     }),
     resultHeader: ({ disabled }: any) => ({
       fontSize: 12,
+      lineHeight: '20px',
       fontWeight: 600,
       textTransform: 'uppercase',
       color: disabled ? 'white' : '#9ea4b4',
       letterSpacing: 2,
-      marginBottom: theme.spacing(1),
+      marginBottom: theme.spacing(0.5),
       [theme.breakpoints.up('sm')]: {
         fontSize: 13,
       },
@@ -134,7 +135,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     }),
     resultAmount: ({ disabled }: any) => ({
-      fontWeight: 700,
+      [theme.breakpoints.up('md')]: {
+        fontWeight: theme.typography.fontWeightBold,
+      },
       color: disabled ? 'white' : theme.palette.primary.main,
     }),
     resultDate: ({ disabled }: any) => ({

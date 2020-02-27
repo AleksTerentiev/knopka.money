@@ -1,15 +1,20 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core'
 
+const minWidth = 360
+
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       borderRadius: theme.shape.borderRadius * 2.5,
       border: `1px solid ${theme.palette.divider}`,
-      padding: theme.spacing(3),
+      padding: theme.spacing(2),
       display: 'grid',
       gridTemplateColumns: '1fr 1fr 1fr',
       gridRowGap: theme.spacing(1),
       gridColumnGap: theme.spacing(2),
+      [`@media(min-width: ${minWidth}px)`]: {
+        padding: theme.spacing(3),
+      },
       [theme.breakpoints.up('md')]: {
         padding: theme.spacing(4),
         borderWidth: 2,
@@ -34,7 +39,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
     value: {
-      fontSize: 14,
+      fontSize: 13,
+      [`@media(min-width: ${minWidth}px)`]: {
+        fontSize: 14,
+      },
       lineHeight: '20px',
       [theme.breakpoints.up('md')]: {
         fontSize: 16,

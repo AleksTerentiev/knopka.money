@@ -23,7 +23,6 @@ import logoImg from 'img/logo.svg'
 import { Navigation } from './navigation'
 import { LoginButton } from 'view/auth/login-button'
 import { GetAccount_account } from 'gql-types/GetAccount'
-import defaultAvatarImg from 'img/avatar.svg'
 import { LogoutButton } from 'view/auth/logout-button'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
@@ -207,8 +206,6 @@ export const AppBarAccount: React.FC<AppBarAccountProps> = ({ account }) => {
         classes={{
           root: c.avatarRoot,
           img: c.avatarImg,
-          colorDefault: c.avatarDefault,
-          fallback: c.avatarFallback,
         }}
         onClick={handleAccountPopupOpen}
         aria-controls='account-popup'
@@ -253,14 +250,6 @@ export const useAppBarStyles = makeStyles((theme: Theme) =>
     },
     avatarImg: {
       background: 'none',
-    },
-    avatarDefault: {
-      background: `url(${defaultAvatarImg}) no-repeat`,
-      backgroundSize: 'contain',
-      color: 'transparent',
-    },
-    avatarFallback: {
-      display: 'none',
     },
   })
 )

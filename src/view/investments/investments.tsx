@@ -35,14 +35,14 @@ export const Investments = () => {
       </Box>
 
       <Box mt={1}>
-        <Typography variant='h3' gutterBottom>
+        <Typography variant='h3' gutterBottom={sortedInvestments.length > 0}>
           <Box display='flex' alignItems='center' justifyContent='space-between'>
             <span>Депозиты</span>
             <span className={c.investmentsCount}>{sortedInvestments.length || ''}</span>
           </Box>
         </Typography>
         {sortedInvestments.length > 0 ? (
-          <Box>
+          <Box mt={1}>
             <Divider className={c.divider} />
             <Box className={c.investments}>
               {sortedInvestments.map(investment => (
@@ -53,7 +53,7 @@ export const Investments = () => {
             </Box>
           </Box>
         ) : (
-          <Box fontWeight='fontWeightMedium' color='text.hint'>
+          <Box fontWeight='fontWeightMedium' color='text.hint' mt={1}>
             <Typography>Депозитов не найдено</Typography>
           </Box>
         )}
@@ -65,15 +65,8 @@ export const Investments = () => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'grid',
-      gridGap: theme.spacing(4),
-      [theme.breakpoints.up('sm')]: {
-        gridGap: theme.spacing(8),
-      },
-      [theme.breakpoints.up('md')]: {
-        gridGap: theme.spacing(12),
-      },
       [theme.breakpoints.up('lg')]: {
+        display: 'grid',
         gridTemplateColumns: 'minmax(auto, 540px) minmax(auto, 448px)',
         gridGap: '9vw',
       },
@@ -84,15 +77,18 @@ const useStyles = makeStyles((theme: Theme) =>
     createInvestment: {
       maxWidth: 544,
       borderRadius: theme.shape.borderRadius * 2.5,
+      marginBottom: theme.spacing(5),
       ['@media(min-width:360px)']: {
         border: `1px solid ${theme.palette.divider}`,
         padding: theme.spacing(3),
       },
       [theme.breakpoints.up('sm')]: {
         padding: theme.spacing(4),
+        marginBottom: theme.spacing(8),
       },
       [theme.breakpoints.up('md')]: {
         padding: theme.spacing(6),
+        marginBottom: theme.spacing(12),
         borderWidth: 2,
       },
     },
@@ -105,7 +101,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     investments: {
       [theme.breakpoints.up('lg')]: {
-        maxHeight: 490,
+        maxHeight: 620,
         overflowY: 'scroll',
       },
     },

@@ -1,5 +1,12 @@
 import React from 'react'
-import { Paper, Box, Typography, Button } from '@material-ui/core'
+import {
+  Paper,
+  Box,
+  Typography,
+  Button,
+  useTheme,
+  useMediaQuery,
+} from '@material-ui/core'
 import { useStyles } from './investment.c'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Currency } from 'view/billing/currency'
@@ -37,6 +44,8 @@ export function Investment({
   async function handlePayout() {
     await closeInvestment({ variables: { id } })
   }
+
+  const miniWidth = useMediaQuery('(max-width:359px)')
 
   return (
     <Paper className={c.root}>
@@ -103,7 +112,9 @@ export function Investment({
 
       <Box>
         <Typography className={c.label}>Выплата</Typography>
-        <Currency value={estimatedPayoutAmount} currencyId={currencyId} />
+        <Typography className={c.value}>
+          <Currency value={estimatedPayoutAmount} currencyId={currencyId} />
+        </Typography>
       </Box>
 
       {!payoutDate && (
@@ -114,8 +125,9 @@ export function Investment({
             size='small'
             disabled={!isReady || payouting}
             onClick={handlePayout}
+            fullWidth
           >
-            Вывести
+            {miniWidth ? 'Вывод' : 'Вывести'}
           </Button>
         </Box>
       )}
