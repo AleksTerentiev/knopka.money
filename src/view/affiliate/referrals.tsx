@@ -23,18 +23,20 @@ export const Referrals: FC = () => {
       {referrals.map(referral => (
         <Box className={c.referral} key={referral.id}>
           <Box display='flex' alignItems='center' justifyContent='center'>
-            <Avatar className={c.avatar} src={referral.picture} alt='Аватар' />
-            <Typography className={c.name} align='left' variant='body1'>
+            <Avatar className={c.avatar} src={referral.picture} />
+            <Typography align='left' variant='body2'>
               {referral.displayName}
             </Typography>
           </Box>
           {referral.totals.map((total, index) => (
-            <Currency
-              key={index}
-              className={c.total}
-              value={total.total}
-              currencyId={total.currencyId}
-            />
+            <Typography variant='body2'>
+              <Currency
+                key={index}
+                className={c.total}
+                value={total.total}
+                currencyId={total.currencyId}
+              />
+            </Typography>
           ))}
         </Box>
       ))}
@@ -46,23 +48,26 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
     referral: {
-      padding: theme.spacing(1),
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-evenly',
+      justifyContent: 'space-between',
+      margin: theme.spacing(2, 0),
+      [theme.breakpoints.up('sm')]: {
+        margin: theme.spacing(2.5, 0),
+      },
     },
     avatar: {
-      width: theme.spacing(4),
-      height: theme.spacing(4),
+      width: 40,
+      height: 40,
       marginRight: theme.spacing(1.5),
-    },
-    name: {
-      fontSize: '1.1rem',
+      [theme.breakpoints.up('sm')]: {
+        width: 50,
+        height: 50,
+        marginRight: theme.spacing(2),
+      },
     },
     total: {
-      display: 'flex',
-      alignItems: 'center',
-      fontSize: '1.35rem',
+      color: '#3B6EE4',
     },
   })
 )

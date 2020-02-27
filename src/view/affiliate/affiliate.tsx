@@ -1,5 +1,5 @@
-import React from 'react'
-import { makeStyles, Theme, createStyles, Box, Typography } from '@material-ui/core'
+import React, { ChangeEvent, useState, useMemo } from 'react'
+import { Box, Typography, Tabs, Tab, Divider } from '@material-ui/core'
 import { useQuery } from '@apollo/react-hooks'
 import { Share } from 'view/affiliate/share'
 import { Currency } from 'view/billing/currency'
@@ -8,106 +8,69 @@ import { Accruals } from 'view/affiliate/accruals'
 import { GET_AFFILIATE_REFERRALS, GET_AFFILIATE_TOTALS } from 'queries'
 import { GetAffiliateReferrals } from 'gql-types/GetAffiliateReferrals'
 import { GetAffiliateTotals } from 'gql-types/GetAffiliateTotals'
+import { useStyles } from './affiliate.c'
 
 export const Affiliate = () => {
   const c = useStyles({})
-
   const { data: totalsData } = useQuery<GetAffiliateTotals>(GET_AFFILIATE_TOTALS)
-  const totals = totalsData ? totalsData.affiliateTotals : []
-  const { data } = useQuery<GetAffiliateReferrals>(GET_AFFILIATE_REFERRALS)
-  const referrals = data ? data.affiliateReferrals : []
+  const totals = totalsData?.affiliateTotals || []
+  const { data: referralsData } = useQuery<GetAffiliateReferrals>(GET_AFFILIATE_REFERRALS)
+  const referrals = referralsData?.affiliateReferrals || []
+  const [currentTab, setCurrentTab] = useState('referrals')
+
+  function handleTabChange(e: ChangeEvent<{}>, tab: string) {
+    setCurrentTab(tab)
+  }
+
+  const total = useMemo(
+    () => totals.reduce((total, curTotal) => total + Number(curTotal.total), 0),
+    [totals]
+  )
 
   return (
     <Box className={c.root}>
-      <Box className={c.header} pt={6} pb={5}>
-        <span className={c.headerImage} role='img' aria-label='Prize'>
-          🎁
-        </span>
-        <Typography variant='h3' style={{ marginBottom: 3 }}>
-          Партнерская программа
+      <Box>
+        <Typography variant='h2' className={c.header}>
+          Зарабатывайте <span className={c.profit}>30%</span>
+          <br />
+          Приглашая Друзей
         </Typography>
-        <Typography variant='subtitle1' gutterBottom>
-          Приглашайте друзей и зарабатывайте{' '}
-          <Typography display='inline' variant='h5' color='error' component='span'>
-            30%
-          </Typography>{' '}
-          от прибыли за каждого из них
+        <Typography className={c.subtitle}>
+          Делитесь ссылкой и зарабатывайте <br />
+          30% прибыли каждого пришедшего
         </Typography>
-
-        <Box mt={2}>
-          <Share />
-        </Box>
+        <Share />
       </Box>
 
-      <Box className={c.infoContainer}>
-        <Box className={c.infoBlock}>
-          <Typography className={c.total}>{referrals.length.toLocaleString()}</Typography>
-          <Typography variant='h5' gutterBottom>
-            рефералы
-          </Typography>
-          <Box p={1} />
-          <Referrals />
-        </Box>
-        <Box className={c.infoBlock}>
-          {totals.length > 0 && (
-            <Typography className={c.total}>
-              {totals.map(total => (
-                <Currency
-                  key={total.currencyId}
-                  value={total.total}
-                  currencyId={total.currencyId}
-                />
-              ))}
-            </Typography>
-          )}
-          <Typography variant='h5' gutterBottom>
-            выплаты
-          </Typography>
-          <Box p={1} />
-          <Accruals />
-        </Box>
+      <Box>
+        <Typography variant='h3'>Рефералы</Typography>
+
+        {referrals.length >= 0 ? (
+          <>
+            <Tabs
+              className={c.tabs}
+              value={currentTab}
+              onChange={handleTabChange}
+              TabIndicatorProps={{ hidden: true }}
+            >
+              <Tab
+                label={`Рефералы (${referrals.length.toLocaleString()})`}
+                value='referrals'
+              />
+              <Tab label={`Выплаты (+${total.toLocaleString()}₽)`} value='totals' />
+            </Tabs>
+            <Divider className={c.divider} />
+            <Box className={c.tabsContent}>
+              {currentTab === 'referrals' && <Referrals />}
+              {currentTab === 'totals' && <Accruals />}
+            </Box>
+          </>
+        ) : (
+          <Box fontWeight='fontWeightMedium' color='text.hint' mt={1}>
+            <Typography>У вас еще нет рефералов</Typography>
+          </Box>
+        )}
       </Box>
     </Box>
   )
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {},
-    header: {
-      display: 'flex',
-      alignItems: 'stretch',
-      flexDirection: 'column',
-      textAlign: 'center',
-      background: '#ff000010',
-    },
-    headerImage: {
-      fontSize: '4.5rem',
-      lineHeight: '4.5rem',
-      [theme.breakpoints.up('sm')]: {
-        fontSize: '5rem',
-        lineHeight: '5rem',
-      },
-    },
-    infoContainer: {
-      textAlign: 'center',
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-      display: 'grid',
-      gridTemplateRows: 'auto auto',
-      gridTemplateColumns: 'auto',
-      [theme.breakpoints.up('md')]: {
-        gridTemplateRows: 'auto',
-        gridTemplateColumns: '50% 50%',
-      },
-    },
-    infoBlock: {
-      padding: theme.spacing(2),
-    },
-    total: {
-      fontSize: '2.2rem',
-      lineHeight: '2.2rem',
-      marginBottom: theme.spacing(0.5),
-    },
-  })
-)

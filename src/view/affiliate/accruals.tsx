@@ -11,38 +11,32 @@ import { useQuery } from '@apollo/react-hooks'
 import { Currency } from 'view/billing/currency'
 import { GET_AFFILIATE_ACCRUALS } from 'queries'
 import { GetAffiliateAccruals } from 'gql-types/GetAffiliateAccruals'
+import { FDate } from 'view/fdate'
 
 export const Accruals: FC = () => {
   const c = useStyles({})
-
   const { data } = useQuery<GetAffiliateAccruals>(GET_AFFILIATE_ACCRUALS)
-  const accruals = data ? data.affiliateAccruals : []
+  const accruals = data?.affiliateAccruals || []
 
   return (
     <Box className={c.root}>
-      {accruals &&
-        accruals.length > 0 &&
-        accruals.map(accrual => (
-          <Box key={accrual.id} className={c.accrual}>
-            <Typography variant='caption'>
-              {new Date(accrual.createdAt).toLocaleDateString()}
-            </Typography>
-            <Box className={c.referral}>
-              <Avatar
-                className={c.referralAvatar}
-                src={accrual.referral.picture}
-                alt='Аватар'
-              />
+      {accruals.map(accrual => (
+        <Box key={accrual.id} className={c.accrual}>
+          <Box className={c.referral}>
+            <Avatar className={c.referralAvatar} src={accrual.referral.picture} />
+            <Box>
               <Typography variant='body2'>{accrual.referral.displayName}</Typography>
+              <Typography className={c.date}>
+                <FDate date={accrual.createdAt} />
+              </Typography>
             </Box>
-            {/* <Typography>{Number(accrual.rate) * 100}%</Typography> */}
-            <Currency
-              className={c.total}
-              value={accrual.amount}
-              currencyId={accrual.currencyId}
-            />
           </Box>
-        ))}
+          {/* <Typography>{Number(accrual.rate) * 100}%</Typography> */}
+          <Typography variant='body2' className={c.total}>
+            <Currency value={accrual.amount} currencyId={accrual.currencyId} />
+          </Typography>
+        </Box>
+      ))}
     </Box>
   )
 }
@@ -51,20 +45,43 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
     accrual: {
-      padding: theme.spacing(1),
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-evenly',
+      justifyContent: 'space-between',
+      margin: theme.spacing(1.5, 0),
+      [theme.breakpoints.up('sm')]: {
+        margin: theme.spacing(2, 0),
+      },
     },
     referral: {
       display: 'flex',
       alignItems: 'center',
     },
     referralAvatar: {
-      width: theme.spacing(3),
-      height: theme.spacing(3),
-      marginRight: theme.spacing(1),
+      width: 40,
+      height: 40,
+      marginRight: theme.spacing(1.5),
+      [theme.breakpoints.up('sm')]: {
+        width: 50,
+        height: 50,
+        marginRight: theme.spacing(2),
+      },
     },
-    total: {},
+    date: {
+      color: theme.palette.text.hint,
+      fontSize: 14,
+      lineHeight: '20px',
+      [theme.breakpoints.up('sm')]: {
+        fontSize: 15,
+        lineHeight: '22px',
+      },
+      [theme.breakpoints.up('md')]: {
+        fontSize: 16,
+        lineHeight: '24px',
+      },
+    },
+    total: {
+      color: '#3B6EE4',
+    },
   })
 )

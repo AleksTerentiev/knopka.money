@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core'
+import defaultAvatarImg from 'img/avatar.svg'
 
 const breakpoints = {
   values: {
@@ -47,7 +48,7 @@ const palette = {
     primary: 'rgba(24, 40, 78, 1)',
     secondary: '#8790A4',
     disabled: '#EDEFF3',
-    hint: 'rgba(24, 40, 78, 0.4)',
+    hint: '#B0B7C8',
   },
   divider: '#EDEFF3',
   grey: {
@@ -133,39 +134,48 @@ theme.overrides = {
       fontSize: 20,
       lineHeight: '28px',
       '&$gutterBottom': {
-        marginBottom: theme.spacing(2),
+        marginBottom: theme.spacing(1.5),
       },
       [theme.breakpoints.up('sm')]: {
         fontSize: 24,
         lineHeight: '36px',
-        '&$gutterBottom': {
-          marginBottom: theme.spacing(2.25),
-        },
       },
       [theme.breakpoints.up('md')]: {
         fontSize: 32,
         lineHeight: '48px',
         '&$gutterBottom': {
-          marginBottom: theme.spacing(2.5),
+          marginBottom: theme.spacing(2),
         },
       },
     },
     body1: {
       fontSize: 16,
+      lineHeight: '24px',
+      '&$gutterBottom': {
+        marginBottom: theme.spacing(1.5),
+      },
       [theme.breakpoints.up('sm')]: {
         fontSize: 18,
+        lineHeight: '28px',
       },
       [`@media (min-width:${breakpoints.values.md}px)`]: {
         fontSize: 22,
+        lineHeight: '32px',
+        '&$gutterBottom': {
+          marginBottom: theme.spacing(2),
+        },
       },
     },
     body2: {
       fontSize: 16,
+      lineHeight: '24px',
       [theme.breakpoints.up('sm')]: {
         fontSize: 18,
+        lineHeight: '26px',
       },
       [theme.breakpoints.up('md')]: {
         fontSize: 20,
+        lineHeight: '28px',
       },
     },
     caption: {
@@ -177,6 +187,7 @@ theme.overrides = {
         fontSize: 20,
       },
     },
+    
   },
 
   MuiToolbar: {
@@ -201,6 +212,17 @@ theme.overrides = {
         paddingLeft: 0,
         paddingRight: 0,
       },
+    },
+  },
+
+  MuiAvatar: {
+    colorDefault: {
+      background: `url(${defaultAvatarImg}) no-repeat`,
+      backgroundSize: 'contain',
+      color: 'transparent',
+    },
+    fallback: {
+      display: 'none',
     },
   },
 
@@ -276,6 +298,12 @@ theme.overrides = {
       minWidth: 'auto !important',
       opacity: '1 !important',
       fontWeight: 400,
+      '&:first-of-type': {
+        paddingLeft: 0,
+      },
+      '&:last-of-type': {
+        paddingRight: 0,
+      },
       '&$selected, &:hover': {
         color: '#B0B7C8',
       },
