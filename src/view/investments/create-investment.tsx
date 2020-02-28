@@ -33,7 +33,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
   const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const { data: tariffsData } = useQuery<GetTariffs>(GET_TARIFFS)
   const [tariff, setTariff] = useState<GetTariffs_tariffs>()
-  const [amount, setAmount] = useState('')
+  const [amount, setAmount] = useState('1000')
   const [resultAmount, setResultAmount] = useState(0)
   const [notEnoughtMoney, setNotEnoughtMoney] = useState()
   const [errorText, setErrorText] = useState()
