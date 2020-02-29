@@ -52,8 +52,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         position: 'relative',
         '&:before': {
           content: '""',
-          background:
-            'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 100%)',
+          background: 'linear-gradient(to right, rgba(0,0,0,0), rgba(255,255,255,1))',
           position: 'absolute',
           width: 20,
           right: 30,
