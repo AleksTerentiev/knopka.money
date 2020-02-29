@@ -4,7 +4,6 @@ import {
   Box,
   Typography,
   Button,
-  useTheme,
   useMediaQuery,
 } from '@material-ui/core'
 import { useStyles } from './investment.c'

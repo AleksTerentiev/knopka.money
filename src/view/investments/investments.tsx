@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: 544,
       borderRadius: theme.shape.borderRadius * 2.5,
       marginBottom: theme.spacing(5),
-      ['@media(min-width:360px)']: {
+      '@media(min-width:360px)': {
         border: `1px solid ${theme.palette.divider}`,
         padding: theme.spacing(3),
       },

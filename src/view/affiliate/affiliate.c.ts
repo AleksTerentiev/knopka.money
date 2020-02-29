@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
       marginBottom: theme.spacing(1),
-      ['@media(max-width: 345px)']: {
+      '@media(max-width: 345px)': {
         fontSize: 25,
       },
       [theme.breakpoints.up('md')]: {
@@ -40,10 +40,10 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     subtitle: {
       marginBottom: theme.spacing(2.5),
-      ['@media(max-width: 356px)']: {
+      '@media(max-width: 356px)': {
         fontSize: 15,
       },
-      ['@media(max-width: 336px)']: {
+      '@media(max-width: 336px)': {
         fontSize: 14,
       },
       [theme.breakpoints.up('sm')]: {

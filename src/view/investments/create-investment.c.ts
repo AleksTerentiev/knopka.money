@@ -96,7 +96,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
     inputField: ({ secondary, disabled }: any) => ({
-      ['&::placeholder']: {
+      '&::placeholder': {
         [secondary && 'opacity']: '0.6 !important',
         [disabled && 'opacity']: '1 !important',
       },

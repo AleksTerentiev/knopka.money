@@ -174,6 +174,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
                   <img
                     src={t.days >= 7 ? magicIcon : t.days >= 3 ? flashIcon : fireIcon}
                     className={c.tariffImg}
+                    alt=''
                   />
                 </span>
               )}

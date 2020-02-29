@@ -57,7 +57,7 @@ export const Landing = () => {
         </Box>
 
         <Hidden smDown>
-          <img src={figures} style={{ position: 'absolute', left: 20, top: '30%' }} />
+          <img src={figures} style={{ position: 'absolute', left: 20, top: '30%' }} alt=''/>
           <img
             src={figures}
             style={{
@@ -66,6 +66,7 @@ export const Landing = () => {
               bottom: '20%',
               transform: 'scaleY(-1)',
             }}
+            alt=''
           />
           <img
             src={figures}
@@ -75,6 +76,7 @@ export const Landing = () => {
               top: '30%',
               transform: 'scaleX(-1)',
             }}
+            alt=''
           />
           <img
             src={figures}
@@ -84,6 +86,7 @@ export const Landing = () => {
               bottom: '20%',
               transform: 'scaleY(-1) scaleX(-1)',
             }}
+            alt=''
           />
         </Hidden>
       </Container>
