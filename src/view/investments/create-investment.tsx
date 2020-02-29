@@ -33,8 +33,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
   const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const { data: tariffsData } = useQuery<GetTariffs>(GET_TARIFFS)
   const [tariff, setTariff] = useState<GetTariffs_tariffs>()
-  const [amount, setAmount] = useState('1000')
-  const [resultAmount, setResultAmount] = useState(0)
+  const [amount, setAmount] = useState(1000)
   const [notEnoughtMoney, setNotEnoughtMoney] = useState()
   const [errorText, setErrorText] = useState()
   const theme = useTheme()
@@ -62,22 +61,19 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
       })
     },
     onCompleted() {
-      setAmount('')
+      setAmount(0)
       refetchBalances()
     },
   })
 
   function handleTariffChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const amountValue = Number(amount)
     const tariff = _.find(tariffsData?.tariffs, { id: e.target.value })
     setTariff(tariff)
-    setResultAmount(tariff ? amountValue + (amountValue * tariff.percent) / 100 : 0)
   }
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setAmount(e.target.value)
     const value = Number(e.target.value)
-    setResultAmount(tariff ? value + (value * tariff.percent) / 100 : 0)
+    setAmount(value)
     const notEnoughtMoney = !!balance && Number(balance.amount) < value
     setNotEnoughtMoney(notEnoughtMoney)
     setErrorText(notEnoughtMoney ? 'Недостаточно средств' : '')
@@ -88,14 +84,14 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
     const constraint = _.find(tariff?.constraints, { currencyId })
     const minAmount = Number(constraint?.minAmount) || 0
     const maxAmount = Number(constraint?.maxAmount) || Infinity
-    if (Number(amount) < minAmount) {
+    if (amount < minAmount) {
       return setErrorText(`Минимальная сумма - ${minAmount}₽`)
     }
-    if (Number(amount) > maxAmount) {
+    if (amount > maxAmount) {
       return setErrorText(`Максимальная сумма - ${maxAmount}₽`)
     }
     createInvestment({
-      variables: { amount: Number(amount), currencyId, investmentTariffId: tariff?.id },
+      variables: { amount, currencyId, investmentTariffId: tariff?.id },
     })
   }
 
@@ -118,7 +114,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
         style: { color: secondary ? 'currentColor' : '#FB6F78' },
       }}
       error={!!errorText}
-      value={amount}
+      value={amount || ''}
       onChange={handleAmountChange}
       label={errorText}
       disabled={disabled}
@@ -189,7 +185,10 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
         <Typography className={c.resultHeader}>К выплате:</Typography>
         <Box display='flex' alignItems='flex-end' justifyContent='space-between'>
           <Typography variant='h3' className={c.resultAmount} noWrap>
-            <Currency currencyId={currencyId} value={resultAmount} />
+            <Currency
+              currencyId={currencyId}
+              value={amount + (amount * tariff.percent) / 100}
+            />
           </Typography>
           <Typography className={c.resultDate}>
             <FDate date={Date.now() + tariff.days * 24 * 60 * 60 * 1000} />
