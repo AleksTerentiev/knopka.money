@@ -106,6 +106,11 @@ export const CREATE_INVOICE = gql`
     }
   }
 `
+export const AFFILIATE_BIND = gql`
+  mutation AffiliateBind($referrerId: String!) {
+    affiliateBind(referrerId: $referrerId)
+  }
+`
 export const GET_AFFILIATE_TOTALS = gql`
   query GetAffiliateTotals {
     affiliateTotals {

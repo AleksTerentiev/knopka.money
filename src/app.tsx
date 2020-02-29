@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { makeStyles, Theme, createStyles, Container } from '@material-ui/core'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_ACCOUNT } from 'queries'
+import { useQuery, useMutation } from '@apollo/react-hooks'
+import { GET_ACCOUNT, AFFILIATE_BIND } from 'queries'
 import { GetAccount } from 'gql-types/GetAccount'
 import { AppBar } from 'view/app-bar'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
@@ -12,8 +12,22 @@ import { Refill } from 'view/refill'
 import { Affiliate } from 'view/affiliate/affiliate'
 
 export const App = () => {
-  const { loading, data } = useQuery<GetAccount>(GET_ACCOUNT)
   const c = useStyles({})
+  const { loading, data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
+  const [affiliateBind] = useMutation(AFFILIATE_BIND)
+
+  useEffect(() => {
+    let referrerId = new URLSearchParams(window.location.search).get('ref')
+    if (referrerId) {
+      localStorage.setItem('ref', referrerId)
+    } else {
+      referrerId = localStorage.getItem('ref')
+    }
+    if (accountData && referrerId) {
+      affiliateBind({ variables: { referrerId } })
+      localStorage.removeItem('ref')
+    }
+  }, [accountData])
 
   if (loading) {
     return <Preloader />
@@ -22,8 +36,8 @@ export const App = () => {
   return (
     <Router>
       <AppBar />
-      {data ? <Redirect from='/' to='/investments' /> : <Redirect to='/' />}
-      {data ? (
+      {accountData ? <Redirect from='/' to='/investments' /> : <Redirect to='/' />}
+      {accountData ? (
         <Container className={c.container}>
           <Route path='/investments' component={Investments} />
           <Route path='/refill' component={Refill} />
