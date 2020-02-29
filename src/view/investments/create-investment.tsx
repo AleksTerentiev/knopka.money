@@ -34,8 +34,8 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
   const { data: tariffsData } = useQuery<GetTariffs>(GET_TARIFFS)
   const [tariff, setTariff] = useState<GetTariffs_tariffs>()
   const [amount, setAmount] = useState(1000)
-  const [notEnoughtMoney, setNotEnoughtMoney] = useState()
-  const [errorText, setErrorText] = useState()
+  const [notEnoughtMoney, setNotEnoughtMoney] = useState(false)
+  const [errorText, setErrorText] = useState('')
   const theme = useTheme()
 
   const { data: balancesData, refetch: refetchBalances } = useQuery<GetBalances>(
@@ -72,11 +72,9 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
   }
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = Number(e.target.value)
-    setAmount(value)
-    const notEnoughtMoney = !!balance && Number(balance.amount) < value
-    setNotEnoughtMoney(notEnoughtMoney)
-    setErrorText(notEnoughtMoney ? 'Недостаточно средств' : '')
+    setAmount(Number(e.target.value))
+    setNotEnoughtMoney(false)
+    setErrorText('')
   }
 
   function handleSubmitClick(e: React.FormEvent) {
@@ -88,8 +86,14 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
       return setErrorText(`Минимальная сумма - ${minAmount}₽`)
     }
     if (amount > maxAmount) {
-      return setErrorText(`Максимальная сумма - ${maxAmount}₽`)
+      return setErrorText(`Макс. сумма - ${maxAmount}₽`)
     }
+
+    if (!!balance && Number(balance.amount) < amount) {
+      setNotEnoughtMoney(true)
+      return setErrorText('Недостаточно средств')
+    }
+
     createInvestment({
       variables: { amount, currencyId, investmentTariffId: tariff?.id },
     })
