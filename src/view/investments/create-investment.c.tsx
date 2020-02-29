@@ -37,6 +37,8 @@ export const useStyles = makeStyles((theme: Theme) =>
       '-webkit-appearance': 'none',
       '-moz-appearance': 'none',
       appearance: 'none',
+      borderRadius: 0,
+      border: 'none',
       position: 'absolute',
       width: '100%',
       height: '100%',
