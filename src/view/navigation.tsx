@@ -1,8 +1,5 @@
 import React, { FC, ChangeEvent } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_ACCOUNT, GET_BALANCES } from 'queries'
-import { GetAccount } from 'gql-types/GetAccount'
-import { makeStyles, Theme, createStyles, Tabs, Tab } from '@material-ui/core'
+import { makeStyles, Theme, createStyles, Tabs, Tab, Divider } from '@material-ui/core'
 import { useLocation, useHistory } from 'react-router-dom'
 
 interface NavigationProps {
@@ -12,7 +9,6 @@ interface NavigationProps {
 
 export const Navigation: FC<NavigationProps> = ({ vertical, color = 'primary' }) => {
   const c = useStyles({ vertical, color })
-  const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const location = useLocation()
   const history = useHistory()
 
@@ -23,7 +19,7 @@ export const Navigation: FC<NavigationProps> = ({ vertical, color = 'primary' })
   return (
     <Tabs
       className={c.root}
-      value={'/' + location.pathname.split('/')[1]}
+      value={location.pathname}
       onChange={handleChange}
       TabIndicatorProps={{ hidden: true }}
       variant={vertical ? 'standard' : 'scrollable'}
@@ -31,27 +27,34 @@ export const Navigation: FC<NavigationProps> = ({ vertical, color = 'primary' })
       classes={{ scrollButtons: c.scrollButtons }}
       orientation={vertical ? 'vertical' : 'horizontal'}
     >
-      <Tab label='Инвестиции' value='/investments' className={c.tab} />
-      {accountData && <Tab label='Пополнить' value='/refill' className={c.tab} />}
-      <Tab label={'Рефералы'} value='/affiliate' className={c.tab} />
-      {accountData && <Tab label='Вывод' value='/withdrawal' className={c.tab} />}
+      <Tab label='Инвестиции' value='/' className={c.tab} />
+      {vertical && <Divider />}
+      <Tab label='Пополнить' value='/refill' className={c.tab} />
+      {vertical && <Divider />}
+      <Tab label='Рефералы' value='/affiliate' className={c.tab} />
+      {vertical && <Divider />}
+      <Tab label='Вывод' value='/withdrawal' className={c.tab} />
     </Tabs>
   )
 }
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: ({ color }: any) => ({
+    root: ({ color }: NavigationProps) => ({
       color:
         color === 'primary' ? theme.palette.primary.main : theme.palette.text.primary,
     }),
     tab: ({ vertical }: any) => ({
+      [vertical && 'fontSize']: 16,
+      [vertical && 'lineHeight']: '24px',
       '&:first-of-type': {
         paddingLeft: 0,
       },
       '&:last-of-type': {
-        paddingRight: theme.spacing(vertical ? 0 : 3),
+        paddingRight: theme.spacing(vertical ? 0 : 2),
       },
+      [vertical && 'paddingTop']: theme.spacing(2),
+      [vertical && 'paddingBottom']: theme.spacing(2),
     }),
     scrollButtons: {
       width: '1.6rem',

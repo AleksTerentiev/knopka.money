@@ -289,7 +289,7 @@ theme.overrides = {
     root: {
       '&$vertical': {
         '& .MuiTab-root': {
-          padding: 0,
+          paddingLeft: 0,
         },
         '& .MuiTab-wrapper': {
           alignItems: 'flex-start',
@@ -315,16 +315,20 @@ theme.overrides = {
         color: '#B0B7C8',
       },
       fontSize: 14,
+      lineHeight: '20px',
       [theme.breakpoints.up('sm')]: {
         fontSize: 16,
+        lineHeight: '22px',
       },
       [theme.breakpoints.up('md')]: {
         fontSize: 18,
+        lineHeight: '24px',
       },
       [theme.breakpoints.up('lg')]: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
         fontSize: 20,
+        lineHeight: '28px',
       },
     },
   },

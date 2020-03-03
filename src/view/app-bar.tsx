@@ -44,7 +44,7 @@ export function AppBar() {
           <Toolbar disableGutters>
             <Box
               className={c.logo}
-              onClick={() => history.push(accountData ? '/investments' : '/')}
+              onClick={() => history.push('/')}
             >
               <img src={logoImg} className={c.logoIcon} alt='Logo' />
               <Typography className={c.logoText}>Кнопка</Typography>
