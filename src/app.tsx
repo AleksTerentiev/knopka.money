@@ -10,6 +10,7 @@ import { Landing } from 'view/landing'
 import { Investments } from 'view/investments/investments'
 import { Refill } from 'view/refill'
 import { Affiliate } from 'view/affiliate/affiliate'
+import { Footer } from 'view/footer'
 
 export const App = () => {
   const c = useStyles({})
@@ -46,6 +47,7 @@ export const App = () => {
       ) : (
         <Route path='/' exact component={Landing} />
       )}
+      <Footer />
     </Router>
   )
 }

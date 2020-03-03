@@ -1,9 +1,18 @@
-import React, { ChangeEvent } from 'react'
+import React, { FC, ChangeEvent } from 'react'
+import { useQuery } from '@apollo/react-hooks'
+import { GET_ACCOUNT, GET_BALANCES } from 'queries'
+import { GetAccount } from 'gql-types/GetAccount'
 import { makeStyles, Theme, createStyles, Tabs, Tab } from '@material-ui/core'
 import { useLocation, useHistory } from 'react-router-dom'
 
-export const Navigation = () => {
-  const c = useStyles({})
+interface NavigationProps {
+  vertical?: boolean
+  color?: 'primary' | 'secondary'
+}
+
+export const Navigation: FC<NavigationProps> = ({ vertical, color = 'primary' }) => {
+  const c = useStyles({ vertical, color })
+  const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const location = useLocation()
   const history = useHistory()
 
@@ -17,30 +26,33 @@ export const Navigation = () => {
       value={'/' + location.pathname.split('/')[1]}
       onChange={handleChange}
       TabIndicatorProps={{ hidden: true }}
-      variant='scrollable'
+      variant={vertical ? 'standard' : 'scrollable'}
       scrollButtons='on'
       classes={{ scrollButtons: c.scrollButtons }}
+      orientation={vertical ? 'vertical' : 'horizontal'}
     >
       <Tab label='Инвестиции' value='/investments' className={c.tab} />
-      <Tab label='Пополнить' value='/refill' className={c.tab} />
-      <Tab label='Рефералы' value='/affiliate' className={c.tab} />
-      <Tab label='Вывод' value='/withdrawal' className={c.tab} />
+      {accountData && <Tab label='Пополнить' value='/refill' className={c.tab} />}
+      <Tab label={'Рефералы'} value='/affiliate' className={c.tab} />
+      {accountData && <Tab label='Вывод' value='/withdrawal' className={c.tab} />}
     </Tabs>
   )
 }
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
-    tab: {
-      [theme.breakpoints.down('xs')]: {
-        paddingLeft: theme.spacing(1),
-        paddingRight: theme.spacing(1),
+    root: ({ color }: any) => ({
+      color:
+        color === 'primary' ? theme.palette.primary.main : theme.palette.text.primary,
+    }),
+    tab: ({ vertical }: any) => ({
+      '&:first-of-type': {
+        paddingLeft: 0,
       },
       '&:last-of-type': {
-        paddingRight: theme.spacing(3),
+        paddingRight: theme.spacing(vertical ? 0 : 3),
       },
-    },
+    }),
     scrollButtons: {
       width: '1.6rem',
       color: theme.palette.primary.light,

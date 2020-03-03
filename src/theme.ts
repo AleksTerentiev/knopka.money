@@ -53,7 +53,7 @@ const palette = {
   divider: '#EDEFF3',
   grey: {
     50: '#fafafa',
-    100: '#f9f9f9',
+    100: '#F9F9F9',
     200: '#EDEFF3',
     300: '#e0e0e0',
     400: '#a3a9b8',
@@ -187,7 +187,6 @@ theme.overrides = {
         fontSize: 20,
       },
     },
-    
   },
 
   MuiToolbar: {
@@ -288,23 +287,31 @@ theme.overrides = {
 
   MuiTabs: {
     root: {
-      color: theme.palette.primary.main,
+      '&$vertical': {
+        '& .MuiTab-root': {
+          padding: 0,
+        },
+        '& .MuiTab-wrapper': {
+          alignItems: 'flex-start',
+        },
+        padding: 0,
+      },
     },
   },
 
   MuiTab: {
     root: {
+      maxWidth: 'none',
+      whiteSpace: 'nowrap',
       textTransform: 'none',
       minWidth: 'auto !important',
       opacity: '1 !important',
       fontWeight: 400,
-      '&:first-of-type': {
-        paddingLeft: 0,
+      [theme.breakpoints.down('xs')]: {
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
       },
-      '&:last-of-type': {
-        paddingRight: 0,
-      },
-      '&$selected, &:hover': {
+      '&$selected': {
         color: '#B0B7C8',
       },
       fontSize: 14,
@@ -315,6 +322,8 @@ theme.overrides = {
         fontSize: 18,
       },
       [theme.breakpoints.up('lg')]: {
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
         fontSize: 20,
       },
     },

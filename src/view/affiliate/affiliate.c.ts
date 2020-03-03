@@ -55,6 +55,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
     tabs: {
+      color: theme.palette.primary.main,
       [theme.breakpoints.up('md')]: {
         marginTop: theme.spacing(0.5),
       },
