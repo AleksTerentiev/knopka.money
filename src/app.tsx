@@ -37,15 +37,17 @@ export const App = () => {
   return (
     <Router>
       <AppBar />
-      {accountData ? <Redirect from='/' to='/investments' /> : <Redirect to='/' />}
       {accountData ? (
         <Container className={c.container}>
-          <Route path='/investments' component={Investments} />
+          <Route path='/' exact component={Investments} />
           <Route path='/refill' component={Refill} />
           <Route path='/affiliate' component={Affiliate} />
         </Container>
       ) : (
-        <Route path='/' exact component={Landing} />
+        <>
+          <Redirect to='/' />
+          <Route path='/' exact component={Landing} />
+        </>
       )}
       <Footer />
     </Router>
