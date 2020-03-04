@@ -42,10 +42,7 @@ export function AppBar() {
       <Container className={c.container}>
         <MuiAppBar className={c.root} position='static'>
           <Toolbar disableGutters>
-            <Box
-              className={c.logo}
-              onClick={() => history.push('/')}
-            >
+            <Box className={c.logo} onClick={() => history.push('/')}>
               <img src={logoImg} className={c.logoIcon} alt='Logo' />
               <Typography className={c.logoText}>Кнопка</Typography>
             </Box>
@@ -63,6 +60,7 @@ export function AppBar() {
                 onClick={() => history.push('/refill')}
                 display='flex'
                 alignItems='center'
+                style={{ cursor: 'pointer' }}
               >
                 <Typography variant='body2'>
                   <Balances className={c.balances} />
@@ -73,7 +71,7 @@ export function AppBar() {
             {accountData ? (
               <AppBarAccount account={accountData.account} />
             ) : (
-              <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет'/>
+              <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет' />
             )}
           </Toolbar>
         </MuiAppBar>
@@ -87,7 +85,7 @@ export function AppBar() {
         </Hidden>
       )}
 
-      <Route path='/investments'>
+      <Route path='/' exact>
         {Number(balance?.amount) === 0 && (
           <Container className={c.container}>
             <Box className={c.alert}>
@@ -99,7 +97,7 @@ export function AppBar() {
                 component={RouterLink}
                 variant='caption'
                 noWrap
-                style={{ borderBottom: '1px dashed' }}
+                // style={{ borderBottom: '1px dashed' }}
               >
                 пополнить баланс
               </Link>
