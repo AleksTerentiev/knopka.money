@@ -52,6 +52,7 @@ export const Share: FC = () => {
         margin='dense'
         fullWidth={xsDown}
         InputProps={{
+          style: { borderRadius: 28, paddingLeft: 16 },
           endAdornment: (
             <InputAdornment position='end'>
               <CopyToClipboard text={url} onCopy={() => setSnackbarIsOpen(true)}>
