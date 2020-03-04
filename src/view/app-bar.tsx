@@ -73,7 +73,7 @@ export function AppBar() {
             {accountData ? (
               <AppBarAccount account={accountData.account} />
             ) : (
-              <LoginButton style={{ borderRadius: 24 }} />
+              <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет'/>
             )}
           </Toolbar>
         </MuiAppBar>

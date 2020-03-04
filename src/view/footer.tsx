@@ -19,12 +19,15 @@ import { Navigation } from './navigation'
 import _ from 'lodash'
 import freeKassaImg from 'img/free-kassa.svg'
 import clsx from 'clsx'
+import { AuthSocial } from 'view/auth/auth-social'
+import { LoginButton } from 'view/auth/login-button'
 
 export function Footer() {
   const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const history = useHistory()
   const theme = useTheme()
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
+  const down650px = useMediaQuery('(max-width: 650px)')
   const c = useStyles({ isLoggedIn: !!accountData })
 
   const FreeKassaBanner = () => (
@@ -48,6 +51,18 @@ export function Footer() {
         )}
 
         {accountData && <FreeKassaBanner />}
+        {!accountData && !down650px && (
+          <Box display='flex' alignItems='center'>
+            <Typography variant='body2' color='textSecondary'>
+              Войти через
+            </Typography>
+            <Box pl={3} />
+            <AuthSocial />
+          </Box>
+        )}
+        {!accountData && down650px && (
+          <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет' />
+        )}
       </Container>
 
       <Container className={c.container} style={{ paddingTop: 0, paddingBottom: 0 }}>

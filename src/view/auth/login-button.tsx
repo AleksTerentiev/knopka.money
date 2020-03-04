@@ -1,82 +1,82 @@
-import React, { FC, useEffect } from 'react'
-import { makeStyles, Theme, createStyles, Button, ButtonProps } from '@material-ui/core'
-import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router-dom'
-import GoogleIcon from 'img/google.svg'
-import { useApolloClient } from '@apollo/react-hooks'
+import React, { FC, useState } from 'react'
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  useMediaQuery,
+  Button,
+  ButtonProps,
+  Dialog,
+  Typography,
+  IconButton,
+  Box,
+  useTheme,
+  Divider,
+} from '@material-ui/core'
+import CloseIcon from 'img/close.svg'
+import { AuthSocial } from 'view/auth/auth-social'
 
-function openSocialLoginPopup() {
-  const width = 480
-  const height = 600
-  const top = window.innerHeight / 2 - height / 2
-  const left = window.innerWidth / 2 - width / 2
-  return window.open(
-    `${process.env.REACT_APP_API_ORIGIN}/auth/google`,
-    'auth',
-    `toolbar=no, location=no, directories=no, status=no, menubar=no,
-     width=${width}, height=${height}, top=${top}, left=${left}
-    `
-  )
-}
-
-let loginWindow: Window | null
-
-export const LoginButton: FC<ButtonProps> = props => {
-  const apolloClient = useApolloClient()
-  const { t } = useTranslation()
+export const LoginButton: FC<ButtonProps & { text?: string }> = props => {
   const c = useStyles({})
-  const history = useHistory()
+  const [open, setOpen] = useState(false)
+  const theme = useTheme()
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
 
-  useEffect(() => {
-    function loginWindowMessageListener(event: MessageEvent) {
-      if (event.origin !== process.env.REACT_APP_API_ORIGIN) {
-        return
-      }
-      const { action, success } = JSON.parse(event.data)
-      if (action !== 'auth' || success !== true) {
-        return
-      }
-      if (loginWindow) {
-        loginWindow.close()
-      }
-      // apolloClient.resetStore()
-      apolloClient.reFetchObservableQueries()
-      history.push('/')
-    }
-
-    window.addEventListener('message', loginWindowMessageListener)
-    return () => {
-      window.removeEventListener('message', loginWindowMessageListener)
-      if (loginWindow) {
-        loginWindow.close()
-      }
-    }
-  }, [apolloClient, history])
-
-  function handleLoginClick() {
-    loginWindow = openSocialLoginPopup()
+  function handleClick() {
+    setOpen(true)
+  }
+  function handleClose() {
+    setOpen(false)
   }
 
   return (
-    <Button
-      className={c.root}
-      variant='contained'
-      color='primary'
-      onClick={handleLoginClick}
-      {...props}
-    >
-      {t('Log in with')}
-      <img alt='Google' src={GoogleIcon} className={c.icon} />
-    </Button>
+    <>
+      <Button variant='contained' color='primary' onClick={handleClick} {...props}>
+        {props.text || 'Войти'}
+      </Button>
+
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby='customized-dialog-title'
+        open={open}
+        fullScreen={xsDown}
+      >
+        <Box className={c.title}>
+          <Typography variant='h3' gutterBottom>
+            Войдите через <br /> аккаунт соц.сети
+          </Typography>
+          <IconButton
+            aria-label='close'
+            className={c.closeButton}
+            onClick={handleClose}
+            size={xsDown ? 'small' : 'medium'}
+          >
+            <img src={CloseIcon} alt='close' />
+          </IconButton>
+          <Divider />
+        </Box>
+
+        <Box pt={4}>
+          <AuthSocial />
+        </Box>
+      </Dialog>
+    </>
   )
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {},
-    icon: {
-      height: '1rem',
-      marginLeft: 10,
+    title: {
+      margin: 0,
+      position: 'relative',
+    },
+    closeButton: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+    },
+    content: {
+      padding: 0,
     },
   })
 )

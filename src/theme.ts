@@ -421,6 +421,16 @@ theme.overrides = {
       },
     },
   },
+
+  MuiDialog: {
+    paper: {
+      borderRadius: theme.shape.borderRadius * 2.5,
+      padding: theme.spacing(2.5, 3, 3),
+      [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(5, 6, 6),
+      },
+    },
+  },
 }
 
 export { theme }
