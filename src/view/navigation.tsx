@@ -47,9 +47,6 @@ export const useStyles = makeStyles((theme: Theme) =>
     tab: ({ vertical }: any) => ({
       [vertical && 'fontSize']: 16,
       [vertical && 'lineHeight']: '24px',
-      '&:first-of-type': {
-        paddingLeft: 0,
-      },
       '&:last-of-type': {
         paddingRight: theme.spacing(vertical ? 0 : 2),
       },

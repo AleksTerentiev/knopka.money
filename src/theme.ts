@@ -311,8 +311,11 @@ theme.overrides = {
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
       },
-      '&$selected': {
+      '&$selected, &:hover': {
         color: '#B0B7C8',
+      },
+      '&:first-of-type': {
+        paddingLeft: 0,
       },
       fontSize: 14,
       lineHeight: '20px',
@@ -330,6 +333,7 @@ theme.overrides = {
         fontSize: 20,
         lineHeight: '28px',
       },
+
     },
   },
 
