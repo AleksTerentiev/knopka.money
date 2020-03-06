@@ -48,11 +48,11 @@ export const Share: FC = () => {
       <TextField
         className={c.textField}
         variant='outlined'
-        value={url}
+        value={url + '22'}
         margin='dense'
         fullWidth={xsDown}
         InputProps={{
-          style: { borderRadius: 28, paddingLeft: 16 },
+          className: c.inputField,
           endAdornment: (
             <InputAdornment position='end'>
               <CopyToClipboard text={url} onCopy={() => setSnackbarIsOpen(true)}>
@@ -100,8 +100,7 @@ export const Share: FC = () => {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-    },
+    root: {},
     label: {
       color: theme.palette.text.hint,
     },
@@ -120,11 +119,23 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       marginBottom: theme.spacing(2),
       [theme.breakpoints.up('sm')]: {
-        minWidth: 386,
+        minWidth: 434,
       },
       [theme.breakpoints.up('md')]: {
         marginBottom: theme.spacing(3),
-        minWidth: 448,
+        minWidth: 472,
+      },
+    },
+    inputField: {
+      borderRadius: 28,
+      paddingLeft: 8,
+      paddingRight: 18,
+      [theme.breakpoints.up('sm')]: {
+        paddingLeft: 12,
+        paddingRight: 22,
+      },
+      '& input': {
+        textOverflow: 'ellipsis',
       },
     },
     socialButton: {
