@@ -23,7 +23,7 @@ export const Referrals: FC = () => {
       {referrals.map(referral => (
         <Box className={c.referral} key={referral.id}>
           <Box display='flex' alignItems='center' justifyContent='center'>
-            <Avatar className={c.avatar} src={referral.picture} />
+            <Avatar className={c.avatar} src={referral.picture || undefined} />
             <Typography align='left' variant='body2'>
               {referral.displayName}
             </Typography>

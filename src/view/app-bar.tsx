@@ -199,8 +199,8 @@ export const AppBarAccount: React.FC<AppBarAccountProps> = ({ account }) => {
   return (
     <>
       <Avatar
-        alt={account.displayName}
-        src={account.picture}
+        alt={account.displayName || ''}
+        src={account.picture || undefined}
         classes={{
           root: c.avatarRoot,
           img: c.avatarImg,

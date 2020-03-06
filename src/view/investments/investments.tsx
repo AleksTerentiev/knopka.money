@@ -4,6 +4,7 @@ import {
   Theme,
   createStyles,
   Box,
+  Card,
   Typography,
   Divider,
 } from '@material-ui/core'
@@ -13,8 +14,11 @@ import { Investment } from 'view/investments/investment'
 import { orderBy } from 'lodash'
 import { GET_INVESTMENTS } from 'queries'
 import { GetInvestments } from 'gql-types/GetInvestments'
+import { useGlobalStyles } from 'styles'
+import clsx from 'clsx'
 
 export const Investments = () => {
+  const gc = useGlobalStyles({})
   const c = useStyles({})
   const { data } = useQuery<GetInvestments>(GET_INVESTMENTS)
 
@@ -23,18 +27,18 @@ export const Investments = () => {
   }, [data])
 
   return (
-    <Box className={c.root}>
+    <Box className={gc.page}>
       <Box>
         <Typography variant='h2' gutterBottom>
           Инвестиции
         </Typography>
 
-        <Box className={c.createInvestment}>
+        <Card className={clsx(gc.card, c.createInvestment)}>
           <CreateInvestment secondary />
-        </Box>
+        </Card>
       </Box>
 
-      <Box mt={1}>
+      <Box>
         <Typography variant='h3' gutterBottom={sortedInvestments.length > 0}>
           <Box display='flex' alignItems='center' justifyContent='space-between'>
             <span>Депозиты</span>
@@ -46,7 +50,7 @@ export const Investments = () => {
             <Divider className={c.divider} />
             <Box className={c.investments}>
               {sortedInvestments.map(investment => (
-                <Box className={c.investment} key={investment.id}>
+                <Box key={investment.id}>
                   <Investment {...investment} />
                 </Box>
               ))}
@@ -64,32 +68,12 @@ export const Investments = () => {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      [theme.breakpoints.up('lg')]: {
-        display: 'grid',
-        gridTemplateColumns: 'minmax(auto, 540px) minmax(auto, 448px)',
-        gridGap: '9vw',
-      },
-      [theme.breakpoints.up('xl')]: {
-        gridGap: theme.spacing(16),
-      },
-    },
     createInvestment: {
       maxWidth: 544,
-      borderRadius: theme.shape.borderRadius * 2.5,
-      marginBottom: theme.spacing(5),
-      '@media(min-width:360px)': {
-        border: `1px solid ${theme.palette.divider}`,
-        padding: theme.spacing(3),
-      },
-      [theme.breakpoints.up('sm')]: {
-        padding: theme.spacing(4),
-        marginBottom: theme.spacing(8),
-      },
-      [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(6),
-        marginBottom: theme.spacing(12),
-        borderWidth: 2,
+      '@media(max-width:359px)': {
+        border: 'none',
+        padding: 0,
+        borderRadius: 0,
       },
     },
     divider: {
@@ -107,9 +91,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     investmentsCount: {
       color: theme.palette.grey[500],
-    },
-    investment: {
-      marginBottom: theme.spacing(2),
     },
   })
 )

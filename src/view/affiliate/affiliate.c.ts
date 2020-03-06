@@ -2,23 +2,6 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: 'grid',
-      gridGap: theme.spacing(5),
-      [theme.breakpoints.up('sm')]: {
-        gridGap: theme.spacing(8),
-      },
-      [theme.breakpoints.up('md')]: {
-        gridGap: theme.spacing(10),
-      },
-      [theme.breakpoints.up('lg')]: {
-        gridTemplateColumns: 'minmax(auto, 540px) minmax(auto, 448px)',
-        gridGap: '9vw',
-      },
-      [theme.breakpoints.up('xl')]: {
-        gridGap: theme.spacing(16),
-      },
-    },
     header: {
       marginBottom: theme.spacing(1),
       '@media(max-width: 345px)': {

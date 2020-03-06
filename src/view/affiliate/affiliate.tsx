@@ -8,9 +8,11 @@ import { Accruals } from 'view/affiliate/accruals'
 import { GET_AFFILIATE_REFERRALS, GET_AFFILIATE_TOTALS } from 'queries'
 import { GetAffiliateReferrals } from 'gql-types/GetAffiliateReferrals'
 import { GetAffiliateTotals } from 'gql-types/GetAffiliateTotals'
+import { useGlobalStyles } from 'styles'
 import { useStyles } from './affiliate.c'
 
 export const Affiliate = () => {
+  const gc = useGlobalStyles({})
   const c = useStyles({})
   const { data: totalsData } = useQuery<GetAffiliateTotals>(GET_AFFILIATE_TOTALS)
   const totals = totalsData?.affiliateTotals || []
@@ -28,7 +30,7 @@ export const Affiliate = () => {
   )
 
   return (
-    <Box className={c.root}>
+    <Box className={gc.page}>
       <Box>
         <Typography variant='h2' className={c.header}>
           Зарабатывайте <span className={c.profit}>30%</span>

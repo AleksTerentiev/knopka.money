@@ -157,6 +157,8 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
             <div
               className={c.tariffLabel}
               style={{
+                background:
+                  tariff.id === t.id && !disabled ? theme.palette.primary.main : 'none',
                 color: disabled
                   ? theme.palette.text.disabled
                   : tariff.id === t.id

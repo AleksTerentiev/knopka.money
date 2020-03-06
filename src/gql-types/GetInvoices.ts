@@ -3,23 +3,22 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { InvoiceStatus } from "./globalTypes";
+
 // ====================================================
-// GraphQL mutation operation: CreateInvoice
+// GraphQL query operation: GetInvoices
 // ====================================================
 
-export interface CreateInvoice_createInvoice {
+export interface GetInvoices_invoices {
   __typename: "Invoice";
   id: string;
   accountId: string;
   amount: number;
   currencyId: string;
+  status: InvoiceStatus;
+  createdAt: any;
 }
 
-export interface CreateInvoice {
-  createInvoice: CreateInvoice_createInvoice;
-}
-
-export interface CreateInvoiceVariables {
-  amount: number;
-  currencyId: string;
+export interface GetInvoices {
+  invoices: GetInvoices_invoices[];
 }

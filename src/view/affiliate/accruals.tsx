@@ -23,7 +23,10 @@ export const Accruals: FC = () => {
       {accruals.map(accrual => (
         <Box key={accrual.id} className={c.accrual}>
           <Box className={c.referral}>
-            <Avatar className={c.referralAvatar} src={accrual.referral.picture} />
+            <Avatar
+              className={c.referralAvatar}
+              src={accrual.referral.picture || undefined}
+            />
             <Box>
               <Typography variant='body2'>{accrual.referral.displayName}</Typography>
               <Typography className={c.date}>

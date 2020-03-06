@@ -1,12 +1,15 @@
 import React from 'react'
 import {
-  Paper,
+  makeStyles,
+  Theme,
+  createStyles,
+  Card,
   Box,
   Typography,
   Button,
   useMediaQuery,
 } from '@material-ui/core'
-import { useStyles } from './investment.c'
+import { useGlobalStyles } from 'styles'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Currency } from 'view/billing/currency'
 import Timer from 'react-compound-timer'
@@ -17,6 +20,7 @@ import { InvestmentData } from 'gql-types/InvestmentData'
 import { FDate } from 'view/fdate'
 import plural from 'plural-ru'
 import moment from 'moment'
+import clsx from 'clsx'
 
 export function Investment({
   id,
@@ -28,6 +32,7 @@ export function Investment({
   isReady,
   payoutDate,
 }: InvestmentData) {
+  const gc = useGlobalStyles({})
   const c = useStyles({})
   const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
   const { refetch: refetchInvestment } = useQuery<GetInvestment>(GET_INVESTMENT, {
@@ -47,35 +52,35 @@ export function Investment({
   const miniWidth = useMediaQuery('(max-width:359px)')
 
   return (
-    <Paper className={c.root}>
+    <Card className={clsx(c.root, gc.cardDense)}>
       <Box>
-        <Typography className={c.label}>Id</Typography>
-        <Typography className={c.value}>{id}</Typography>
+        <Typography className={gc.cardLabel}>Id</Typography>
+        <Typography className={gc.cardValue}>{id}</Typography>
       </Box>
 
       <Box>
-        <Typography className={c.label}>Депозит</Typography>
-        <Typography className={c.value}>
+        <Typography className={gc.cardLabel}>Депозит</Typography>
+        <Typography className={gc.cardValue}>
           <Currency value={amount} currencyId={currencyId} />
         </Typography>
       </Box>
 
       <Box>
         {payoutDate && (
-          <Typography className={c.value}>
+          <Typography className={gc.cardValue}>
             Завершен <br />
             <FDate date={payoutDate} />
           </Typography>
         )}
 
         {!payoutDate && isReady && (
-          <Typography className={c.value}>
+          <Typography className={gc.cardValue}>
             Готов <br /> к выводу
           </Typography>
         )}
 
         {!payoutDate && !isReady && (
-          <Typography className={c.value} style={{ color: '#3B6EE4' }}>
+          <Typography className={gc.cardValue} style={{ color: '#3B6EE4' }}>
             <Timer
               initialTime={new Date(endsAt).getTime() - Date.now()}
               direction='backward'
@@ -103,15 +108,15 @@ export function Investment({
       </Box>
 
       <Box color='grey.400'>
-        <Typography className={c.value}>
+        <Typography className={gc.cardValue}>
           <FDate date={createdAt} /> <br />
           {new Date(createdAt).toLocaleTimeString()}
         </Typography>
       </Box>
 
       <Box>
-        <Typography className={c.label}>Выплата</Typography>
-        <Typography className={c.value}>
+        <Typography className={gc.cardLabel}>Выплата</Typography>
+        <Typography className={gc.cardValue}>
           <Currency value={estimatedPayoutAmount} currencyId={currencyId} />
         </Typography>
       </Box>
@@ -130,6 +135,21 @@ export function Investment({
           </Button>
         </Box>
       )}
-    </Paper>
+    </Card>
   )
 }
+
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr 1fr',
+      gridRowGap: theme.spacing(1),
+      gridColumnGap: theme.spacing(2),
+      [theme.breakpoints.up('md')]: {
+        gridRowGap: theme.spacing(2),
+        gridColumnGap: theme.spacing(3),
+      },
+    },
+  })
+)

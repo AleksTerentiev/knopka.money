@@ -96,13 +96,15 @@ export const CLOSE_INVESTMENT = gql`
   }
   ${INVESTMENT_DATA}
 `
-export const CREATE_INVOICE = gql`
-  mutation CreateInvoice($amount: Float!, $currencyId: String!) {
-    createInvoice(data: { amount: $amount, currencyId: $currencyId }) {
+export const GET_INVOICES = gql`
+  query GetInvoices {
+    invoices {
       id
       accountId
       amount
       currencyId
+      status
+      createdAt
     }
   }
 `
