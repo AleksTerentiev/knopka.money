@@ -85,7 +85,7 @@ export const Share: FC = () => {
 
       <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
+          vertical: 'top',
           horizontal: 'center',
         }}
         open={snackbarIsOpen}
