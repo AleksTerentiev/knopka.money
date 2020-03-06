@@ -16,8 +16,8 @@ export interface GetAffiliateReferrals_affiliateReferrals_totals {
 export interface GetAffiliateReferrals_affiliateReferrals {
   __typename: "AffiliateReferral";
   id: string;
-  displayName: string;
-  picture: string;
+  displayName: string | null;
+  picture: string | null;
   totals: GetAffiliateReferrals_affiliateReferrals_totals[];
 }
 

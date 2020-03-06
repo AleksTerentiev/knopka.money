@@ -10,8 +10,8 @@
 export interface GetAffiliateAccruals_affiliateAccruals_referral {
   __typename: "AccountEntity";
   id: string;
-  displayName: string;
-  picture: string;
+  displayName: string | null;
+  picture: string | null;
 }
 
 export interface GetAffiliateAccruals_affiliateAccruals {

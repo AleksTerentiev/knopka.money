@@ -46,7 +46,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       zIndex: -1,
       '&:checked': {
         outline: 'none',
-        background: disabled ? 'none' : theme.palette.primary.main,
       },
     }),
     tariffImgContainer: {
@@ -102,12 +101,8 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     }),
     inputAdornment: ({ secondary, disabled }: any) => ({
-      fontSize: 16,
-      [theme.breakpoints.up('sm')]: {
-        fontSize: 20,
-      },
       [theme.breakpoints.up('md')]: {
-        fontSize: 24,
+        [secondary ? '' : 'fontSize']: 24,
       },
     }),
     result: ({ disabled }: any) => ({

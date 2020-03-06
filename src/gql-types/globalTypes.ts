@@ -7,6 +7,12 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum InvoiceStatus {
+  failed = "failed",
+  pending = "pending",
+  successful = "successful",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

@@ -93,6 +93,9 @@ theme.props = {
   MuiPaper: {
     elevation: 0,
   },
+  MuiCard: {
+    elevation: 0,
+  },
 }
 
 theme.overrides = {
@@ -185,6 +188,22 @@ theme.overrides = {
       },
       [theme.breakpoints.up('md')]: {
         fontSize: 20,
+      },
+    },
+  },
+
+  MuiCard: {
+    root: {
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: theme.shape.borderRadius * 2,
+      marginBottom: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        marginBottom: theme.spacing(2.5),
+      },
+      [theme.breakpoints.up('md')]: {
+        borderRadius: theme.shape.borderRadius * 2.5,
+        borderWidth: 2,
+        marginBottom: theme.spacing(3),
       },
     },
   },
@@ -333,7 +352,6 @@ theme.overrides = {
         fontSize: 20,
         lineHeight: '28px',
       },
-
     },
   },
 
