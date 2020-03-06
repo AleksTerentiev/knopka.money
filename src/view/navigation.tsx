@@ -29,7 +29,7 @@ export const Navigation: FC<NavigationProps> = ({ vertical, color = 'primary' })
       <Tab label='Инвестиции' value='/' className={c.tab} />
       <Tab label='Пополнить' value='/refill' className={c.tab} />
       <Tab label='Рефералы' value='/affiliate' className={c.tab} />
-      <Tab label='Вывод' value='/withdrawal' className={c.tab} />
+      <Tab label='Вывод' value='/payout' className={c.tab} />
     </Tabs>
   )
 }

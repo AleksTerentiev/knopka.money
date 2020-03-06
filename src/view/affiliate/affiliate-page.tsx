@@ -9,9 +9,9 @@ import { GET_AFFILIATE_REFERRALS, GET_AFFILIATE_TOTALS } from 'queries'
 import { GetAffiliateReferrals } from 'gql-types/GetAffiliateReferrals'
 import { GetAffiliateTotals } from 'gql-types/GetAffiliateTotals'
 import { useGlobalStyles } from 'styles'
-import { useStyles } from './affiliate.c'
+import { useStyles } from './affiliate-page.c'
 
-export const Affiliate = () => {
+export const AffiliatePage = () => {
   const gc = useGlobalStyles({})
   const c = useStyles({})
   const { data: totalsData } = useQuery<GetAffiliateTotals>(GET_AFFILIATE_TOTALS)

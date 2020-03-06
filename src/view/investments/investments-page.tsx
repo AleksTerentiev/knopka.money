@@ -17,7 +17,7 @@ import { GetInvestments } from 'gql-types/GetInvestments'
 import { useGlobalStyles } from 'styles'
 import clsx from 'clsx'
 
-export const Investments = () => {
+export const InvestmentsPage = () => {
   const gc = useGlobalStyles({})
   const c = useStyles({})
   const { data } = useQuery<GetInvestments>(GET_INVESTMENTS)
@@ -33,7 +33,7 @@ export const Investments = () => {
           Инвестиции
         </Typography>
 
-        <Card className={clsx(gc.card, c.createInvestment)}>
+        <Card className={c.createInvestment}>
           <CreateInvestment secondary />
         </Card>
       </Box>

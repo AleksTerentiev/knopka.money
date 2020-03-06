@@ -150,3 +150,56 @@ export const GET_AFFILIATE_ACCRUALS = gql`
     }
   }
 `
+
+export const PAYOUT_DATA = gql`
+  fragment PayoutData on PayoutEntity {
+    id
+    createdAt
+    accountId
+    currencyId
+    amount
+    payoutMethodId
+    isSuccess
+    operatorComment
+    details
+  }
+`
+export const CREATE_PAYOUT = gql`
+  mutation CreatePayout(
+    $amount: Float!
+    $currencyId: String!
+    $payoutMethodId: String!
+    $details: String!
+  ) {
+    createPayout(
+      data: {
+        amount: $amount
+        currencyId: $currencyId
+        payoutMethodId: $payoutMethodId
+        details: $details
+      }
+    ) {
+      ...PayoutData
+    }
+  }
+  ${PAYOUT_DATA}
+`
+export const GET_PAYOUTS = gql`
+  query GetPayouts {
+    payouts {
+      ...PayoutData
+    }
+  }
+  ${PAYOUT_DATA}
+`
+export const GET_PAYOUT_METHODS = gql`
+  query GetPayoutMethods {
+    payoutMethods {
+      id
+      currencyId
+      rate
+      minAmount
+      maxAmount
+    }
+  }
+`

@@ -20,7 +20,7 @@ import { Currency } from 'view/billing/currency'
 import { FDate } from 'view/fdate'
 import { orderBy } from 'lodash'
 
-export const Refill = () => {
+export const RefillPage = () => {
   const gc = useGlobalStyles({})
   return (
     <Box className={gc.page}>
@@ -85,7 +85,7 @@ export const CreateInvoice = () => {
   }
 
   return (
-    <Card className={clsx(c.root, gc.card)}>
+    <Card className={c.root}>
       <form onSubmit={handleSubmit}>
         <TextField
           type='number'
@@ -171,7 +171,11 @@ export const Invoices = () => {
                 <Box>
                   <Typography className={gc.cardLabel}>Сумма</Typography>
                   <Typography className={gc.cardValue}>
-                    <Currency value={invoice.amount} fraction={0} currencyId='RUB' />
+                    <Currency
+                      value={invoice.amount}
+                      fraction={0}
+                      currencyId={invoice.currencyId}
+                    />
                   </Typography>
                 </Box>
                 <Box>

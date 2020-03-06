@@ -7,9 +7,10 @@ import { AppBar } from 'view/app-bar'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import { Preloader } from 'view/preloader'
 import { Landing } from 'view/landing'
-import { Investments } from 'view/investments/investments'
-import { Refill } from 'view/refill'
-import { Affiliate } from 'view/affiliate/affiliate'
+import { InvestmentsPage } from 'view/investments/investments-page'
+import { RefillPage } from 'view/billing/refill-page'
+import { AffiliatePage } from 'view/affiliate/affiliate-page'
+import { PayoutPage} from 'view/billing/payout-page'
 import { Footer } from 'view/footer'
 
 export const App = () => {
@@ -38,9 +39,10 @@ export const App = () => {
       <AppBar />
       {accountData ? (
         <Container>
-          <Route path='/' exact component={Investments} />
-          <Route path='/refill' component={Refill} />
-          <Route path='/affiliate' component={Affiliate} />
+          <Route path='/' exact component={InvestmentsPage} />
+          <Route path='/refill' component={RefillPage} />
+          <Route path='/affiliate' component={AffiliatePage} />
+          <Route path='/payout' component={PayoutPage} />
         </Container>
       ) : (
         <>

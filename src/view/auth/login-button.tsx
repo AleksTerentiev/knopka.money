@@ -1,26 +1,10 @@
 import React, { FC, useState } from 'react'
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  useMediaQuery,
-  Button,
-  ButtonProps,
-  Dialog,
-  Typography,
-  IconButton,
-  Box,
-  useTheme,
-  Divider,
-} from '@material-ui/core'
-import CloseIcon from 'img/close.svg'
+import { Button, ButtonProps } from '@material-ui/core'
+import { Modal } from 'view/modal'
 import { AuthSocial } from 'view/auth/auth-social'
 
 export const LoginButton: FC<ButtonProps & { text?: string }> = props => {
-  const c = useStyles({})
   const [open, setOpen] = useState(false)
-  const theme = useTheme()
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
 
   function handleClick() {
     setOpen(true)
@@ -35,48 +19,17 @@ export const LoginButton: FC<ButtonProps & { text?: string }> = props => {
         {props.text || 'Войти'}
       </Button>
 
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby='customized-dialog-title'
+      <Modal
         open={open}
-        fullScreen={xsDown}
-      >
-        <Box className={c.title}>
-          <Typography variant='h3' gutterBottom>
+        onClose={handleClose}
+        header={
+          <span>
             Войдите через <br /> аккаунт соц.сети
-          </Typography>
-          <IconButton
-            aria-label='close'
-            className={c.closeButton}
-            onClick={handleClose}
-            size={xsDown ? 'small' : 'medium'}
-          >
-            <img src={CloseIcon} alt='close' />
-          </IconButton>
-          <Divider />
-        </Box>
-
-        <Box pt={4}>
-          <AuthSocial />
-        </Box>
-      </Dialog>
+          </span>
+        }
+      >
+        <AuthSocial />
+      </Modal>
     </>
   )
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      margin: 0,
-      position: 'relative',
-    },
-    closeButton: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-    },
-    content: {
-      padding: 0,
-    },
-  })
-)

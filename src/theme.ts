@@ -196,14 +196,14 @@ theme.overrides = {
     root: {
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: theme.shape.borderRadius * 2,
-      marginBottom: theme.spacing(2),
+      padding: theme.spacing(3),
       [theme.breakpoints.up('sm')]: {
-        marginBottom: theme.spacing(2.5),
+        padding: theme.spacing(4.5),
       },
       [theme.breakpoints.up('md')]: {
+        padding: theme.spacing(6),
         borderRadius: theme.shape.borderRadius * 2.5,
         borderWidth: 2,
-        marginBottom: theme.spacing(3),
       },
     },
   },
