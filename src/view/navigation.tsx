@@ -1,5 +1,5 @@
 import React, { FC, ChangeEvent } from 'react'
-import { makeStyles, Theme, createStyles, Tabs, Tab, Divider } from '@material-ui/core'
+import { makeStyles, Theme, createStyles, Tabs, Tab } from '@material-ui/core'
 import { useLocation, useHistory } from 'react-router-dom'
 
 interface NavigationProps {
@@ -21,18 +21,14 @@ export const Navigation: FC<NavigationProps> = ({ vertical, color = 'primary' })
       className={c.root}
       value={location.pathname}
       onChange={handleChange}
-      TabIndicatorProps={{ hidden: true }}
       variant={vertical ? 'standard' : 'scrollable'}
       scrollButtons='on'
       classes={{ scrollButtons: c.scrollButtons }}
       orientation={vertical ? 'vertical' : 'horizontal'}
     >
       <Tab label='Инвестиции' value='/' className={c.tab} />
-      {vertical && <Divider />}
       <Tab label='Пополнить' value='/refill' className={c.tab} />
-      {vertical && <Divider />}
       <Tab label='Рефералы' value='/affiliate' className={c.tab} />
-      {vertical && <Divider />}
       <Tab label='Вывод' value='/withdrawal' className={c.tab} />
     </Tabs>
   )

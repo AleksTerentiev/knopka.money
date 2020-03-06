@@ -49,12 +49,7 @@ export const Affiliate = () => {
 
         {referrals.length >= 0 ? (
           <>
-            <Tabs
-              className={c.tabs}
-              value={currentTab}
-              onChange={handleTabChange}
-              TabIndicatorProps={{ hidden: true }}
-            >
+            <Tabs className={c.tabs} value={currentTab} onChange={handleTabChange}>
               <Tab
                 label={`Рефералы (${referrals.length.toLocaleString()})`}
                 value='referrals'

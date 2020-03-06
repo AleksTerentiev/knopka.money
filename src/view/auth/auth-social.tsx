@@ -4,7 +4,6 @@ import {
   makeStyles,
   Theme,
   createStyles,
-  Button,
   IconButton,
   Box,
 } from '@material-ui/core'

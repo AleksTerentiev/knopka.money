@@ -16,7 +16,6 @@ import {
 import { useHistory } from 'react-router-dom'
 import logoImg from 'img/logo.svg'
 import { Navigation } from './navigation'
-import _ from 'lodash'
 import freeKassaImg from 'img/free-kassa.svg'
 import clsx from 'clsx'
 import { AuthSocial } from 'view/auth/auth-social'
@@ -31,8 +30,8 @@ export function Footer() {
   const c = useStyles({ isLoggedIn: !!accountData })
 
   const FreeKassaBanner = () => (
-    <a href='https://www.free-kassa.ru' target='_blank'>
-      <img src={freeKassaImg} />
+    <a href='https://www.free-kassa.ru' target='_blank' rel="noopener noreferrer">
+      <img src={freeKassaImg} alt='We accept FREE-KASSA'/>
     </a>
   )
 
@@ -106,7 +105,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     navigation: {
       marginRight: theme.spacing(-2),
-      ['@media (max-width: 740px)']: {
+      '@media (max-width: 740px)': {
         order: 1,
         width: '100%',
         borderTop: `1px solid ${theme.palette.divider}`,
