@@ -46,7 +46,6 @@ function openPayWindow(amount: string) {
 let payWindow: Window | null
 
 export const CreateInvoice = () => {
-  const gc = useGlobalStyles({})
   const c = useCreateInvoiceStyles({})
   const { refetch: refetchInvoices } = useQuery<GetInvoices>(GET_INVOICES)
   const [amount, setAmount] = useState('1000')
