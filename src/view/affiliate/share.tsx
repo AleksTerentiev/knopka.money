@@ -48,7 +48,7 @@ export const Share: FC = () => {
       <TextField
         className={c.textField}
         variant='outlined'
-        value={url + '22'}
+        value={url}
         margin='dense'
         fullWidth={xsDown}
         InputProps={{
