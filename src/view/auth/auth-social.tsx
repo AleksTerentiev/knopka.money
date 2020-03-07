@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useApolloClient } from '@apollo/react-hooks'
+import React from 'react'
 import {
   makeStyles,
   Theme,
@@ -7,64 +6,19 @@ import {
   IconButton,
   Box,
 } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
 import VKIcon from 'img/social/vk.svg'
 import GoogleIcon from 'img/social/google.svg'
 import FacebookIcon from 'img/social/facebook.svg'
 import OKIcon from 'img/social/ok.svg'
 import MailruIcon from 'img/social/mailru.svg'
-
-type Provider = 'google' | 'fb' | 'vk' | 'ok' | 'mailru'
-
-function openSocialLoginPopup(provider: Provider) {
-  const width = 480
-  const height = 600
-  const top = window.innerHeight / 2 - height / 2
-  const left = window.innerWidth / 2 - width / 2
-  return window.open(
-    `${process.env.REACT_APP_API_ORIGIN}/auth/${provider}`,
-    'auth',
-    `toolbar=no, location=no, directories=no, status=no, menubar=no,
-     width=${width}, height=${height}, top=${top}, left=${left}
-    `
-  )
-}
-
-let loginWindow: Window | null
+import { AuthProvider, useAuthPopup } from './useAuthPopup'
 
 export const AuthSocial = () => {
-  const apolloClient = useApolloClient()
   const c = useStyles({})
-  const history = useHistory()
+  const { loginWithPopup } = useAuthPopup()
 
-  useEffect(() => {
-    function loginWindowMessageListener(event: MessageEvent) {
-      if (event.origin !== process.env.REACT_APP_API_ORIGIN) {
-        return
-      }
-      const { action, success } = JSON.parse(event.data)
-      if (action !== 'auth' || success !== true) {
-        return
-      }
-      if (loginWindow) {
-        loginWindow.close()
-      }
-      // apolloClient.resetStore()
-      apolloClient.reFetchObservableQueries()
-      history.push('/')
-    }
-
-    window.addEventListener('message', loginWindowMessageListener)
-    return () => {
-      window.removeEventListener('message', loginWindowMessageListener)
-      if (loginWindow) {
-        loginWindow.close()
-      }
-    }
-  }, [apolloClient, history])
-
-  function handleClick(provider: Provider) {
-    loginWindow = openSocialLoginPopup(provider)
+  function handleClick(provider: AuthProvider) {
+    loginWithPopup(provider)
   }
 
   return (
@@ -94,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       flexWrap: 'wrap',
+      justifyContent: 'space-between',
     },
     button: {
       padding: 0,

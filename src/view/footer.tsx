@@ -50,7 +50,7 @@ export function Footer() {
         )}
 
         {accountData && <FreeKassaBanner />}
-        {!accountData && !down650px && (
+        {/* {!accountData && !down650px && (
           <Box display='flex' alignItems='center'>
             <Typography variant='body2' color='textSecondary'>
               Войти через
@@ -58,8 +58,8 @@ export function Footer() {
             <Box pl={3} />
             <AuthSocial />
           </Box>
-        )}
-        {!accountData && down650px && (
+        )} */}
+        {!accountData && (
           <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет' />
         )}
       </Container>
