@@ -66,6 +66,32 @@ export const Share: FC = () => {
       />
 
       <Typography className={c.label} gutterBottom>
+        Вы можете отслеживать пришедших добавляя к ссылке ваш код пикселя
+      </Typography>
+      <TextField
+        className={c.textField}
+        variant='outlined'
+        value={'&pixel=1234567890'}
+        margin='dense'
+        fullWidth={xsDown}
+        InputProps={{
+          className: c.inputField,
+          endAdornment: (
+            <InputAdornment position='end'>
+              <CopyToClipboard
+                text={'&pixel=1234567890'}
+                onCopy={() => setSnackbarIsOpen(true)}
+              >
+                <IconButton edge='end' aria-label='Скопировать' color='primary'>
+                  <img src={CopyIcon} className={c.copyIcon} alt='Скопировать' />
+                </IconButton>
+              </CopyToClipboard>
+            </InputAdornment>
+          ),
+        }}
+      />
+
+      <Typography className={c.label} gutterBottom>
         Поделиться ссылкой в сети
       </Typography>
       <Box>
@@ -89,10 +115,10 @@ export const Share: FC = () => {
           horizontal: 'center',
         }}
         open={snackbarIsOpen}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
         onClose={() => setSnackbarIsOpen(false)}
       >
-        <SnackbarContent message='Ссылка скопирована' />
+        <SnackbarContent classes={{ root: c.snackbar }} message='Ссылка скопирована' />
       </Snackbar>
     </Box>
   )
@@ -103,6 +129,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {},
     label: {
       color: theme.palette.text.hint,
+      [theme.breakpoints.up('md')]: {
+        fontWeight: theme.typography.fontWeightMedium,
+      },
     },
     copyIcon: {
       width: 14,
@@ -137,6 +166,9 @@ const useStyles = makeStyles((theme: Theme) =>
       '& input': {
         textOverflow: 'ellipsis',
       },
+    },
+    snackbar: {
+      background: theme.palette.primary.light,
     },
     socialButton: {
       display: 'inline-block',

@@ -45,7 +45,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     tabsContent: {
       [theme.breakpoints.up('lg')]: {
-        maxHeight: 440,
+        maxHeight: 530,
         overflowY: 'scroll',
       },
     },
