@@ -1,7 +1,8 @@
 import React, { FC, useState } from 'react'
-import { useMutation } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { GetPayoutMethods_payoutMethods } from 'gql-types/GetPayoutMethods'
-import { GET_PAYOUTS, CREATE_PAYOUT } from 'queries'
+import { GetBalances } from 'gql-types/GetBalances'
+import { GET_PAYOUTS, CREATE_PAYOUT, GET_BALANCES } from 'queries'
 import {
   createStyles,
   makeStyles,
@@ -21,6 +22,8 @@ export const PayoutCreate: FC<{
   const [amount, setAmount] = useState(0)
   const [details, setDetails] = useState('')
 
+  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
+
   const [createPayout, { loading, error }] = useMutation(CREATE_PAYOUT, {
     update(cache, { data: { createdPayout } }) {
       const cachedData: any = cache.readQuery({ query: GET_PAYOUTS })
@@ -35,7 +38,7 @@ export const PayoutCreate: FC<{
       if (onCreate) {
         onCreate()
       }
-      // refetchBalances() ?
+      refetchBalances()
     },
   })
 
