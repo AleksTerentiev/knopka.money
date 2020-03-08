@@ -47,6 +47,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       '&:checked': {
         outline: 'none',
       },
+      transition: 'background .2s',
+      '&:hover': {
+        background: disabled ? 'none' : '#ffe5e7',
+      },
     }),
     tariffImgContainer: {
       display: 'flex',
