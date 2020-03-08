@@ -1,10 +1,13 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, ReactNode } from 'react'
 import { Box, Button, ButtonProps, Typography } from '@material-ui/core'
 import { Modal } from 'view/modal'
 import { AuthSocial } from 'view/auth/auth-social'
 import { useAuthPopup } from './useAuthPopup'
 
-export const LoginButton: FC<ButtonProps & { text?: string }> = props => {
+export const LoginButton: FC<ButtonProps & {
+  children?: ReactNode
+  text?: string
+}> = props => {
   const [open, setOpen] = useState(false)
   const { loginWithPopup } = useAuthPopup()
 
@@ -17,9 +20,13 @@ export const LoginButton: FC<ButtonProps & { text?: string }> = props => {
 
   return (
     <>
-      <Button variant='contained' color='primary' onClick={handleClick} {...props}>
-        {props.text || 'Войти'}
-      </Button>
+      {props.children ? (
+        <Box onClick={handleClick} style={{cursor: 'pointer'}}>{props.children}</Box>
+      ) : (
+        <Button variant='contained' color='primary' onClick={handleClick} {...props}>
+          {props.text || 'Войти'}
+        </Button>
+      )}
 
       <Modal
         open={open}

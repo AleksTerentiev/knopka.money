@@ -15,6 +15,11 @@ import illustration from 'img/illustration.svg'
 import figures from 'img/figures.svg'
 import clsx from 'clsx'
 import { CreateInvestment } from './investments/create-investment'
+import howToStartStepImg1 from 'img/enter.svg'
+import howToStartStepImg2 from 'img/enroll.svg'
+import howToStartStepImg3 from 'img/copy.svg'
+import howToStartStepImg4 from 'img/coins.svg'
+import { LoginButton } from './auth/login-button'
 
 export const Landing = () => {
   const c = useStyles({})
@@ -26,14 +31,14 @@ export const Landing = () => {
       <Box className={c.mainBlock}>
         <Container className={clsx(c.features, c.padding)}>
           <Typography variant='h1' gutterBottom>
-            Смарт Инвестиции
+            Быстрые Инвестиции
           </Typography>
           <ul style={{ listStyle: 'none', paddingLeft: 18, marginBottom: 8 }}>
-            <li className={c.feature}>Просто, как заказать такси</li>
-            <li className={c.feature}>Попробуйте с $10</li>
-            <li className={c.feature}>Составьте портфель как профи</li>
-            <li className={c.feature}>Зарабатывайте 20-80% годовых</li>
-            <li className={c.feature}>Рекомендуйте друзьям</li>
+            <li className={c.feature}>Начните всего от 1000р</li>
+            <li className={c.feature}>100% от вложений за 7 дней</li>
+            <li className={c.feature}>Моментальный вывод на карту</li>
+            <li className={c.feature}>30% от каждего пришедшего</li>
+            <li className={c.feature}>Анонимность ваших данных</li>
           </ul>
         </Container>
         <Box className={clsx(c.illustrationBlock, c.padding)}>
@@ -45,19 +50,97 @@ export const Landing = () => {
         <Divider className={c.divider} />
       </Container>
 
+      <Container className={c.padding}>
+        <Typography variant='h2' align='center' gutterBottom>
+          Как Начать?
+        </Typography>
+        <Box className={c.howToStartSteps}>
+          <Box className={c.howToStartStep}>
+            <LoginButton>
+              <Box className={clsx(c.howToStartStepImg, c.howToStartStepLoginImg)}>
+                <img src={howToStartStepImg1} />
+              </Box>
+            </LoginButton>
+            <Box>
+              <Typography variant='h4' gutterBottom>
+                Регистрация
+              </Typography>
+              <Typography className={c.howToStartStepText}>
+                По телефону либо <br className={c.howToStartStepTextWrap} /> через соц.
+                сеть
+              </Typography>
+            </Box>
+          </Box>
+          <Box className={c.howToStartStep}>
+            <Box className={c.howToStartStepImg}>
+              <img src={howToStartStepImg2} />
+            </Box>
+            <Box>
+              <Typography variant='h4' gutterBottom>
+                Пополнение
+              </Typography>
+              <Typography className={c.howToStartStepText}>
+                MasterCard | Visa | <br className={c.howToStartStepTextWrap} /> Qiwi |
+                ЯндексДеньги
+              </Typography>
+            </Box>
+          </Box>
+          <Box className={c.howToStartStep}>
+            <Box className={c.howToStartStepImg}>
+              <img src={howToStartStepImg3} />
+            </Box>
+            <Box>
+              <Typography variant='h4' gutterBottom>
+                Инвестиции
+              </Typography>
+              <Typography className={c.howToStartStepText}>
+                Создайте депозит на <br className={c.howToStartStepTextWrap} /> срок от 1
+                до 7 дней
+              </Typography>
+            </Box>
+          </Box>
+          <Box className={c.howToStartStep}>
+            <Box className={c.howToStartStepImg}>
+              <img src={howToStartStepImg4} />
+            </Box>
+            <Box>
+              <Typography variant='h4' gutterBottom>
+                Вывод Средств
+              </Typography>
+              <Typography className={c.howToStartStepText}>
+                Выводите в касание <br className={c.howToStartStepTextWrap} /> по
+                истечению срока
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Container>
+
+      <Container disableGutters={smUp}>
+        <Divider className={c.divider} />
+      </Container>
+
       <Container className={c.padding} style={{ position: 'relative' }}>
         <Box className={c.calculator}>
-          <Typography variant='h2' className={c.calculatorTitle}>
+          <Typography
+            variant='h2'
+            className={c.calculatorTitle}
+            align={smUp ? 'center' : 'left'}
+          >
             Калькулятор
           </Typography>
-          <Typography className={c.calculatorSubtitle}>
+          <Typography className={c.calculatorSubtitle} align={smUp ? 'center' : 'left'}>
             Выберите тариф для пересчета
           </Typography>
           <CreateInvestment />
         </Box>
 
         <Hidden smDown>
-          <img src={figures} style={{ position: 'absolute', left: 20, top: '30%' }} alt=''/>
+          <img
+            src={figures}
+            style={{ position: 'absolute', left: 20, top: '30%' }}
+            alt=''
+          />
           <img
             src={figures}
             style={{
@@ -94,6 +177,7 @@ export const Landing = () => {
   )
 }
 
+const horizontalModeBreakpointPx = 1200
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
@@ -160,6 +244,82 @@ const useStyles = makeStyles((theme: Theme) =>
     divider: {
       [theme.breakpoints.up('md')]: {
         height: 2,
+      },
+    },
+    howToStartSteps: {
+      marginTop: theme.spacing(3.5),
+      [theme.breakpoints.up('sm')]: {
+        marginTop: theme.spacing(4.5),
+      },
+      [theme.breakpoints.up('md')]: {
+        marginTop: theme.spacing(6),
+      },
+      [`@media(min-width: ${horizontalModeBreakpointPx}px)`]: {
+        marginTop: theme.spacing(7),
+        display: 'flex',
+        justifyContent: 'space-between',
+        position: 'relative',
+        '&::after': {
+          content: '""',
+          background: theme.palette.divider,
+          width: '80%',
+          height: 2,
+          top: '18%',
+          left: '50%',
+          position: 'absolute',
+          zIndex: -1,
+          transform: 'translateX(-50%)',
+        },
+      },
+    },
+    howToStartStep: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+      '&:not(:last-child)': {
+        marginBottom: theme.spacing(3),
+        [theme.breakpoints.up('sm')]: {
+          marginBottom: theme.spacing(4.5),
+        },
+        [theme.breakpoints.up('md')]: {
+          marginBottom: theme.spacing(6),
+        },
+        [`@media(min-width: ${horizontalModeBreakpointPx}px)`]: {
+          marginBottom: theme.spacing(0),
+        },
+      },
+    },
+    howToStartStepImg: {
+      display: 'inline-flex',
+      justifyContent: 'center',
+      borderRadius: '50%',
+      border: `1px solid ${theme.palette.divider}`,
+      width: theme.spacing(6.5),
+      height: theme.spacing(6.5),
+      marginBottom: theme.spacing(1),
+      [theme.breakpoints.up('md')]: {
+        borderWidth: 2,
+        width: theme.spacing(9),
+        height: theme.spacing(9),
+      },
+      background: 'white',
+    },
+    howToStartStepLoginImg: {
+      border: 'none',
+      background: theme.palette.primary.main,
+      transition: 'background .2s',
+      '&:hover': {
+        background: theme.palette.primary.dark,
+      },
+    },
+    howToStartStepText: {
+      opacity: 0.8,
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    howToStartStepTextWrap: {
+      [`@media(min-width: 460px) and (max-width: ${horizontalModeBreakpointPx}px)`]: {
+        display: 'none',
       },
     },
     calculator: {

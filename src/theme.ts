@@ -151,6 +151,25 @@ theme.overrides = {
         },
       },
     },
+    h4: {
+      fontWeight: theme.typography.fontWeightBold,
+      fontSize: 22,
+      lineHeight: '36px',
+      '&$gutterBottom': {
+        marginBottom: theme.spacing(0.5),
+      },
+      [theme.breakpoints.up('sm')]: {
+        fontSize: 24,
+        lineHeight: '40px',
+      },
+      [theme.breakpoints.up('md')]: {
+        fontSize: 28,
+        lineHeight: '48px',
+        '&$gutterBottom': {
+          marginBottom: theme.spacing(1),
+        },
+      },
+    },
     body1: {
       fontSize: 16,
       lineHeight: '24px',
