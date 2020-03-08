@@ -34,14 +34,16 @@ export const LoginButton: FC<ButtonProps & { text?: string }> = props => {
         <Button
           onClick={() => loginWithPopup('auth0')}
           fullWidth
-          color='primary'
+          color='secondary'
           variant='contained'
           size='large'
           style={{ marginBottom: 24 }}
         >
           По номеру телефона
         </Button>
-        <Typography gutterBottom>Или через аккаунт соц.сети</Typography>
+        <Typography gutterBottom color='textSecondary' style={{ fontWeight: 500 }}>
+          Или через аккаунт соц.сети
+        </Typography>
         <AuthSocial />
       </Modal>
     </>

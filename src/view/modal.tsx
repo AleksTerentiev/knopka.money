@@ -31,6 +31,7 @@ export const Modal: FC<{
           {header}
         </Typography>
         <IconButton
+          edge='end'
           aria-label='close'
           className={c.closeButton}
           onClick={onClose}
