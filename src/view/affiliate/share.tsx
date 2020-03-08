@@ -66,7 +66,7 @@ export const Share: FC = () => {
       />
 
       <Typography className={c.label} gutterBottom>
-        Вы можете отслеживать пришедших добавляя к ссылке ваш код пикселя
+        Вы можете отслеживать пришедших по ссылке добавляя к ней ваш код пикселя
       </Typography>
       <TextField
         className={c.textField}
