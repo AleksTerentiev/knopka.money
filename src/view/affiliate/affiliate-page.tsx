@@ -29,6 +29,7 @@ export const AffiliatePage = () => {
     [totals]
   )
 
+  console.log(referrals)
   return (
     <Box className={gc.page}>
       <Box>
@@ -47,7 +48,7 @@ export const AffiliatePage = () => {
       <Box>
         <Typography variant='h3'>Рефералы</Typography>
 
-        {referrals.length >= 0 ? (
+        {referrals.length > 0 ? (
           <>
             <Tabs className={c.tabs} value={currentTab} onChange={handleTabChange}>
               <Tab
