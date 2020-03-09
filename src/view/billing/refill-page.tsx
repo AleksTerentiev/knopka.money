@@ -64,9 +64,12 @@ export const CreateInvoice = () => {
       if (event.origin !== process.env.REACT_APP_API_ORIGIN) {
         return
       }
-      const { action, success } = JSON.parse(event.data)
-      if (action !== 'freekassa' || success !== true) {
+      const { action, status } = JSON.parse(event.data)
+      if (action !== 'freekassa') {
         return
+      }
+      if (status !== 'success') {
+        return alert(`Что-то пошло не так :( Статус платежа: "${status}"`)
       }
       if (payWindow) {
         payWindow.close()
