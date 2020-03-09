@@ -4,6 +4,7 @@ export const useGlobalStyles = makeStyles((theme: Theme) =>
   createStyles({
     page: {
       display: 'grid',
+      gridTemplateColumns: '100%',
       gridGap: theme.spacing(5),
       paddingTop: theme.spacing(4.5),
       paddingBottom: theme.spacing(4.5),
