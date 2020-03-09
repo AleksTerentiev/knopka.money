@@ -3,6 +3,10 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core'
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
+    label: {
+      color: theme.palette.grey[400],
+      fontWeight: theme.typography.fontWeightMedium,
+    },
     tariffs: ({ disabled }: any) => ({
       display: 'flex',
       margin: 0,

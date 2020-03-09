@@ -65,7 +65,7 @@ export const PayoutCreate: FC<{
   return (
     <form className={c.root} onSubmit={handleSubmit}>
       <Typography className={c.label} gutterBottom>
-        Мин.{method.minAmount}₽ Макс. {method.maxAmount}₽
+        Мин.{method.minAmount}₽ - Макс.{method.maxAmount}₽
       </Typography>
       <TextField
         type='number'

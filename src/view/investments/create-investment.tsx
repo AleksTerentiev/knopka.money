@@ -33,9 +33,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
   const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const { data: tariffsData } = useQuery<GetTariffs>(GET_TARIFFS)
   const [tariff, setTariff] = useState<GetTariffs_tariffs>()
-  const [amount, setAmount] = useState(1000)
-  const [notEnoughtMoney, setNotEnoughtMoney] = useState(false)
-  const [errorText, setErrorText] = useState('')
+  const [amount, setAmount] = useState(0)
   const theme = useTheme()
 
   const { data: balancesData, refetch: refetchBalances } = useQuery<GetBalances>(
@@ -48,9 +46,22 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
   const disabled = accountData && Number(balance?.amount) === 0
   const c = useStyles({ disabled, secondary })
 
+  const limits = useMemo(() => {
+    const constraint = _.find(tariff?.constraints, { currencyId })
+    return {
+      min: Number(constraint?.minAmount) || 0,
+      max: Number(constraint?.maxAmount) || Infinity,
+    }
+  }, [tariff, currencyId])
+
+  const notEnoughtMoney = !!balance && Number(balance.amount) < amount
+
   useEffect(() => {
-    setTariff(tariffsData?.tariffs[0])
-  }, [tariffsData])
+    const tariff = tariffsData?.tariffs[0]
+    setTariff(tariff)
+    const balanceAmount = Number(balance?.amount)
+    setAmount(!balanceAmount || balanceAmount >= 1000 ? 1000 : balanceAmount)
+  }, [tariffsData, balance])
 
   const [createInvestment, { loading: creating }] = useMutation(CREATE_INVESTMENT, {
     update(cache, { data: { createInvestment } }) {
@@ -73,27 +84,10 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     setAmount(Number(e.target.value))
-    setNotEnoughtMoney(false)
-    setErrorText('')
   }
 
   function handleSubmitClick(e: React.FormEvent) {
     e.preventDefault()
-    const constraint = _.find(tariff?.constraints, { currencyId })
-    const minAmount = Number(constraint?.minAmount) || 0
-    const maxAmount = Number(constraint?.maxAmount) || Infinity
-    if (amount < minAmount) {
-      return setErrorText(`Минимальная сумма - ${minAmount}₽`)
-    }
-    if (amount > maxAmount) {
-      return setErrorText(`Макс. сумма - ${maxAmount}₽`)
-    }
-
-    if (!!balance && Number(balance.amount) < amount) {
-      setNotEnoughtMoney(true)
-      return setErrorText('Недостаточно средств')
-    }
-
     createInvestment({
       variables: { amount, currencyId, investmentTariffId: tariff?.id },
     })
@@ -113,14 +107,15 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
       margin={secondary ? 'dense' : 'normal'}
       classes={{ root: c.amountInput }}
       inputProps={{
-        min: 0,
+        min: limits.min,
+        max: limits.max,
         className: c.inputField,
         style: { color: secondary ? 'currentColor' : '#FB6F78' },
       }}
-      error={!!errorText}
+      error={notEnoughtMoney}
       value={amount || ''}
       onChange={handleAmountChange}
-      label={errorText}
+      label={notEnoughtMoney ? 'Недостаточно средств' : ''}
       disabled={disabled}
       InputProps={{
         endAdornment: (
@@ -139,6 +134,12 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
 
   return (
     <form className={c.root} onSubmit={handleSubmitClick}>
+      {secondary && (
+        <Typography className={c.label} gutterBottom>
+          Мин.{limits.min}₽ - Макс.{limits.max}₽
+        </Typography>
+      )}
+
       {secondary && amountInput}
 
       <div className={c.tariffs}>
@@ -206,7 +207,13 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
       {accountData ? (
         <Button
           type='submit'
-          disabled={disabled || notEnoughtMoney || creating}
+          disabled={
+            disabled ||
+            notEnoughtMoney ||
+            creating ||
+            amount < limits.min ||
+            amount > limits.max
+          }
           color='secondary'
           size='large'
           variant='contained'
