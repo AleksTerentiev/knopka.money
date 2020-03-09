@@ -54,7 +54,7 @@ export const PayoutCreate: FC<{
     e.preventDefault()
     createPayout({
       variables: {
-        amount: String(amount),
+        amount,
         details,
         currencyId: method.currencyId,
         payoutMethodId: method.id,
