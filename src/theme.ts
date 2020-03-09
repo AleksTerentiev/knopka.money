@@ -12,7 +12,7 @@ const breakpoints = {
 }
 
 const typography = {
-  fontFamily: '"IBM Plex Mono", Helvetica, Arial, sans-serif',
+  fontFamily: '"IBM Plex Mono", Helvetica, Arial, sans-serif, -apple-system',
   fontSize: 16,
   fontWeightLight: 300,
   fontWeightRegular: 400,
