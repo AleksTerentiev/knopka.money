@@ -65,7 +65,7 @@ export const CreateInvoice = () => {
         return
       }
       const { action, success } = JSON.parse(event.data)
-      if (action !== 'pay' || success !== true) {
+      if (action !== 'freekassa' || success !== true) {
         return
       }
       if (payWindow) {
