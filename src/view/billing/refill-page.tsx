@@ -35,7 +35,7 @@ export const RefillPage = () => {
   )
 }
 
-function openPayWindow(amount: string) {
+function openPayWindow(amount: number) {
   return window.open(
     `${process.env.REACT_APP_API_ORIGIN}/freekassa/pay?amount=${amount}`,
     'pay',
@@ -45,13 +45,18 @@ function openPayWindow(amount: string) {
 
 let payWindow: Window | null
 
+const limits = {
+  min: 50,
+  max: 15000,
+}
+
 export const CreateInvoice = () => {
   const c = useCreateInvoiceStyles({})
   const { refetch: refetchInvoices } = useQuery<GetInvoices>(GET_INVOICES)
-  const [amount, setAmount] = useState('1000')
+  const [amount, setAmount] = useState(1000)
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setAmount(e.target.value)
+    setAmount(Number(e.target.value))
   }
 
   useEffect(() => {
@@ -86,6 +91,9 @@ export const CreateInvoice = () => {
   return (
     <Card className={c.root}>
       <form onSubmit={handleSubmit}>
+        <Typography className={c.label} gutterBottom>
+          Мин.{limits.min}₽ - Макс.{limits.max}₽
+        </Typography>
         <TextField
           type='number'
           placeholder={'Введите сумму'}
@@ -94,8 +102,8 @@ export const CreateInvoice = () => {
           fullWidth
           margin='dense'
           classes={{ root: c.input }}
-          inputProps={{ min: 0 }}
-          value={amount}
+          inputProps={{ min: limits.min, max: limits.max }}
+          value={amount || ''}
           onChange={handleAmountChange}
           InputProps={{
             endAdornment: (
@@ -111,7 +119,7 @@ export const CreateInvoice = () => {
           color='secondary'
           size='large'
           variant='contained'
-          disabled={!amount}
+          disabled={!amount || amount < limits.min || amount > limits.max}
           style={{ justifyContent: 'flex-start' }}
           fullWidth
         >
@@ -126,6 +134,10 @@ const useCreateInvoiceStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       maxWidth: 544,
+    },
+    label: {
+      color: theme.palette.grey[400],
+      fontWeight: theme.typography.fontWeightMedium,
     },
     input: {
       marginBottom: theme.spacing(2),
