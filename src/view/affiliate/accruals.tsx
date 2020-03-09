@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      margin: theme.spacing(1.5, 0),
+      margin: theme.spacing(2, 0),
       [theme.breakpoints.up('sm')]: {
-        margin: theme.spacing(2, 0),
+        margin: theme.spacing(2.5, 0),
       },
     },
     referral: {
