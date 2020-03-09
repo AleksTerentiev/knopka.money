@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { GetInvoices } from 'gql-types/GetInvoices'
-import { GET_INVOICES } from 'queries'
+import { GetBalances } from 'gql-types/GetBalances'
+import { GET_INVOICES, GET_BALANCES } from 'queries'
 import {
   createStyles,
   makeStyles,
@@ -53,6 +54,7 @@ const limits = {
 export const CreateInvoice = () => {
   const c = useCreateInvoiceStyles({})
   const { refetch: refetchInvoices } = useQuery<GetInvoices>(GET_INVOICES)
+  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
   const [amount, setAmount] = useState(1000)
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -75,6 +77,7 @@ export const CreateInvoice = () => {
         payWindow.close()
       }
       refetchInvoices()
+      refetchBalances()
     }
 
     window.addEventListener('message', payWindowMessageListener)
