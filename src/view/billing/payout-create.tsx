@@ -92,6 +92,31 @@ export const PayoutCreate: FC<{
           ),
         }}
       />
+
+      <Typography className={c.label} gutterBottom>
+        с учетом {((1 - Number(method.rate)) * 100).toFixed()}% комиссии
+      </Typography>
+      <TextField
+        type='number'
+        autoFocus
+        variant='outlined'
+        color='secondary'
+        fullWidth
+        margin='dense'
+        disabled
+        className={c.result}
+        classes={{ root: c.input }}
+        value={(amount * Number(method.rate)).toFixed(2)}
+        InputProps={{
+          className: c.result,
+          endAdornment: (
+            <InputAdornment position='end'>
+              <Typography color='textPrimary'>₽</Typography>
+            </InputAdornment>
+          ),
+        }}
+      />
+
       <Typography className={c.label} gutterBottom>
         Номер {method.id === 'VISA/MASTERCARD' ? 'Карты' : 'Кошелька'}
       </Typography>
@@ -113,6 +138,7 @@ export const PayoutCreate: FC<{
           color='secondary'
           size='large'
           variant='contained'
+          className={c.submitButton}
           disabled={
             loading ||
             !amount ||
@@ -139,6 +165,22 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       marginBottom: theme.spacing(3),
+      '& .MuiOutlinedInput-root': {
+        borderRadius: theme.shape.borderRadius * 2,
+      },
+    },
+    result: {
+      '& fieldset': {
+        border: 'none',
+      },
+      '& input': {
+        color: theme.palette.text.primary,
+      },
+      borderRadius: theme.shape.borderRadius * 2,
+      background: theme.palette.grey[100],
+    },
+    submitButton: {
+      borderRadius: theme.shape.borderRadius * 2,
     },
   })
 )
