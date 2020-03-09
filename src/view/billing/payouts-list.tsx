@@ -6,6 +6,7 @@ import {
   createStyles,
   makeStyles,
   Theme,
+  useMediaQuery,
   Box,
   Card,
   Typography,
@@ -25,6 +26,8 @@ export const PayoutsList = () => {
   const payouts = useMemo(() => {
     return orderBy(data?.payouts, ['createdAt'], ['desc'])
   }, [data])
+
+  const down340px = useMediaQuery('(max-width: 340px)')
 
   return (
     <Box>
@@ -52,7 +55,7 @@ export const PayoutsList = () => {
                   <Typography className={gc.cardLabel}>Сумма</Typography>
                   <Typography className={gc.cardValue}>
                     <Currency
-                      value={payout.amount}
+                      value={Math.abs(payout.amount)}
                       fraction={0}
                       currencyId={payout.currencyId}
                     />
@@ -64,12 +67,26 @@ export const PayoutsList = () => {
                     {payout.isSuccess ? 'Проведен' : 'В обработке'}
                   </Typography>
                 </Box>
+                <Box className={c.details}>
+                  <Typography className={gc.cardLabel}>Реквизиты</Typography>
+                  <Typography className={gc.cardValue} style={{ whiteSpace: 'normal' }}>
+                    {down340px ? payout.details.replace(/ /g, '') : payout.details}
+                  </Typography>
+                </Box>
+                <Box className={c.payoutMethod}>
+                  <Typography className={gc.cardLabel}>Платежка</Typography>
+                  <Typography className={gc.cardValue}>
+                    {payout.payoutMethodId === 'VISA/MASTERCARD'
+                      ? 'VISA/MASTER'
+                      : payout.payoutMethodId}
+                  </Typography>
+                </Box>
                 {payout.operatorComment && (
                   <Box className={c.comment}>
                     <Typography className={gc.cardLabel}>Примечание</Typography>
-                    <Box className={clsx(c.commentField, gc.cardValue)}>
+                    <Typography className={clsx(c.commentField, gc.cardValue)}>
                       {payout.operatorComment}
-                    </Box>
+                    </Typography>
                   </Box>
                 )}
               </Card>
@@ -114,6 +131,10 @@ const useStyles = makeStyles((theme: Theme) =>
         gridColumnGap: theme.spacing(3),
       },
     },
+    details: {
+      gridColumn: '1 / 3',
+    },
+    payoutMethod: {},
     comment: {
       gridColumn: '1 / 4',
     },

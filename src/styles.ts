@@ -31,7 +31,7 @@ export const useGlobalStyles = makeStyles((theme: Theme) =>
     cardDense: {
       padding: theme.spacing(2.5),
       marginBottom: theme.spacing(2),
-      '@media(min-width: 360px)': {
+      '@media(min-width: 370px)': {
         padding: theme.spacing(2.5, 3),
       },
       [theme.breakpoints.up('sm')]: {
