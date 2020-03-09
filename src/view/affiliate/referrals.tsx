@@ -17,7 +17,7 @@ export const Referrals: FC = () => {
 
   const { data } = useQuery<GetAffiliateReferrals>(GET_AFFILIATE_REFERRALS)
   const referrals = data ? data.affiliateReferrals : []
-
+  console.log(referrals)
   return (
     <Box className={c.root}>
       {referrals.map(referral => (
@@ -29,13 +29,8 @@ export const Referrals: FC = () => {
             </Typography>
           </Box>
           {referral.totals.map((total, index) => (
-            <Typography variant='body2'>
-              <Currency
-                key={index}
-                className={c.total}
-                value={total.total}
-                currencyId={total.currencyId}
-              />
+            <Typography variant='body2' key={index} className={c.total}>
+              +<Currency rubRight value={total.total} currencyId={total.currencyId} />
             </Typography>
           ))}
         </Box>

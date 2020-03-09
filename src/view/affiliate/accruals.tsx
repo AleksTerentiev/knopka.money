@@ -36,7 +36,7 @@ export const Accruals: FC = () => {
           </Box>
           {/* <Typography>{Number(accrual.rate) * 100}%</Typography> */}
           <Typography variant='body2' className={c.total}>
-            <Currency value={accrual.amount} currencyId={accrual.currencyId} />
+            +<Currency rubRight value={accrual.amount} currencyId={accrual.currencyId} />
           </Typography>
         </Box>
       ))}
