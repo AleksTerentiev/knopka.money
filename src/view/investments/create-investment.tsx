@@ -57,7 +57,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
   const notEnoughtMoney = !disabled && !!balance && Number(balance.amount) < amount
 
   useEffect(() => {
-    const tariff = tariffsData?.tariffs[0]
+    const tariff = tariffsData?.tariffs[secondary ? 0 : tariffsData?.tariffs.length - 1]
     setTariff(tariff)
     const balanceAmount = Number(balance?.amount)
     setAmount(!balanceAmount || balanceAmount >= 1000 ? 1000 : balanceAmount)
