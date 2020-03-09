@@ -18,9 +18,13 @@ export function Currency({
   return (
     <span style={{ whiteSpace: 'nowrap' }} className={className}>
       {currencyId === 'USD' && '$ '}
-      {!rubRight && currencyId === 'RUB' && <span>&#x20bd; </span>}
+      {!rubRight && currencyId === 'RUB' && (
+        <span>
+          <span style={{ fontFamily: 'initial' }}>&#8381;</span>{' '}
+        </span>
+      )}
       {Number(value).toLocaleString(undefined, { minimumFractionDigits: fraction })}
-      {rubRight && currencyId === 'RUB' && <span>&#x20bd;</span>}
+      {rubRight && currencyId === 'RUB' && <span>&#8381;</span>}
     </span>
   )
 }
