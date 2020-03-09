@@ -34,7 +34,7 @@ export const Landing = () => {
             Быстрые Инвестиции
           </Typography>
           <ul style={{ listStyle: 'none', paddingLeft: 18, marginBottom: 8 }}>
-            <li className={c.feature}>Начните всего от 1000р</li>
+            <li className={c.feature}>Начните всего от 99р</li>
             <li className={c.feature}>100% от вложений за 7 дней</li>
             <li className={c.feature}>Моментальный вывод на карту</li>
             <li className={c.feature}>30% от каждего пришедшего</li>
