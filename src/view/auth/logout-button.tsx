@@ -35,7 +35,7 @@ export function LogoutButton({
       onClick={handleClick}
       className={c.root}
     >
-      {t('Logout')}
+      Выйти
     </Button>
   )
 }
