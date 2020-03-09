@@ -46,7 +46,7 @@ function openPayWindow(amount: number) {
 let payWindow: Window | null
 
 const limits = {
-  min: 50,
+  min: 200,
   max: 15000,
 }
 
