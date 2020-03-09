@@ -54,7 +54,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
     }
   }, [tariff, currencyId])
 
-  const notEnoughtMoney = !!balance && Number(balance.amount) < amount
+  const notEnoughtMoney = !disabled && !!balance && Number(balance.amount) < amount
 
   useEffect(() => {
     const tariff = tariffsData?.tariffs[0]
@@ -113,7 +113,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
         style: { color: secondary ? 'currentColor' : '#FB6F78' },
       }}
       error={notEnoughtMoney}
-      value={amount || ''}
+      value={disabled ? '' : amount || ''}
       onChange={handleAmountChange}
       label={notEnoughtMoney ? 'Недостаточно средств' : ''}
       disabled={disabled}
@@ -134,7 +134,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
 
   return (
     <form className={c.root} onSubmit={handleSubmitClick}>
-      {secondary && (
+      {secondary && !disabled && (
         <Typography className={c.label} gutterBottom>
           Мин.{limits.min}₽ - Макс.{limits.max}₽
         </Typography>
