@@ -14,6 +14,8 @@ import {
   InputAdornment,
   Button,
 } from '@material-ui/core'
+import _ from 'lodash'
+import { useBalance } from 'hooks/useBalance'
 
 export const PayoutCreate: FC<{
   method: GetPayoutMethods_payoutMethods
@@ -24,8 +26,8 @@ export const PayoutCreate: FC<{
   const [details, setDetails] = useState('')
 
   // const { refetch: refetchPayouts } = useQuery<GetPayouts>(GET_PAYOUTS)
+  const balance = useBalance()
   const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
-
   const [createPayout, { loading, error }] = useMutation(CREATE_PAYOUT, {
     update(cache, { data: { createPayout } }) {
       const cachedData: any = cache.readQuery({ query: GET_PAYOUTS })
@@ -144,7 +146,9 @@ export const PayoutCreate: FC<{
             !amount ||
             details.length < 6 ||
             amount < Number(method.minAmount) ||
-            amount > Number(method.maxAmount)
+            amount > Number(method.maxAmount) ||
+            !balance ||
+            amount > balance
           }
           style={{ justifyContent: 'flex-start' }}
           fullWidth
