@@ -2,7 +2,7 @@ import React, { FC, useState, ReactNode } from 'react'
 import { Box, Button, ButtonProps, Typography } from '@material-ui/core'
 import { Modal } from 'view/modal'
 import { AuthSocial } from 'view/auth/auth-social'
-import { useAuthPopup } from './useAuthPopup'
+import { useAuthPopup } from 'auth'
 
 export const LoginButton: FC<ButtonProps & {
   children?: ReactNode

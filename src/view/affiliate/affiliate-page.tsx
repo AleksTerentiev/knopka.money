@@ -1,23 +1,18 @@
 import React, { ChangeEvent, useState, useMemo } from 'react'
+import { useAffiliateTotals, useAffiliateReferrals } from 'gql'
 import { Box, Typography, Tabs, Tab, Divider } from '@material-ui/core'
-import { useQuery } from '@apollo/react-hooks'
 import { Share } from 'view/affiliate/share'
 // import { Currency } from 'view/billing/currency'
 import { Referrals } from 'view/affiliate/referrals'
 import { Accruals } from 'view/affiliate/accruals'
-import { GET_AFFILIATE_REFERRALS, GET_AFFILIATE_TOTALS } from 'queries'
-import { GetAffiliateReferrals } from 'gql-types/GetAffiliateReferrals'
-import { GetAffiliateTotals } from 'gql-types/GetAffiliateTotals'
 import { useGlobalStyles } from 'styles'
 import { useStyles } from './affiliate-page.c'
 
 export const AffiliatePage = () => {
   const gc = useGlobalStyles({})
   const c = useStyles({})
-  const { data: totalsData } = useQuery<GetAffiliateTotals>(GET_AFFILIATE_TOTALS)
-  const totals = totalsData?.affiliateTotals || []
-  const { data: referralsData } = useQuery<GetAffiliateReferrals>(GET_AFFILIATE_REFERRALS)
-  const referrals = referralsData?.affiliateReferrals || []
+  const { affiliateTotals } = useAffiliateTotals()
+  const { affiliateReferrals } = useAffiliateReferrals()
   const [currentTab, setCurrentTab] = useState('referrals')
 
   function handleTabChange(e: ChangeEvent<{}>, tab: string) {
@@ -25,11 +20,10 @@ export const AffiliatePage = () => {
   }
 
   const total = useMemo(
-    () => totals.reduce((total, curTotal) => total + Number(curTotal.total), 0),
-    [totals]
+    () => affiliateTotals.reduce((total, curTotal) => total + Number(curTotal.total), 0),
+    [affiliateTotals]
   )
 
-  console.log(referrals)
   return (
     <Box className={gc.page}>
       <Box>
@@ -48,11 +42,11 @@ export const AffiliatePage = () => {
       <Box>
         <Typography variant='h3'>Рефералы</Typography>
 
-        {referrals.length > 0 ? (
+        {affiliateReferrals.length > 0 ? (
           <>
             <Tabs className={c.tabs} value={currentTab} onChange={handleTabChange}>
               <Tab
-                label={`Рефералы (${referrals.length.toLocaleString()})`}
+                label={`Рефералы (${affiliateReferrals.length.toLocaleString()})`}
                 value='referrals'
               />
               <Tab label={`Выплаты (+${total.toLocaleString()}₽)`} value='totals' />

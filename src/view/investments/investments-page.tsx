@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react'
+import React from 'react'
+import { useInvestments } from 'gql'
 import {
   makeStyles,
   Theme,
@@ -8,23 +9,15 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core'
-import { useQuery } from '@apollo/react-hooks'
 import { CreateInvestment } from 'view/investments/create-investment'
 import { Investment } from 'view/investments/investment'
-import { orderBy } from 'lodash'
-import { GET_INVESTMENTS } from 'queries'
-import { GetInvestments } from 'gql-types/GetInvestments'
 import { useGlobalStyles } from 'styles'
-import clsx from 'clsx'
 
 export const InvestmentsPage = () => {
+  const { investments, refetch: refetchInvestments } = useInvestments()
+
   const gc = useGlobalStyles({})
   const c = useStyles({})
-  const { data } = useQuery<GetInvestments>(GET_INVESTMENTS)
-
-  const sortedInvestments = useMemo(() => {
-    return data ? orderBy(data.investments, ['createdAt'], ['desc']) : []
-  }, [data])
 
   return (
     <Box className={gc.page}>
@@ -39,19 +32,19 @@ export const InvestmentsPage = () => {
       </Box>
 
       <Box>
-        <Typography variant='h3' gutterBottom={sortedInvestments.length > 0}>
+        <Typography variant='h3' gutterBottom={investments.length > 0}>
           <Box display='flex' alignItems='center' justifyContent='space-between'>
             <span>Депозиты</span>
-            <span className={c.investmentsCount}>{sortedInvestments.length || ''}</span>
+            <span className={c.investmentsCount}>{investments.length || ''}</span>
           </Box>
         </Typography>
-        {sortedInvestments.length > 0 ? (
+        {investments.length > 0 ? (
           <Box mt={1}>
             <Divider className={c.divider} />
             <Box className={c.investments}>
-              {sortedInvestments.map(investment => (
+              {investments.map(investment => (
                 <Box key={investment.id}>
-                  <Investment {...investment} />
+                  <Investment {...investment} onTimerEnds={() => refetchInvestments()} />
                 </Box>
               ))}
             </Box>

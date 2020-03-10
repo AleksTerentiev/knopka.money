@@ -1,7 +1,5 @@
-import React, { useMemo } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { GetPayouts } from 'gql-types/GetPayouts'
-import { GET_PAYOUTS } from 'queries'
+import React from 'react'
+import { usePayouts } from 'gql'
 import {
   createStyles,
   makeStyles,
@@ -16,18 +14,13 @@ import clsx from 'clsx'
 import { useGlobalStyles } from 'styles'
 import { Currency } from 'view/billing/currency'
 import { FDate } from 'view/fdate'
-import { orderBy } from 'lodash'
 
 export const PayoutsList = () => {
   const gc = useGlobalStyles({})
   const c = useStyles({})
-  const { data } = useQuery<GetPayouts>(GET_PAYOUTS)
-
-  const payouts = useMemo(() => {
-    return orderBy(data?.payouts, ['createdAt'], ['desc'])
-  }, [data])
-
   const down340px = useMediaQuery('(max-width: 340px)')
+
+  const { payouts } = usePayouts()
 
   return (
     <Box>

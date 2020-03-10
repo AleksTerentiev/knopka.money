@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 import { makeStyles, createStyles, Button } from '@material-ui/core'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 
 export function LogoutButton({
   size = 'medium',
@@ -10,7 +10,7 @@ export function LogoutButton({
   onClick?: () => void
 }>) {
   // const apolloClient = useApolloClient()
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const c = useStyles({})
 
   function handleClick() {

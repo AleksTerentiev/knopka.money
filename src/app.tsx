@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
-import { GET_ACCOUNT, AFFILIATE_BIND } from 'queries'
-import { GetAccount } from 'gql-types/GetAccount'
+import { useAccount, useAffiliateBind } from 'gql'
 import ReactPixel from 'react-facebook-pixel'
 import { Container } from '@material-ui/core'
 import { AppBar } from 'view/app-bar'
@@ -15,28 +13,36 @@ import { PayoutPage } from 'view/billing/payout-page'
 import { Footer } from 'view/footer'
 
 export const App = () => {
-  const { loading, data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
-  const [affiliateBind] = useMutation(AFFILIATE_BIND)
+  const { account, loading } = useAccount()
+  const [affiliateBind] = useAffiliateBind()
 
   useEffect(() => {
-    let referrerId = new URLSearchParams(window.location.search).get('ref')
+    const urlParams = new URLSearchParams(window.location.search)
+    const refParamName = 'ref'
+    let referrerId = urlParams.get(refParamName)
     if (referrerId) {
-      localStorage.setItem('ref', referrerId)
+      localStorage.setItem(refParamName, referrerId)
+      urlParams.delete(refParamName)
+      window.history.replaceState(null, '', String(urlParams) ? '?' + urlParams : '/')
     } else {
-      referrerId = localStorage.getItem('ref')
+      referrerId = localStorage.getItem(refParamName)
     }
-    if (accountData && referrerId) {
+    if (account && referrerId) {
       affiliateBind({ variables: { referrerId } })
-      localStorage.removeItem('ref')
+      localStorage.removeItem(refParamName)
     }
-  }, [accountData])
+  }, [account])
 
   useEffect(() => {
-    let pixelId = new URLSearchParams(window.location.search).get('pixel')
+    const urlParams = new URLSearchParams(window.location.search)
+    const pixelParamName = 'pixel'
+    let pixelId = urlParams.get(pixelParamName)
     if (pixelId) {
-      localStorage.setItem('pixel', pixelId)
+      localStorage.setItem(pixelParamName, pixelId)
+      urlParams.delete(pixelParamName)
+      window.history.replaceState(null, '', String(urlParams) ? '?' + urlParams : '/')
     } else {
-      pixelId = localStorage.getItem('pixel')
+      pixelId = localStorage.getItem(pixelParamName)
     }
     if (pixelId) {
       ReactPixel.init(pixelId)
@@ -51,7 +57,7 @@ export const App = () => {
   return (
     <Router>
       <AppBar />
-      {accountData ? (
+      {account ? (
         <Container>
           <Route path='/' exact component={InvestmentsPage} />
           <Route path='/refill' component={RefillPage} />

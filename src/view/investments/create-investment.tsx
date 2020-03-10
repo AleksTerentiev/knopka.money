@@ -1,4 +1,6 @@
 import React, { FC, useState, useMemo, useEffect } from 'react'
+import { useTariffs, useAccount, useBalance, useCreateInvestment } from 'gql'
+import { GetTariffs_tariffs } from 'gql/types/GetTariffs'
 import {
   useTheme,
   Box,
@@ -7,18 +9,7 @@ import {
   InputAdornment,
   Typography,
 } from '@material-ui/core'
-import { useQuery, useMutation } from '@apollo/react-hooks'
 import _ from 'lodash'
-import {
-  GET_TARIFFS,
-  GET_ACCOUNT,
-  CREATE_INVESTMENT,
-  GET_BALANCES,
-  GET_INVESTMENTS,
-} from 'queries'
-import { GetTariffs, GetTariffs_tariffs } from 'gql-types/GetTariffs'
-import { GetAccount } from 'gql-types/GetAccount'
-import { GetBalances } from 'gql-types/GetBalances'
 import { useStyles } from './create-investment.c'
 import fireIcon from 'img/fire.svg'
 import flashIcon from 'img/flash.svg'
@@ -30,20 +21,14 @@ import { FDate } from 'view/fdate'
 
 export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => {
   const currencyId = 'RUB'
-  const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
-  const { data: tariffsData } = useQuery<GetTariffs>(GET_TARIFFS)
+  const { tariffs } = useTariffs()
+  const { account } = useAccount()
+  const { balance } = useBalance(currencyId)
+  const disabled = account && balance === 0
   const [tariff, setTariff] = useState<GetTariffs_tariffs>()
   const [amount, setAmount] = useState(0)
+  const notEnoughtMoney = !disabled && !!balance && balance < amount
   const theme = useTheme()
-
-  const { data: balancesData, refetch: refetchBalances } = useQuery<GetBalances>(
-    GET_BALANCES
-  )
-  const balance = useMemo(() => _.find(balancesData?.balances, { currencyId }), [
-    balancesData,
-  ])
-
-  const disabled = accountData && Number(balance?.amount) === 0
   const c = useStyles({ disabled, secondary })
 
   const limits = useMemo(() => {
@@ -54,31 +39,16 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
     }
   }, [tariff, currencyId])
 
-  const notEnoughtMoney = !disabled && !!balance && Number(balance.amount) < amount
-
   useEffect(() => {
-    const tariff = tariffsData?.tariffs[secondary ? 0 : tariffsData?.tariffs.length - 1]
+    const tariff = tariffs[secondary ? 0 : tariffs.length - 1]
     setTariff(tariff)
-    const balanceAmount = Number(balance?.amount)
-    setAmount(!balanceAmount || balanceAmount >= 1000 ? 1000 : balanceAmount)
-  }, [tariffsData, balance])
+    setAmount(!balance || balance >= 1000 ? 1000 : balance)
+  }, [tariffs, balance, secondary])
 
-  const [createInvestment, { loading: creating }] = useMutation(CREATE_INVESTMENT, {
-    update(cache, { data: { createInvestment } }) {
-      const cachedData: any = cache.readQuery({ query: GET_INVESTMENTS })
-      cache.writeQuery({
-        query: GET_INVESTMENTS,
-        data: { investments: [...cachedData.investments, createInvestment] },
-      })
-    },
-    onCompleted() {
-      setAmount(0)
-      refetchBalances()
-    },
-  })
+  const [createInvestment, { loading: creating }] = useCreateInvestment()
 
   function handleTariffChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const tariff = _.find(tariffsData?.tariffs, { id: e.target.value })
+    const tariff = _.find(tariffs, { id: e.target.value })
     setTariff(tariff)
   }
 
@@ -86,11 +56,12 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
     setAmount(Number(e.target.value))
   }
 
-  function handleSubmitClick(e: React.FormEvent) {
+  async function handleSubmitClick(e: React.FormEvent) {
     e.preventDefault()
-    createInvestment({
+    await createInvestment({
       variables: { amount, currencyId, investmentTariffId: tariff?.id },
     })
+    setAmount(0)
   }
 
   if (!tariff) {
@@ -143,7 +114,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
       {secondary && amountInput}
 
       <div className={c.tariffs}>
-        {tariffsData?.tariffs.map(t => (
+        {tariffs.map(t => (
           <label htmlFor={t.id} className={c.tariff} key={t.id}>
             <input
               disabled={disabled}
@@ -204,7 +175,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
         </Box>
       </Box>
 
-      {accountData ? (
+      {account ? (
         <Button
           type='submit'
           disabled={

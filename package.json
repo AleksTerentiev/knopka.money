@@ -37,13 +37,13 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-share": "^3.0.1",
-    "typescript": "3.7.2"
+    "typescript": "^3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "apollo:codegen": "apollo client:codegen --target=typescript --outputFlat src/gql-types",
+    "apollo:codegen": "apollo client:codegen --target=typescript --outputFlat src/gql/types",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

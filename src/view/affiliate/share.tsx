@@ -1,7 +1,5 @@
 import React, { FC, useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { GetAccount } from 'gql-types/GetAccount'
-import { GET_ACCOUNT } from 'queries'
+import { useAccount } from 'gql'
 import {
   makeStyles,
   Theme,
@@ -31,14 +29,14 @@ import WhatsappIcon from 'img/whatsapp.svg'
 
 export const Share: FC = () => {
   const c = useStyles({})
-  const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
+  const { account } = useAccount()
   const [snackbarIsOpen, setSnackbarIsOpen] = useState(false)
   const theme = useTheme()
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
 
-  if (!accountData) return null
+  if (!account) return null
 
-  const url = `https://knopka.money?ref=${accountData.account.id}`
+  const url = `https://knopka.money?ref=${account.id}`
 
   return (
     <Box className={c.root}>

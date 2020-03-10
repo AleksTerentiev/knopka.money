@@ -1,10 +1,6 @@
 import React, { useState } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import {
-  GetPayoutMethods,
-  GetPayoutMethods_payoutMethods,
-} from 'gql-types/GetPayoutMethods'
-import { GET_PAYOUT_METHODS } from 'queries'
+import { usePayoutMethods } from 'gql'
+import { GetPayoutMethods_payoutMethods } from 'gql/types/GetPayoutMethods'
 import { createStyles, makeStyles, Theme, Box, Card, Typography } from '@material-ui/core'
 import { useGlobalStyles } from 'styles'
 import visaMastercardImg from 'img/billing/visa-mastercard.svg'
@@ -17,10 +13,9 @@ import { Modal } from 'view/modal'
 export const PayoutPage = () => {
   const gc = useGlobalStyles({})
   const c = useStyles({})
-  const { data } = useQuery<GetPayoutMethods>(GET_PAYOUT_METHODS)
+  const { payoutMethods } = usePayoutMethods()
   const [method, setMethod] = useState<GetPayoutMethods_payoutMethods>()
   const [createModalOpen, setCreateModalOpen] = useState(false)
-  const [createSuccessModalOpen, setCreateSuccessModalOpen] = useState(false)
 
   const handleMethodClick = (method: GetPayoutMethods_payoutMethods) => {
     setMethod(method)
@@ -32,15 +27,6 @@ export const PayoutPage = () => {
     setCreateModalOpen(false)
   }
 
-  const handleCreateSuccess = () => {
-    handleCreateModalClose()
-    setCreateSuccessModalOpen(true)
-  }
-
-  const handleCreateSuccessModalClose = () => {
-    setCreateSuccessModalOpen(false)
-  }
-
   return (
     <Box className={gc.page}>
       <Box>
@@ -48,7 +34,7 @@ export const PayoutPage = () => {
           Вывести Деньги
         </Typography>
         <Box className={c.methods}>
-          {data?.payoutMethods.map(method => (
+          {payoutMethods.map(method => (
             <Card
               key={method.id}
               className={c.method}
@@ -74,21 +60,11 @@ export const PayoutPage = () => {
         <Modal
           open={createModalOpen}
           onClose={handleCreateModalClose}
-          header={<Box mr={10}>Введите Сумму</Box>}
+          header={<Box mr={10}>Вывод Средств</Box>}
         >
-          <PayoutCreate method={method} onCreate={handleCreateSuccess} />
+          <PayoutCreate method={method} />
         </Modal>
       )}
-
-      <Modal
-        open={createSuccessModalOpen}
-        onClose={handleCreateSuccessModalClose}
-        header={<Box mr={10}>Заявка Принята</Box>}
-      >
-        <Typography>
-          Ваша заявка на вывод средств принята и вскоре будет обработана.
-        </Typography>
-      </Modal>
     </Box>
   )
 }

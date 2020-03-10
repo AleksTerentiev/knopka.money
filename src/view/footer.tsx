@@ -1,7 +1,6 @@
 import React from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_ACCOUNT } from 'queries'
-import { GetAccount } from 'gql-types/GetAccount'
+import { useHistory } from 'react-router-dom'
+import { useAccount } from 'gql'
 import {
   makeStyles,
   Theme,
@@ -13,25 +12,24 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
 import logoImg from 'img/logo.svg'
 import { Navigation } from './navigation'
 import freeKassaImg from 'img/free-kassa.svg'
 import clsx from 'clsx'
-import { AuthSocial } from 'view/auth/auth-social'
+// import { AuthSocial } from 'view/auth/auth-social'
 import { LoginButton } from 'view/auth/login-button'
 
 export function Footer() {
-  const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
+  const { account } = useAccount()
   const history = useHistory()
   const theme = useTheme()
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
-  const down650px = useMediaQuery('(max-width: 650px)')
-  const c = useStyles({ isLoggedIn: !!accountData })
+  // const down650px = useMediaQuery('(max-width: 650px)')
+  const c = useStyles({ isLoggedIn: !!account })
 
   const FreeKassaBanner = () => (
-    <a href='https://www.free-kassa.ru' target='_blank' rel="noopener noreferrer">
-      <img src={freeKassaImg} alt='We accept FREE-KASSA'/>
+    <a href='https://www.free-kassa.ru' target='_blank' rel='noopener noreferrer'>
+      <img src={freeKassaImg} alt='We accept FREE-KASSA' />
     </a>
   )
 
@@ -43,13 +41,13 @@ export function Footer() {
           <Typography className={c.logoText}>Кнопка</Typography>
         </Box>
 
-        {accountData && (
+        {account && (
           <Box className={c.navigation}>
             <Navigation color='secondary' vertical={xsDown} />
           </Box>
         )}
 
-        {accountData && <FreeKassaBanner />}
+        {account && <FreeKassaBanner />}
         {/* {!accountData && !down650px && (
           <Box display='flex' alignItems='center'>
             <Typography variant='body2' color='textSecondary'>
@@ -59,9 +57,7 @@ export function Footer() {
             <AuthSocial />
           </Box>
         )} */}
-        {!accountData && (
-          <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет' />
-        )}
+        {!account && <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет' />}
       </Container>
 
       <Container className={c.container} style={{ paddingTop: 0, paddingBottom: 0 }}>
@@ -73,7 +69,7 @@ export function Footer() {
           Copyright © 2020 knopka.money
         </Typography>
 
-        {!accountData && <FreeKassaBanner />}
+        {!account && <FreeKassaBanner />}
       </Container>
     </>
   )

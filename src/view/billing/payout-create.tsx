@@ -1,9 +1,6 @@
 import React, { FC, useState } from 'react'
-import { useQuery, useMutation } from '@apollo/react-hooks'
-import { GetPayoutMethods_payoutMethods } from 'gql-types/GetPayoutMethods'
-// import { GetPayouts } from 'gql-types/GetPayouts'
-import { GetBalances } from 'gql-types/GetBalances'
-import { GET_PAYOUTS, CREATE_PAYOUT, GET_BALANCES } from 'queries'
+import { useBalance, useCreatePayout } from 'gql'
+import { GetPayoutMethods_payoutMethods } from 'gql/types/GetPayoutMethods'
 import {
   createStyles,
   makeStyles,
@@ -14,38 +11,17 @@ import {
   InputAdornment,
   Button,
 } from '@material-ui/core'
-import _ from 'lodash'
-import { useBalance } from 'hooks/useBalance'
 
 export const PayoutCreate: FC<{
   method: GetPayoutMethods_payoutMethods
-  onCreate?: () => void
-}> = ({ method, onCreate }) => {
+}> = ({ method }) => {
   const c = useStyles({})
   const [amount, setAmount] = useState(0)
   const [details, setDetails] = useState('')
+  const [createSuccess, setCreateSuccess] = useState(false)
 
-  // const { refetch: refetchPayouts } = useQuery<GetPayouts>(GET_PAYOUTS)
-  const balance = useBalance()
-  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
-  const [createPayout, { loading, error }] = useMutation(CREATE_PAYOUT, {
-    update(cache, { data: { createPayout } }) {
-      const cachedData: any = cache.readQuery({ query: GET_PAYOUTS })
-      cache.writeQuery({
-        query: GET_PAYOUTS,
-        data: { payouts: [...cachedData.payouts, createPayout] },
-      })
-    },
-    onCompleted() {
-      setAmount(0)
-      setDetails('')
-      // refetchPayouts()
-      refetchBalances()
-      if (onCreate) {
-        onCreate()
-      }
-    },
-  })
+  const { balance } = useBalance()
+  const [createPayout, { loading: creating, error }] = useCreatePayout()
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     setAmount(Number(e.target.value))
@@ -55,9 +31,9 @@ export const PayoutCreate: FC<{
     setDetails(e.target.value)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    createPayout({
+    await createPayout({
       variables: {
         amount,
         details,
@@ -65,6 +41,15 @@ export const PayoutCreate: FC<{
         payoutMethodId: method.id,
       },
     })
+    setCreateSuccess(true)
+  }
+
+  if (createSuccess) {
+    return (
+      <Typography>
+        Ваша заявка на вывод средств принята и вскоре будет обработана.
+      </Typography>
+    )
   }
 
   return (
@@ -142,7 +127,7 @@ export const PayoutCreate: FC<{
           variant='contained'
           className={c.submitButton}
           disabled={
-            loading ||
+            creating ||
             !amount ||
             details.length < 6 ||
             amount < Number(method.minAmount) ||

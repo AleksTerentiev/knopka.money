@@ -1,4 +1,5 @@
 import React from 'react'
+import { useCloseInvestment } from 'gql'
 import {
   makeStyles,
   Theme,
@@ -10,13 +11,9 @@ import {
   useMediaQuery,
 } from '@material-ui/core'
 import { useGlobalStyles } from 'styles'
-import { useQuery, useMutation } from '@apollo/react-hooks'
 import { Currency } from 'view/billing/currency'
 import Timer from 'react-compound-timer'
-import { CLOSE_INVESTMENT, GET_BALANCES, GET_INVESTMENT } from 'queries'
-import { GetBalances } from 'gql-types/GetBalances'
-import { GetInvestment } from 'gql-types/GetInvestment'
-import { InvestmentData } from 'gql-types/InvestmentData'
+import { InvestmentData } from 'gql/types/InvestmentData'
 import { FDate } from 'view/fdate'
 import plural from 'plural-ru'
 import moment from 'moment'
@@ -31,22 +28,20 @@ export function Investment({
   endsAt,
   isReady,
   payoutDate,
-}: InvestmentData) {
+  onTimerEnds,
+}: InvestmentData & { onTimerEnds?: () => void }) {
+  const [closeInvestment, { loading: closing }] = useCloseInvestment()
   const gc = useGlobalStyles({})
   const c = useStyles({})
-  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
-  const { refetch: refetchInvestment } = useQuery<GetInvestment>(GET_INVESTMENT, {
-    variables: { id },
-  })
 
-  const [closeInvestment, { loading: payouting }] = useMutation(CLOSE_INVESTMENT, {
-    async onCompleted() {
-      await refetchBalances()
-    },
-  })
+  function handlePayout() {
+    closeInvestment({ variables: { id } })
+  }
 
-  async function handlePayout() {
-    await closeInvestment({ variables: { id } })
+  function handleTimerEnds() {
+    if (onTimerEnds) {
+      onTimerEnds()
+    }
   }
 
   const miniWidth = useMediaQuery('(max-width:359px)')
@@ -85,7 +80,7 @@ export function Investment({
               initialTime={new Date(endsAt).getTime() - Date.now()}
               direction='backward'
               formatValue={v => `${v < 10 ? '0' : ''}${v}`}
-              onStop={() => refetchInvestment()}
+              onStop={handleTimerEnds}
             >
               {() => (
                 <React.Fragment>
@@ -127,7 +122,7 @@ export function Investment({
             color='primary'
             variant='contained'
             size='small'
-            disabled={!isReady || payouting}
+            disabled={!isReady || closing}
             onClick={handlePayout}
             fullWidth
           >

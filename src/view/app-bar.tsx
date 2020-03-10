@@ -1,4 +1,7 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { GetAccount_account } from 'gql/types/GetAccount'
+import { useAccount, useBalance } from 'gql'
 import {
   makeStyles,
   Theme,
@@ -13,29 +16,21 @@ import {
   Popover,
   Divider,
 } from '@material-ui/core'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_ACCOUNT, GET_BALANCES } from 'queries'
-import { GetAccount } from 'gql-types/GetAccount'
-import { GetBalances } from 'gql-types/GetBalances'
-import { useHistory } from 'react-router-dom'
 import { Balances } from 'view/billing/balances'
 import logoImg from 'img/logo.svg'
 import { Navigation } from './navigation'
 import { LoginButton } from 'view/auth/login-button'
-import { GetAccount_account } from 'gql-types/GetAccount'
 import { LogoutButton } from 'view/auth/logout-button'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 import { Route } from 'react-router-dom'
-import _ from 'lodash'
 
 export function AppBar() {
-  const c = useStyles({})
-  const { data: accountData } = useQuery<GetAccount>(GET_ACCOUNT)
   const history = useHistory()
+  const { account } = useAccount()
+  const { balance } = useBalance('RUB')
 
-  const { data: balancesData } = useQuery<GetBalances>(GET_BALANCES)
-  const balance = _.find(balancesData?.balances, { currencyId: 'RUB' })
+  const c = useStyles({})
 
   return (
     <>
@@ -47,7 +42,7 @@ export function AppBar() {
               <Typography className={c.logoText}>Кнопка</Typography>
             </Box>
 
-            {accountData && (
+            {account && (
               <Hidden smDown>
                 <Navigation />
               </Hidden>
@@ -55,7 +50,7 @@ export function AppBar() {
 
             <Box ml='auto' />
 
-            {accountData && (
+            {account && (
               <Box
                 onClick={() => history.push('/refill')}
                 display='flex'
@@ -68,8 +63,8 @@ export function AppBar() {
               </Box>
             )}
 
-            {accountData ? (
-              <AppBarAccount account={accountData.account} />
+            {account ? (
+              <AppBarAccount account={account} />
             ) : (
               <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет' />
             )}
@@ -77,7 +72,7 @@ export function AppBar() {
         </MuiAppBar>
       </Container>
 
-      {accountData && (
+      {account && (
         <Hidden mdUp>
           <Container className={c.container}>
             <Navigation />
@@ -86,7 +81,7 @@ export function AppBar() {
       )}
 
       <Route path='/' exact>
-        {Number(balance?.amount) === 0 && (
+        {balance === 0 && (
           <Container className={c.container}>
             <Box className={c.alert}>
               <Typography display='inline' variant='caption'>

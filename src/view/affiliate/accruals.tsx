@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { useAffiliateAccruals } from 'gql'
 import {
   makeStyles,
   Theme,
@@ -7,20 +8,16 @@ import {
   Avatar,
   Typography,
 } from '@material-ui/core'
-import { useQuery } from '@apollo/react-hooks'
 import { Currency } from 'view/billing/currency'
-import { GET_AFFILIATE_ACCRUALS } from 'queries'
-import { GetAffiliateAccruals } from 'gql-types/GetAffiliateAccruals'
 import { FDate } from 'view/fdate'
 
 export const Accruals: FC = () => {
   const c = useStyles({})
-  const { data } = useQuery<GetAffiliateAccruals>(GET_AFFILIATE_ACCRUALS)
-  const accruals = data?.affiliateAccruals || []
+  const { affiliateAccruals } = useAffiliateAccruals()
 
   return (
     <Box className={c.root}>
-      {accruals.map(accrual => (
+      {affiliateAccruals.map(accrual => (
         <Box key={accrual.id} className={c.accrual}>
           <Box className={c.referral}>
             <Avatar

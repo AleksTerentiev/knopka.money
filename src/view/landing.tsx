@@ -58,7 +58,7 @@ export const Landing = () => {
           <Box className={c.howToStartStep}>
             <LoginButton>
               <Box className={clsx(c.howToStartStepImg, c.howToStartStepLoginImg)}>
-                <img src={howToStartStepImg1} />
+                <img src={howToStartStepImg1} alt='step1img'/>
               </Box>
             </LoginButton>
             <Box>
@@ -73,7 +73,7 @@ export const Landing = () => {
           </Box>
           <Box className={c.howToStartStep}>
             <Box className={c.howToStartStepImg}>
-              <img src={howToStartStepImg2} />
+              <img src={howToStartStepImg2} alt='step2img'/>
             </Box>
             <Box>
               <Typography variant='h4' gutterBottom>
@@ -87,7 +87,7 @@ export const Landing = () => {
           </Box>
           <Box className={c.howToStartStep}>
             <Box className={c.howToStartStepImg}>
-              <img src={howToStartStepImg3} />
+              <img src={howToStartStepImg3} alt='step3img'/>
             </Box>
             <Box>
               <Typography variant='h4' gutterBottom>
@@ -101,7 +101,7 @@ export const Landing = () => {
           </Box>
           <Box className={c.howToStartStep}>
             <Box className={c.howToStartStepImg}>
-              <img src={howToStartStepImg4} />
+              <img src={howToStartStepImg4} alt='step4img'/>
             </Box>
             <Box>
               <Typography variant='h4' gutterBottom>
@@ -139,7 +139,7 @@ export const Landing = () => {
           <img
             src={figures}
             style={{ position: 'absolute', left: 20, top: '30%' }}
-            alt=''
+            alt='img'
           />
           <img
             src={figures}
@@ -149,7 +149,7 @@ export const Landing = () => {
               bottom: '20%',
               transform: 'scaleY(-1)',
             }}
-            alt=''
+            alt='img'
           />
           <img
             src={figures}
@@ -159,7 +159,7 @@ export const Landing = () => {
               top: '30%',
               transform: 'scaleX(-1)',
             }}
-            alt=''
+            alt='img'
           />
           <img
             src={figures}
@@ -169,7 +169,7 @@ export const Landing = () => {
               bottom: '20%',
               transform: 'scaleY(-1) scaleX(-1)',
             }}
-            alt=''
+            alt='img'
           />
         </Hidden>
       </Container>

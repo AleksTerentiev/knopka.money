@@ -11,7 +11,7 @@ import GoogleIcon from 'img/social/google.svg'
 import FacebookIcon from 'img/social/facebook.svg'
 import OKIcon from 'img/social/ok.svg'
 import MailruIcon from 'img/social/mailru.svg'
-import { AuthProvider, useAuthPopup } from './useAuthPopup'
+import { AuthProvider, useAuthPopup } from 'auth'
 
 export const AuthSocial = () => {
   const c = useStyles({})

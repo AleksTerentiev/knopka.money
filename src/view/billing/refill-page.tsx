@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { GetInvoices } from 'gql-types/GetInvoices'
-import { GetBalances } from 'gql-types/GetBalances'
-import { GET_INVOICES, GET_BALANCES } from 'queries'
+import React, { useState, useEffect } from 'react'
+import { useBalance, useInvoices } from 'gql'
 import {
   createStyles,
   makeStyles,
@@ -19,7 +16,6 @@ import clsx from 'clsx'
 import { useGlobalStyles } from 'styles'
 import { Currency } from 'view/billing/currency'
 import { FDate } from 'view/fdate'
-import { orderBy } from 'lodash'
 
 export const RefillPage = () => {
   const gc = useGlobalStyles({})
@@ -53,8 +49,8 @@ const limits = {
 
 export const CreateInvoice = () => {
   const c = useCreateInvoiceStyles({})
-  const { refetch: refetchInvoices } = useQuery<GetInvoices>(GET_INVOICES)
-  const { refetch: refetchBalances } = useQuery<GetBalances>(GET_BALANCES)
+  const { refetch: refetchInvoices } = useInvoices()
+  const { refetch: refetchBalances } = useBalance()
   const [amount, setAmount] = useState(1000)
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -157,11 +153,7 @@ const useCreateInvoiceStyles = makeStyles((theme: Theme) =>
 export const Invoices = () => {
   const gc = useGlobalStyles({})
   const c = useInvoicesStyles({})
-  const { data } = useQuery<GetInvoices>(GET_INVOICES)
-
-  const invoices = useMemo(() => {
-    return orderBy(data?.invoices, ['createdAt'], ['desc'])
-  }, [data])
+  const { invoices } = useInvoices()
 
   return (
     <Box>
