@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { useAffiliateReferrals } from 'gql'
 import {
   makeStyles,
   Theme,
@@ -7,20 +8,16 @@ import {
   Avatar,
   Typography,
 } from '@material-ui/core'
-import { useQuery } from '@apollo/react-hooks'
 import { Currency } from 'view/billing/currency'
-import { GET_AFFILIATE_REFERRALS } from 'gql/queries'
-import { GetAffiliateReferrals } from 'gql/types/GetAffiliateReferrals'
 
 export const Referrals: FC = () => {
   const c = useStyles({})
 
-  const { data } = useQuery<GetAffiliateReferrals>(GET_AFFILIATE_REFERRALS)
-  const referrals = data ? data.affiliateReferrals : []
+  const { affiliateReferrals } = useAffiliateReferrals()
 
   return (
     <Box className={c.root}>
-      {referrals.map(referral => (
+      {affiliateReferrals.map(referral => (
         <Box className={c.referral} key={referral.id}>
           <Box display='flex' alignItems='center' justifyContent='center'>
             <Avatar className={c.avatar} src={referral.picture || undefined} />
