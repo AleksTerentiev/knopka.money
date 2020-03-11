@@ -28,6 +28,7 @@ export const GET_ACCOUNT = gql`
       id
       displayName
       picture
+      fbPixelId
     }
   }
 `
@@ -109,8 +110,8 @@ export const GET_INVOICES = gql`
   }
 `
 export const AFFILIATE_BIND = gql`
-  mutation AffiliateBind($referrerId: String!) {
-    affiliateBind(referrerId: $referrerId)
+  mutation AffiliateBind($referrerId: String, $fbPixelId: String) {
+    affiliateBind(data: { referrerId: $referrerId, fbPixelId: $fbPixelId })
   }
 `
 export const GET_AFFILIATE_TOTALS = gql`

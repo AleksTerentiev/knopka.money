@@ -17,38 +17,33 @@ export const App = () => {
   const [affiliateBind] = useAffiliateBind()
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const refParamName = 'ref'
-    let referrerId = urlParams.get(refParamName)
-    if (referrerId) {
-      localStorage.setItem(refParamName, referrerId)
-      urlParams.delete(refParamName)
-      window.history.replaceState(null, '', String(urlParams) ? '?' + urlParams : '/')
-    } else {
-      referrerId = localStorage.getItem(refParamName)
+    function getParam(paramName: string) {
+      const urlParams = new URLSearchParams(window.location.search)
+      let param = urlParams.get(paramName)
+      if (param) {
+        localStorage.setItem(paramName, param)
+        urlParams.delete(paramName)
+        window.history.replaceState(null, '', String(urlParams) ? '?' + urlParams : '/')
+      } else {
+        param = localStorage.getItem(paramName)
+      }
+      return param
     }
-    if (account && referrerId) {
-      affiliateBind({ variables: { referrerId } })
-      localStorage.removeItem(refParamName)
-    }
-  }, [account])
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const pixelParamName = 'pixel'
-    let pixelId = urlParams.get(pixelParamName)
-    if (pixelId) {
-      localStorage.setItem(pixelParamName, pixelId)
-      urlParams.delete(pixelParamName)
-      window.history.replaceState(null, '', String(urlParams) ? '?' + urlParams : '/')
-    } else {
-      pixelId = localStorage.getItem(pixelParamName)
+    const referrerId = getParam('ref')
+    const fbPixelId = getParam('pixel')
+
+    if (account && (referrerId || fbPixelId)) {
+      affiliateBind({ variables: { referrerId, fbPixelId } })
+      localStorage.removeItem('ref')
+      localStorage.removeItem('pixel')
     }
-    if (pixelId) {
-      ReactPixel.init(pixelId)
+
+    if (account?.fbPixelId || fbPixelId) {
+      ReactPixel.init(account?.fbPixelId || fbPixelId || '')
       ReactPixel.pageView()
     }
-  }, [])
+  }, [account])
 
   if (loading) {
     return <Preloader />

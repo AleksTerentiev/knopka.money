@@ -12,6 +12,7 @@ export interface GetAccount_account {
   id: string;
   displayName: string | null;
   picture: string | null;
+  fbPixelId: string | null;
 }
 
 export interface GetAccount {

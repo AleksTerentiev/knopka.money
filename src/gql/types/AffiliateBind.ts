@@ -12,5 +12,6 @@ export interface AffiliateBind {
 }
 
 export interface AffiliateBindVariables {
-  referrerId: string;
+  referrerId?: string | null;
+  fbPixelId?: string | null;
 }
