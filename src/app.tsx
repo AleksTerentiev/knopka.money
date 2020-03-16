@@ -39,7 +39,7 @@ export const App = () => {
       localStorage.removeItem('pixel')
     }
 
-    if (account?.fbPixelId || fbPixelId) {
+    if (account && (account?.fbPixelId || fbPixelId)) {
       ReactPixel.init(account?.fbPixelId || fbPixelId || '')
       ReactPixel.pageView()
     }
