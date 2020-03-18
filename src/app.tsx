@@ -42,6 +42,10 @@ export const App = () => {
     if (account && (account?.fbPixelId || fbPixelId)) {
       ReactPixel.init(account?.fbPixelId || fbPixelId || '')
       ReactPixel.pageView()
+      if (fbPixelId) {
+        ReactPixel.track('CompleteRegistration', {})
+        ReactPixel.track('Lead', {})
+      }
     }
   }, [account])
 
