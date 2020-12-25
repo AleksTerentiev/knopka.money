@@ -2,7 +2,7 @@ module.exports = {
   client: {
     service: {
       name: 'server',
-      url: 'https://bff.knopka.money/graphql',
+      url: 'http://localhost:4000/graphql',
     },
   },
 };
