@@ -34,7 +34,7 @@ export const RefillPage = () => {
 
 function openPayWindow(amount: number) {
   return window.open(
-    `${process.env.REACT_APP_API_ORIGIN}/freekassa/pay?amount=${amount}`,
+    `${process.env.REACT_APP_API_URL}/freekassa/pay?amount=${amount}`,
     'pay',
     `toolbar=no, location=no, directories=no, status=no, menubar=no`
   );
@@ -59,7 +59,7 @@ export const CreateInvoice = () => {
 
   useEffect(() => {
     function payWindowMessageListener(event: MessageEvent) {
-      if (event.origin !== process.env.REACT_APP_API_ORIGIN) {
+      if (event.origin !== process.env.REACT_APP_API_URL) {
         return;
       }
       const { action, status } = JSON.parse(event.data);

@@ -15,7 +15,7 @@ export function LogoutButton({
       onClick();
     }
 
-    fetch(`${process.env.REACT_APP_API_ORIGIN}/auth/destroy`, {
+    fetch(`${process.env.REACT_APP_API_URL}/auth/destroy`, {
       credentials: 'include',
     }).then(() => {
       window.location.reload();
