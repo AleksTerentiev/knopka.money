@@ -14,7 +14,7 @@ import visaMastercardImg from 'img/billing/visa-mastercard.svg';
 import qiwiImg from 'img/billing/qiwi.svg';
 import yandexMoneyImg from 'img/billing/yandex-money.svg';
 import { PayoutCreate } from './payout-create';
-import { PayoutsList } from './payouts-list';
+import { Payouts } from './payouts';
 import { Modal } from 'components/modal';
 
 export const PayoutPage = () => {
@@ -61,7 +61,7 @@ export const PayoutPage = () => {
         </Box>
       </Box>
 
-      <PayoutsList />
+      <Payouts />
 
       {method && (
         <Modal

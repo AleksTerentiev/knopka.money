@@ -10,12 +10,9 @@ import {
   TextField,
   InputAdornment,
   Button,
-  Divider,
 } from '@material-ui/core';
 import { useGlobalStyles } from 'styles';
-import clsx from 'clsx';
-import { Currency } from 'components/billing/currency';
-import { FDate } from 'components/fdate';
+import { Invoices } from './invoices';
 
 export const RefillPage = () => {
   const gc = useGlobalStyles();
@@ -42,7 +39,7 @@ function openPayWindow(amount: number) {
 
 let payWindow: Window | null;
 
-const limits = {
+const REFILL_LIMIT = {
   min: 200,
   max: 15000,
 };
@@ -94,7 +91,7 @@ export const CreateInvoice = () => {
     <Card className={c.root}>
       <form onSubmit={handleSubmit}>
         <Typography className={c.label} gutterBottom>
-          Мин.{limits.min}₽ - Макс.{limits.max}₽
+          Мин.{REFILL_LIMIT.min}₽ - Макс.{REFILL_LIMIT.max}₽
         </Typography>
         <TextField
           type='number'
@@ -104,7 +101,7 @@ export const CreateInvoice = () => {
           fullWidth
           margin='dense'
           classes={{ root: c.input }}
-          inputProps={{ min: limits.min, max: limits.max }}
+          inputProps={{ min: REFILL_LIMIT.min, max: REFILL_LIMIT.max }}
           value={amount || ''}
           onChange={handleAmountChange}
           InputProps={{
@@ -121,7 +118,7 @@ export const CreateInvoice = () => {
           color='secondary'
           size='large'
           variant='contained'
-          disabled={!amount || amount < limits.min || amount > limits.max}
+          disabled={!amount || amount < REFILL_LIMIT.min || amount > REFILL_LIMIT.max}
           style={{ justifyContent: 'flex-start' }}
           fullWidth
         >
@@ -145,94 +142,6 @@ const useCreateInvoiceStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(2),
       [theme.breakpoints.up('md')]: {
         marginBottom: theme.spacing(3),
-      },
-    },
-  })
-);
-
-export const Invoices = () => {
-  const gc = useGlobalStyles();
-  const c = useInvoicesStyles();
-  const { invoices } = useInvoices();
-
-  return (
-    <Box>
-      <Typography variant='h3' gutterBottom={invoices.length > 0}>
-        <Box display='flex' alignItems='center' justifyContent='space-between'>
-          <span>История</span>
-          <span className={c.count}>{invoices.length || ''}</span>
-        </Box>
-      </Typography>
-      {invoices.length > 0 ? (
-        <Box mt={1}>
-          <Divider className={c.divider} />
-          <Box className={c.invoices}>
-            {invoices.map(invoice => (
-              <Card className={clsx(c.invoice, gc.cardDense)} key={invoice.id}>
-                <Box>
-                  <Typography className={gc.cardLabel}>Дата</Typography>
-                  <Box color='grey.400'>
-                    <Typography className={gc.cardValue}>
-                      {<FDate date={invoice.createdAt} />}
-                    </Typography>
-                  </Box>
-                </Box>
-                <Box>
-                  <Typography className={gc.cardLabel}>Сумма</Typography>
-                  <Typography className={gc.cardValue}>
-                    <Currency
-                      value={invoice.amount}
-                      fraction={0}
-                      currencyId={invoice.currencyId}
-                    />
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography className={gc.cardLabel}>Статус</Typography>
-                  <Typography className={gc.cardValue}>
-                    {invoice.status === 'pending' && 'В обработке'}
-                    {invoice.status === 'successful' && 'Проведен'}
-                    {invoice.status === 'failed' && 'Отклонен'}
-                  </Typography>
-                </Box>
-              </Card>
-            ))}
-          </Box>
-        </Box>
-      ) : (
-        <Box fontWeight='fontWeightMedium' color='text.hint' mt={1}>
-          <Typography>Пополнений не найдено</Typography>
-        </Box>
-      )}
-    </Box>
-  );
-};
-
-const useInvoicesStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {},
-    divider: {
-      display: 'none',
-      [theme.breakpoints.up('lg')]: {
-        marginBottom: theme.spacing(4),
-        display: 'block',
-      },
-    },
-    count: {
-      color: theme.palette.grey[500],
-    },
-    invoices: {
-      [theme.breakpoints.up('lg')]: {
-        maxHeight: 620,
-        overflowY: 'scroll',
-      },
-    },
-    invoice: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr 1fr',
-      gridColumnGap: theme.spacing(2),
-      [theme.breakpoints.up('md')]: {
-        gridColumnGap: theme.spacing(3),
       },
     },
   })

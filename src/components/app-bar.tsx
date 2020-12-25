@@ -87,13 +87,7 @@ export function AppBar() {
               <Typography display='inline' variant='caption'>
                 Сперва необходимо
               </Typography>{' '}
-              <Link
-                to={`/refill`}
-                component={RouterLink}
-                variant='caption'
-                noWrap
-                // style={{ borderBottom: '1px dashed' }}
-              >
+              <Link to={`/refill`} component={RouterLink} variant='caption' noWrap>
                 пополнить баланс
               </Link>
             </Box>
@@ -180,7 +174,7 @@ export interface AppBarAccountProps {
 }
 
 export const AppBarAccount: React.FC<AppBarAccountProps> = ({ account }) => {
-  const c = useAppBarStyles({});
+  const c = useAppBarAccountStyles();
 
   const [popoverAnchorEl, setPopoverAnchorEl] = React.useState<null | HTMLElement>(null);
   const popoverIsOpen = Boolean(popoverAnchorEl);
@@ -231,7 +225,7 @@ export const AppBarAccount: React.FC<AppBarAccountProps> = ({ account }) => {
   );
 };
 
-export const useAppBarStyles = makeStyles((theme: Theme) =>
+export const useAppBarAccountStyles = makeStyles((theme: Theme) =>
   createStyles({
     avatarRoot: {
       width: '3.5vw',

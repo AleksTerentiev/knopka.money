@@ -1,24 +1,15 @@
 import React from 'react';
 import { usePayouts } from 'gql';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  useMediaQuery,
-  Box,
-  Card,
-  Typography,
-  Divider,
-} from '@material-ui/core';
+import { Box, Card, Typography, Divider } from '@material-ui/core';
 import { useGlobalStyles } from 'styles';
+import { useStyles } from './payouts.c';
 import clsx from 'clsx';
 import { Currency } from 'components/billing/currency';
 import { FDate } from 'components/fdate';
 
-export const PayoutsList = () => {
+export const Payouts = () => {
   const gc = useGlobalStyles();
   const c = useStyles();
-  const down340px = useMediaQuery('(max-width: 340px)');
 
   const { payouts } = usePayouts();
 
@@ -63,7 +54,7 @@ export const PayoutsList = () => {
                 <Box className={c.details}>
                   <Typography className={gc.cardLabel}>Реквизиты</Typography>
                   <Typography className={gc.cardValue} style={{ whiteSpace: 'normal' }}>
-                    {down340px ? payout.details.replace(/ /g, '') : payout.details}
+                    {payout.details}
                   </Typography>
                 </Box>
                 <Box className={c.payoutMethod}>
@@ -94,49 +85,3 @@ export const PayoutsList = () => {
     </Box>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {},
-    divider: {
-      display: 'none',
-      [theme.breakpoints.up('lg')]: {
-        marginBottom: theme.spacing(4),
-        display: 'block',
-      },
-    },
-    count: {
-      color: theme.palette.grey[500],
-    },
-    payouts: {
-      [theme.breakpoints.up('lg')]: {
-        maxHeight: 620,
-        overflowY: 'scroll',
-      },
-    },
-    payout: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr 1fr',
-      gridTemplateRows: 'auto auto',
-      gridColumnGap: theme.spacing(2),
-      gridRowGap: theme.spacing(2),
-      [theme.breakpoints.up('md')]: {
-        gridColumnGap: theme.spacing(3),
-      },
-    },
-    details: {
-      gridColumn: '1 / 3',
-    },
-    payoutMethod: {},
-    comment: {
-      gridColumn: '1 / 4',
-    },
-    commentField: {
-      whiteSpace: 'normal',
-      background: theme.palette.grey[100],
-      borderRadius: theme.shape.borderRadius,
-      padding: theme.spacing(1, 2),
-      marginTop: theme.spacing(1),
-    },
-  })
-);

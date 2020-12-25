@@ -1,28 +1,28 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core';
 import PreloaderSvg from 'img/preloader.svg';
 
-export const Preloader: React.FC = () => {
+export const Preloader: FC = () => {
   const c = useStyles();
 
   return (
     <>
-      <img alt='Loading' className={c.up} src={PreloaderSvg} />
-      <img alt='Loading' className={c.down} src={PreloaderSvg} />
+      <img alt='Loading' className={c.top} src={PreloaderSvg} />
+      <img alt='Loading' className={c.bot} src={PreloaderSvg} />
     </>
   );
 };
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    up: {
+    top: {
       width: 100,
       position: 'absolute',
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
     },
-    down: {
+    bot: {
       width: 100,
       position: 'absolute',
       top: '50%',
