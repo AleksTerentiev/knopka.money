@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import { useAffiliateReferrals } from 'gql'
+import React, { FC } from 'react';
+import { useAffiliateReferrals } from 'gql';
 import {
   makeStyles,
   Theme,
@@ -7,13 +7,13 @@ import {
   Box,
   Avatar,
   Typography,
-} from '@material-ui/core'
-import { Currency } from 'components/billing/currency'
+} from '@material-ui/core';
+import { Currency } from 'components/billing/currency';
 
 export const Referrals: FC = () => {
-  const c = useStyles()
+  const c = useStyles();
 
-  const { affiliateReferrals } = useAffiliateReferrals()
+  const { affiliateReferrals } = useAffiliateReferrals();
 
   return (
     <Box className={c.root}>
@@ -33,8 +33,8 @@ export const Referrals: FC = () => {
         </Box>
       ))}
     </Box>
-  )
-}
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,4 +62,4 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#3B6EE4',
     },
   })
-)
+);

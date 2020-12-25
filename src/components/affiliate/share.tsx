@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react'
-import { useAccount } from 'gql'
+import React, { FC, useState } from 'react';
+import { useAccount } from 'gql';
 import {
   makeStyles,
   Theme,
@@ -13,30 +13,30 @@ import {
   Snackbar,
   SnackbarContent,
   Typography,
-} from '@material-ui/core'
-import CopyIcon from 'img/copy.svg'
-import CopyToClipboard from 'react-copy-to-clipboard'
+} from '@material-ui/core';
+import CopyIcon from 'img/copy.svg';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import {
   VKShareButton,
   FacebookShareButton,
   TelegramShareButton,
   WhatsappShareButton,
-} from 'react-share'
-import VKIcon from 'img/vk.svg'
-import FacebookIcon from 'img/facebook.svg'
-import TelegramIcon from 'img/telegram.svg'
-import WhatsappIcon from 'img/whatsapp.svg'
+} from 'react-share';
+import VKIcon from 'img/vk.svg';
+import FacebookIcon from 'img/facebook.svg';
+import TelegramIcon from 'img/telegram.svg';
+import WhatsappIcon from 'img/whatsapp.svg';
 
 export const Share: FC = () => {
-  const c = useStyles()
-  const { account } = useAccount()
-  const [snackbarIsOpen, setSnackbarIsOpen] = useState(false)
-  const theme = useTheme()
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
+  const c = useStyles();
+  const { account } = useAccount();
+  const [snackbarIsOpen, setSnackbarIsOpen] = useState(false);
+  const theme = useTheme();
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
-  if (!account) return null
+  if (!account) return null;
 
-  const url = `https://knopka.money?ref=${account.id}`
+  const url = `https://knopka.money?ref=${account.id}`;
 
   return (
     <Box className={c.root}>
@@ -119,8 +119,8 @@ export const Share: FC = () => {
         <SnackbarContent classes={{ root: c.snackbar }} message='Ссылка скопирована' />
       </Snackbar>
     </Box>
-  )
-}
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -193,4 +193,4 @@ const useStyles = makeStyles((theme: Theme) =>
     //   fontSize: '1.3rem',
     // }
   })
-)
+);

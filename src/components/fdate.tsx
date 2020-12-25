@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 export interface FDateProps {
-  date: string | number | Date
+  date: string | number | Date;
 }
 
 export function FDate({ date }: FDateProps) {
@@ -15,5 +15,5 @@ export function FDate({ date }: FDateProps) {
         })
         .replace(/\//g, '.')}
     </span>
-  )
+  );
 }

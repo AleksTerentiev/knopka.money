@@ -1,7 +1,7 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { GetAccount_account } from 'gql/types/GetAccount'
-import { useAccount, useBalance } from 'gql'
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { GetAccount_account } from 'gql/types/GetAccount';
+import { useAccount, useBalance } from 'gql';
 import {
   makeStyles,
   Theme,
@@ -15,22 +15,22 @@ import {
   Avatar,
   Popover,
   Divider,
-} from '@material-ui/core'
-import { Balances } from 'components/billing/balances'
-import logoImg from 'img/logo.svg'
-import { Navigation } from './navigation'
-import { LoginButton } from 'components/auth/login-button'
-import { LogoutButton } from 'components/auth/logout-button'
-import { Link as RouterLink } from 'react-router-dom'
-import Link from '@material-ui/core/Link'
-import { Route } from 'react-router-dom'
+} from '@material-ui/core';
+import { Balances } from 'components/billing/balances';
+import logoImg from 'img/logo.svg';
+import { Navigation } from './navigation';
+import { LoginButton } from 'components/auth/login-button';
+import { LogoutButton } from 'components/auth/logout-button';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import { Route } from 'react-router-dom';
 
 export function AppBar() {
-  const history = useHistory()
-  const { account } = useAccount()
-  const { balance } = useBalance('RUB')
+  const history = useHistory();
+  const { account } = useAccount();
+  const { balance } = useBalance('RUB');
 
-  const c = useStyles()
+  const c = useStyles();
 
   return (
     <>
@@ -101,7 +101,7 @@ export function AppBar() {
         )}
       </Route>
     </>
-  )
+  );
 }
 
 export const useStyles = makeStyles((theme: Theme) =>
@@ -173,22 +173,22 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);
 
 export interface AppBarAccountProps {
-  account: GetAccount_account
+  account: GetAccount_account;
 }
 
 export const AppBarAccount: React.FC<AppBarAccountProps> = ({ account }) => {
-  const c = useAppBarStyles({})
+  const c = useAppBarStyles({});
 
-  const [popoverAnchorEl, setPopoverAnchorEl] = React.useState<null | HTMLElement>(null)
-  const popoverIsOpen = Boolean(popoverAnchorEl)
+  const [popoverAnchorEl, setPopoverAnchorEl] = React.useState<null | HTMLElement>(null);
+  const popoverIsOpen = Boolean(popoverAnchorEl);
   function handleAccountPopupOpen(event: React.MouseEvent<HTMLElement>) {
-    setPopoverAnchorEl(event.currentTarget)
+    setPopoverAnchorEl(event.currentTarget);
   }
   function handlePopupClose() {
-    setPopoverAnchorEl(null)
+    setPopoverAnchorEl(null);
   }
 
   return (
@@ -228,8 +228,8 @@ export const AppBarAccount: React.FC<AppBarAccountProps> = ({ account }) => {
         </Box>
       </Popover>
     </>
-  )
-}
+  );
+};
 
 export const useAppBarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -245,4 +245,4 @@ export const useAppBarStyles = makeStyles((theme: Theme) =>
       background: 'none',
     },
   })
-)
+);

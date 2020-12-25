@@ -1,4 +1,4 @@
-import { makeStyles, Theme, createStyles } from '@material-ui/core'
+import { makeStyles, Theme, createStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,4 +56,4 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);

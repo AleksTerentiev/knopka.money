@@ -1,5 +1,5 @@
-import React from 'react'
-import { usePayouts } from 'gql'
+import React from 'react';
+import { usePayouts } from 'gql';
 import {
   createStyles,
   makeStyles,
@@ -9,18 +9,18 @@ import {
   Card,
   Typography,
   Divider,
-} from '@material-ui/core'
-import clsx from 'clsx'
-import { useGlobalStyles } from 'styles'
-import { Currency } from 'components/billing/currency'
-import { FDate } from 'components/fdate'
+} from '@material-ui/core';
+import clsx from 'clsx';
+import { useGlobalStyles } from 'styles';
+import { Currency } from 'components/billing/currency';
+import { FDate } from 'components/fdate';
 
 export const PayoutsList = () => {
-  const gc = useGlobalStyles({})
-  const c = useStyles()
-  const down340px = useMediaQuery('(max-width: 340px)')
+  const gc = useGlobalStyles();
+  const c = useStyles();
+  const down340px = useMediaQuery('(max-width: 340px)');
 
-  const { payouts } = usePayouts()
+  const { payouts } = usePayouts();
 
   return (
     <Box>
@@ -92,8 +92,8 @@ export const PayoutsList = () => {
         </Box>
       )}
     </Box>
-  )
-}
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -139,4 +139,4 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(1),
     },
   })
-)
+);

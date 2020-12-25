@@ -1,28 +1,28 @@
-import React, { ChangeEvent, useState, useMemo } from 'react'
-import { useAffiliateTotals, useAffiliateReferrals } from 'gql'
-import { Box, Typography, Tabs, Tab, Divider } from '@material-ui/core'
-import { Share } from 'components/affiliate/share'
+import React, { ChangeEvent, useState, useMemo } from 'react';
+import { useAffiliateTotals, useAffiliateReferrals } from 'gql';
+import { Box, Typography, Tabs, Tab, Divider } from '@material-ui/core';
+import { Share } from 'components/affiliate/share';
 // import { Currency } from 'components/billing/currency'
-import { Referrals } from 'components/affiliate/referrals'
-import { Accruals } from 'components/affiliate/accruals'
-import { useGlobalStyles } from 'styles'
-import { useStyles } from './affiliate-page.c'
+import { Referrals } from 'components/affiliate/referrals';
+import { Accruals } from 'components/affiliate/accruals';
+import { useGlobalStyles } from 'styles';
+import { useStyles } from './affiliate-page.c';
 
 export const AffiliatePage = () => {
-  const gc = useGlobalStyles({})
-  const c = useStyles()
-  const { affiliateTotals } = useAffiliateTotals()
-  const { affiliateReferrals } = useAffiliateReferrals()
-  const [currentTab, setCurrentTab] = useState('referrals')
+  const gc = useGlobalStyles();
+  const c = useStyles();
+  const { affiliateTotals } = useAffiliateTotals();
+  const { affiliateReferrals } = useAffiliateReferrals();
+  const [currentTab, setCurrentTab] = useState('referrals');
 
   function handleTabChange(e: ChangeEvent<{}>, tab: string) {
-    setCurrentTab(tab)
+    setCurrentTab(tab);
   }
 
   const total = useMemo(
     () => affiliateTotals.reduce((total, curTotal) => total + Number(curTotal.total), 0),
     [affiliateTotals]
-  )
+  );
 
   return (
     <Box className={gc.page}>
@@ -64,5 +64,5 @@ export const AffiliatePage = () => {
         )}
       </Box>
     </Box>
-  )
-}
+  );
+};

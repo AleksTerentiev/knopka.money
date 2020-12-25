@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useBalance, useInvoices } from 'gql'
+import React, { useState, useEffect } from 'react';
+import { useBalance, useInvoices } from 'gql';
 import {
   createStyles,
   makeStyles,
@@ -11,14 +11,14 @@ import {
   InputAdornment,
   Button,
   Divider,
-} from '@material-ui/core'
-import clsx from 'clsx'
-import { useGlobalStyles } from 'styles'
-import { Currency } from 'components/billing/currency'
-import { FDate } from 'components/fdate'
+} from '@material-ui/core';
+import clsx from 'clsx';
+import { useGlobalStyles } from 'styles';
+import { Currency } from 'components/billing/currency';
+import { FDate } from 'components/fdate';
 
 export const RefillPage = () => {
-  const gc = useGlobalStyles({})
+  const gc = useGlobalStyles();
   return (
     <Box className={gc.page}>
       <Box>
@@ -29,65 +29,65 @@ export const RefillPage = () => {
       </Box>
       <Invoices />
     </Box>
-  )
-}
+  );
+};
 
 function openPayWindow(amount: number) {
   return window.open(
     `${process.env.REACT_APP_API_ORIGIN}/freekassa/pay?amount=${amount}`,
     'pay',
     `toolbar=no, location=no, directories=no, status=no, menubar=no`
-  )
+  );
 }
 
-let payWindow: Window | null
+let payWindow: Window | null;
 
 const limits = {
   min: 200,
   max: 15000,
-}
+};
 
 export const CreateInvoice = () => {
-  const c = useCreateInvoiceStyles({})
-  const { refetch: refetchInvoices } = useInvoices()
-  const { refetch: refetchBalances } = useBalance()
-  const [amount, setAmount] = useState(1000)
+  const c = useCreateInvoiceStyles({});
+  const { refetch: refetchInvoices } = useInvoices();
+  const { refetch: refetchBalances } = useBalance();
+  const [amount, setAmount] = useState(1000);
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setAmount(Number(e.target.value))
+    setAmount(Number(e.target.value));
   }
 
   useEffect(() => {
     function payWindowMessageListener(event: MessageEvent) {
       if (event.origin !== process.env.REACT_APP_API_ORIGIN) {
-        return
+        return;
       }
-      const { action, status } = JSON.parse(event.data)
+      const { action, status } = JSON.parse(event.data);
       if (action !== 'freekassa') {
-        return
+        return;
       }
       if (status !== 'success') {
-        return alert(`Что-то пошло не так :( Статус платежа: "${status}"`)
+        return alert(`Что-то пошло не так :( Статус платежа: "${status}"`);
       }
       if (payWindow) {
-        payWindow.close()
+        payWindow.close();
       }
-      refetchInvoices()
-      refetchBalances()
+      refetchInvoices();
+      refetchBalances();
     }
 
-    window.addEventListener('message', payWindowMessageListener)
+    window.addEventListener('message', payWindowMessageListener);
     return () => {
-      window.removeEventListener('message', payWindowMessageListener)
+      window.removeEventListener('message', payWindowMessageListener);
       // if (payWindow) {
       //   payWindow.close()
       // }
-    }
-  }, [])
+    };
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    payWindow = openPayWindow(amount)
+    e.preventDefault();
+    payWindow = openPayWindow(amount);
   }
 
   return (
@@ -129,8 +129,8 @@ export const CreateInvoice = () => {
         </Button>
       </form>
     </Card>
-  )
-}
+  );
+};
 
 const useCreateInvoiceStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -148,12 +148,12 @@ const useCreateInvoiceStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);
 
 export const Invoices = () => {
-  const gc = useGlobalStyles({})
-  const c = useInvoicesStyles({})
-  const { invoices } = useInvoices()
+  const gc = useGlobalStyles();
+  const c = useInvoicesStyles({});
+  const { invoices } = useInvoices();
 
   return (
     <Box>
@@ -205,8 +205,8 @@ export const Invoices = () => {
         </Box>
       )}
     </Box>
-  )
-}
+  );
+};
 
 const useInvoicesStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -236,4 +236,4 @@ const useInvoicesStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);

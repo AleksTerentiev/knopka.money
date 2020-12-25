@@ -1,5 +1,5 @@
-import React from 'react'
-import { useCloseInvestment } from 'gql'
+import React from 'react';
+import { useCloseInvestment } from 'gql';
 import {
   makeStyles,
   Theme,
@@ -9,15 +9,15 @@ import {
   Typography,
   Button,
   useMediaQuery,
-} from '@material-ui/core'
-import { useGlobalStyles } from 'styles'
-import { Currency } from 'components/billing/currency'
-import Timer from 'react-compound-timer'
-import { InvestmentData } from 'gql/types/InvestmentData'
-import { FDate } from 'components/fdate'
-import plural from 'plural-ru'
-import moment from 'moment'
-import clsx from 'clsx'
+} from '@material-ui/core';
+import { useGlobalStyles } from 'styles';
+import { Currency } from 'components/billing/currency';
+import Timer from 'react-compound-timer';
+import { InvestmentData } from 'gql/types/InvestmentData';
+import { FDate } from 'components/fdate';
+import plural from 'plural-ru';
+import moment from 'moment';
+import clsx from 'clsx';
 
 export function Investment({
   id,
@@ -30,21 +30,21 @@ export function Investment({
   payoutDate,
   onTimerEnds,
 }: InvestmentData & { onTimerEnds?: () => void }) {
-  const [closeInvestment, { loading: closing }] = useCloseInvestment()
-  const gc = useGlobalStyles({})
-  const c = useStyles()
+  const [closeInvestment, { loading: closing }] = useCloseInvestment();
+  const gc = useGlobalStyles();
+  const c = useStyles();
 
   function handlePayout() {
-    closeInvestment({ variables: { id } })
+    closeInvestment({ variables: { id } });
   }
 
   function handleTimerEnds() {
     if (onTimerEnds) {
-      onTimerEnds()
+      onTimerEnds();
     }
   }
 
-  const miniWidth = useMediaQuery('(max-width:359px)')
+  const miniWidth = useMediaQuery('(max-width:359px)');
 
   return (
     <Card className={clsx(c.root, gc.cardDense)}>
@@ -131,7 +131,7 @@ export function Investment({
         </Box>
       )}
     </Card>
-  )
+  );
 }
 
 export const useStyles = makeStyles((theme: Theme) =>
@@ -147,4 +147,4 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);

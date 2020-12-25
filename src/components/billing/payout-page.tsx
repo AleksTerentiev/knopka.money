@@ -1,31 +1,38 @@
-import React, { useState } from 'react'
-import { usePayoutMethods } from 'gql'
-import { GetPayoutMethods_payoutMethods } from 'gql/types/GetPayoutMethods'
-import { createStyles, makeStyles, Theme, Box, Card, Typography } from '@material-ui/core'
-import { useGlobalStyles } from 'styles'
-import visaMastercardImg from 'img/billing/visa-mastercard.svg'
-import qiwiImg from 'img/billing/qiwi.svg'
-import yandexMoneyImg from 'img/billing/yandex-money.svg'
-import { PayoutCreate } from './payout-create'
-import { PayoutsList } from './payouts-list'
-import { Modal } from 'components/modal'
+import React, { useState } from 'react';
+import { usePayoutMethods } from 'gql';
+import { GetPayoutMethods_payoutMethods } from 'gql/types/GetPayoutMethods';
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  Box,
+  Card,
+  Typography,
+} from '@material-ui/core';
+import { useGlobalStyles } from 'styles';
+import visaMastercardImg from 'img/billing/visa-mastercard.svg';
+import qiwiImg from 'img/billing/qiwi.svg';
+import yandexMoneyImg from 'img/billing/yandex-money.svg';
+import { PayoutCreate } from './payout-create';
+import { PayoutsList } from './payouts-list';
+import { Modal } from 'components/modal';
 
 export const PayoutPage = () => {
-  const gc = useGlobalStyles({})
-  const c = useStyles()
-  const { payoutMethods } = usePayoutMethods()
-  const [method, setMethod] = useState<GetPayoutMethods_payoutMethods>()
-  const [createModalOpen, setCreateModalOpen] = useState(false)
+  const gc = useGlobalStyles();
+  const c = useStyles();
+  const { payoutMethods } = usePayoutMethods();
+  const [method, setMethod] = useState<GetPayoutMethods_payoutMethods>();
+  const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const handleMethodClick = (method: GetPayoutMethods_payoutMethods) => {
-    setMethod(method)
-    setCreateModalOpen(true)
-  }
+    setMethod(method);
+    setCreateModalOpen(true);
+  };
 
   const handleCreateModalClose = () => {
-    setMethod(undefined)
-    setCreateModalOpen(false)
-  }
+    setMethod(undefined);
+    setCreateModalOpen(false);
+  };
 
   return (
     <Box className={gc.page}>
@@ -66,8 +73,8 @@ export const PayoutPage = () => {
         </Modal>
       )}
     </Box>
-  )
-}
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -96,4 +103,4 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);

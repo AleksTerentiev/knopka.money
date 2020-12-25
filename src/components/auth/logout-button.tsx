@@ -1,25 +1,25 @@
-import React, { PropsWithChildren } from 'react'
-import { makeStyles, createStyles, Button } from '@material-ui/core'
+import React, { PropsWithChildren } from 'react';
+import { makeStyles, createStyles, Button } from '@material-ui/core';
 
 export function LogoutButton({
   size = 'medium',
   onClick,
 }: PropsWithChildren<{
-  size?: 'small' | 'medium' | 'large' | undefined
-  onClick?: () => void
+  size?: 'small' | 'medium' | 'large' | undefined;
+  onClick?: () => void;
 }>) {
-  const c = useStyles()
+  const c = useStyles();
 
   function handleClick() {
     if (onClick) {
-      onClick()
+      onClick();
     }
 
     fetch(`${process.env.REACT_APP_API_ORIGIN}/auth/destroy`, {
       credentials: 'include',
     }).then(() => {
-      window.location.reload()
-    })
+      window.location.reload();
+    });
   }
 
   return (
@@ -32,7 +32,7 @@ export function LogoutButton({
     >
       Выйти
     </Button>
-  )
+  );
 }
 
 const useStyles = makeStyles(() =>
@@ -41,4 +41,4 @@ const useStyles = makeStyles(() =>
       opacity: 0.8,
     },
   })
-)
+);

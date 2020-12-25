@@ -1,27 +1,29 @@
-import React, { FC, useState, ReactNode } from 'react'
-import { Box, Button, ButtonProps, Typography } from '@material-ui/core'
-import { Modal } from 'components/modal'
-import { AuthSocial } from 'components/auth/auth-social'
-import { useAuthPopup } from 'auth'
+import React, { FC, useState, ReactNode } from 'react';
+import { Box, Button, ButtonProps, Typography } from '@material-ui/core';
+import { Modal } from 'components/modal';
+import { AuthSocial } from 'components/auth/auth-social';
+import { useAuthPopup } from 'auth';
 
 export const LoginButton: FC<ButtonProps & {
-  children?: ReactNode
-  text?: string
+  children?: ReactNode;
+  text?: string;
 }> = props => {
-  const [open, setOpen] = useState(false)
-  const { loginWithPopup } = useAuthPopup()
+  const [open, setOpen] = useState(false);
+  const { loginWithPopup } = useAuthPopup();
 
   function handleClick() {
-    setOpen(true)
+    setOpen(true);
   }
   function handleClose() {
-    setOpen(false)
+    setOpen(false);
   }
 
   return (
     <>
       {props.children ? (
-        <Box onClick={handleClick} style={{cursor: 'pointer'}}>{props.children}</Box>
+        <Box onClick={handleClick} style={{ cursor: 'pointer' }}>
+          {props.children}
+        </Box>
       ) : (
         <Button variant='contained' color='primary' onClick={handleClick} {...props}>
           {props.text || 'Войти'}
@@ -54,5 +56,5 @@ export const LoginButton: FC<ButtonProps & {
         <AuthSocial />
       </Modal>
     </>
-  )
-}
+  );
+};

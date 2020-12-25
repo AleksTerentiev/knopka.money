@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 export interface CurrencyProps {
-  value: number | string
-  fraction?: number
-  currencyId: string
-  className?: string
-  rubRight?: boolean
+  value: number | string;
+  fraction?: number;
+  currencyId: string;
+  className?: string;
+  rubRight?: boolean;
 }
 
 export function Currency({
@@ -22,5 +22,5 @@ export function Currency({
       {Number(value).toLocaleString(undefined, { minimumFractionDigits: fraction })}
       {rubRight && currencyId === 'RUB' && '₽'}
     </span>
-  )
+  );
 }

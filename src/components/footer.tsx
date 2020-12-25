@@ -1,6 +1,6 @@
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { useAccount } from 'gql'
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAccount } from 'gql';
 import {
   makeStyles,
   Theme,
@@ -11,27 +11,27 @@ import {
   Container,
   Typography,
   Divider,
-} from '@material-ui/core'
-import logoImg from 'img/logo.svg'
-import { Navigation } from './navigation'
-import freeKassaImg from 'img/free-kassa.svg'
-import clsx from 'clsx'
+} from '@material-ui/core';
+import logoImg from 'img/logo.svg';
+import { Navigation } from './navigation';
+import freeKassaImg from 'img/free-kassa.svg';
+import clsx from 'clsx';
 // import { AuthSocial } from 'components/auth/auth-social'
-import { LoginButton } from 'components/auth/login-button'
+import { LoginButton } from 'components/auth/login-button';
 
 export function Footer() {
-  const { account } = useAccount()
-  const history = useHistory()
-  const theme = useTheme()
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
+  const { account } = useAccount();
+  const history = useHistory();
+  const theme = useTheme();
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
   // const down650px = useMediaQuery('(max-width: 650px)')
-  const c = useStyles({ isLoggedIn: !!account })
+  const c = useStyles({ isLoggedIn: !!account });
 
   const FreeKassaBanner = () => (
     <a href='https://www.free-kassa.ru' target='_blank' rel='noopener noreferrer'>
       <img src={freeKassaImg} alt='We accept FREE-KASSA' />
     </a>
-  )
+  );
 
   return (
     <>
@@ -72,7 +72,7 @@ export function Footer() {
         {!account && <FreeKassaBanner />}
       </Container>
     </>
-  )
+  );
 }
 
 export const useStyles = makeStyles((theme: Theme) =>
@@ -144,4 +144,4 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);

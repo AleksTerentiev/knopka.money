@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import { useAffiliateAccruals } from 'gql'
+import React, { FC } from 'react';
+import { useAffiliateAccruals } from 'gql';
 import {
   makeStyles,
   Theme,
@@ -7,13 +7,13 @@ import {
   Box,
   Avatar,
   Typography,
-} from '@material-ui/core'
-import { Currency } from 'components/billing/currency'
-import { FDate } from 'components/fdate'
+} from '@material-ui/core';
+import { Currency } from 'components/billing/currency';
+import { FDate } from 'components/fdate';
 
 export const Accruals: FC = () => {
-  const c = useStyles()
-  const { affiliateAccruals } = useAffiliateAccruals()
+  const c = useStyles();
+  const { affiliateAccruals } = useAffiliateAccruals();
 
   return (
     <Box className={c.root}>
@@ -38,8 +38,8 @@ export const Accruals: FC = () => {
         </Box>
       ))}
     </Box>
-  )
-}
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,4 +84,4 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#3B6EE4',
     },
   })
-)
+);

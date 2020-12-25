@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react'
-import { useBalance, useCreatePayout } from 'gql'
-import { GetPayoutMethods_payoutMethods } from 'gql/types/GetPayoutMethods'
+import React, { FC, useState } from 'react';
+import { useBalance, useCreatePayout } from 'gql';
+import { GetPayoutMethods_payoutMethods } from 'gql/types/GetPayoutMethods';
 import {
   createStyles,
   makeStyles,
@@ -10,29 +10,29 @@ import {
   TextField,
   InputAdornment,
   Button,
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 export const PayoutCreate: FC<{
-  method: GetPayoutMethods_payoutMethods
+  method: GetPayoutMethods_payoutMethods;
 }> = ({ method }) => {
-  const c = useStyles()
-  const [amount, setAmount] = useState(0)
-  const [details, setDetails] = useState('')
-  const [createSuccess, setCreateSuccess] = useState(false)
+  const c = useStyles();
+  const [amount, setAmount] = useState(0);
+  const [details, setDetails] = useState('');
+  const [createSuccess, setCreateSuccess] = useState(false);
 
-  const { balance } = useBalance()
-  const [createPayout, { loading: creating, error }] = useCreatePayout()
+  const { balance } = useBalance();
+  const [createPayout, { loading: creating, error }] = useCreatePayout();
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setAmount(Number(e.target.value))
+    setAmount(Number(e.target.value));
   }
 
   function handleDetailsChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setDetails(e.target.value)
+    setDetails(e.target.value);
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     await createPayout({
       variables: {
         amount,
@@ -40,16 +40,16 @@ export const PayoutCreate: FC<{
         currencyId: method.currencyId,
         payoutMethodId: method.id,
       },
-    })
-    setCreateSuccess(true)
-  }
+    });
+    setCreateSuccess(true);
+  };
 
   if (createSuccess) {
     return (
       <Typography>
         Ваша заявка на вывод средств принята и вскоре будет обработана.
       </Typography>
-    )
+    );
   }
 
   return (
@@ -142,8 +142,8 @@ export const PayoutCreate: FC<{
         </Button>
       </Box>
     </form>
-  )
-}
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -172,4 +172,4 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: theme.shape.borderRadius * 2,
     },
   })
-)
+);

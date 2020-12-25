@@ -1,6 +1,6 @@
-import React, { FC, useState, useMemo, useEffect } from 'react'
-import { useTariffs, useAccount, useBalance, useCreateInvestment } from 'gql'
-import { GetTariffs_tariffs } from 'gql/types/GetTariffs'
+import React, { FC, useState, useMemo, useEffect } from 'react';
+import { useTariffs, useAccount, useBalance, useCreateInvestment } from 'gql';
+import { GetTariffs_tariffs } from 'gql/types/GetTariffs';
 import {
   useTheme,
   Box,
@@ -8,64 +8,64 @@ import {
   TextField,
   InputAdornment,
   Typography,
-} from '@material-ui/core'
-import _ from 'lodash'
-import { useStyles } from './create-investment.c'
-import fireIcon from 'img/fire.svg'
-import flashIcon from 'img/flash.svg'
-import magicIcon from 'img/magic.svg'
-import { LoginButton } from 'components/auth/login-button'
-import plural from 'plural-ru'
-import { Currency } from 'components/billing/currency'
-import { FDate } from 'components/fdate'
+} from '@material-ui/core';
+import _ from 'lodash';
+import { useStyles } from './create-investment.c';
+import fireIcon from 'img/fire.svg';
+import flashIcon from 'img/flash.svg';
+import magicIcon from 'img/magic.svg';
+import { LoginButton } from 'components/auth/login-button';
+import plural from 'plural-ru';
+import { Currency } from 'components/billing/currency';
+import { FDate } from 'components/fdate';
 
 export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => {
-  const currencyId = 'RUB'
-  const { tariffs } = useTariffs()
-  const { account } = useAccount()
-  const { balance } = useBalance(currencyId)
-  const disabled = account && balance === 0
-  const [tariff, setTariff] = useState<GetTariffs_tariffs>()
-  const [amount, setAmount] = useState(0)
-  const notEnoughtMoney = !disabled && !!balance && balance < amount
-  const theme = useTheme()
-  const c = useStyles({ disabled, secondary })
+  const currencyId = 'RUB';
+  const { tariffs } = useTariffs();
+  const { account } = useAccount();
+  const { balance } = useBalance(currencyId);
+  const disabled = account && balance === 0;
+  const [tariff, setTariff] = useState<GetTariffs_tariffs>();
+  const [amount, setAmount] = useState(0);
+  const notEnoughtMoney = !disabled && !!balance && balance < amount;
+  const theme = useTheme();
+  const c = useStyles({ disabled, secondary });
 
   const limits = useMemo(() => {
-    const constraint = _.find(tariff?.constraints, { currencyId })
+    const constraint = _.find(tariff?.constraints, { currencyId });
     return {
       min: Number(constraint?.minAmount) || 0,
       max: Number(constraint?.maxAmount) || Infinity,
-    }
-  }, [tariff, currencyId])
+    };
+  }, [tariff, currencyId]);
 
   useEffect(() => {
-    const tariff = tariffs[secondary ? 0 : tariffs.length - 1]
-    setTariff(tariff)
-    setAmount(!balance || balance >= 1000 ? 1000 : balance)
-  }, [tariffs, balance, secondary])
+    const tariff = tariffs[secondary ? 0 : tariffs.length - 1];
+    setTariff(tariff);
+    setAmount(!balance || balance >= 1000 ? 1000 : balance);
+  }, [tariffs, balance, secondary]);
 
-  const [createInvestment, { loading: creating }] = useCreateInvestment()
+  const [createInvestment, { loading: creating }] = useCreateInvestment();
 
   function handleTariffChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const tariff = _.find(tariffs, { id: e.target.value })
-    setTariff(tariff)
+    const tariff = _.find(tariffs, { id: e.target.value });
+    setTariff(tariff);
   }
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setAmount(Number(e.target.value))
+    setAmount(Number(e.target.value));
   }
 
   async function handleSubmitClick(e: React.FormEvent) {
-    e.preventDefault()
+    e.preventDefault();
     await createInvestment({
       variables: { amount, currencyId, investmentTariffId: tariff?.id },
-    })
-    setAmount(0)
+    });
+    setAmount(0);
   }
 
   if (!tariff) {
-    return null
+    return null;
   }
 
   const amountInput = (
@@ -101,7 +101,7 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
         ),
       }}
     />
-  )
+  );
 
   return (
     <form className={c.root} onSubmit={handleSubmitClick}>
@@ -197,5 +197,5 @@ export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => 
         <LoginButton size='large' color='secondary' fullWidth />
       )}
     </form>
-  )
-}
+  );
+};

@@ -1,19 +1,19 @@
-import React, { FC, ChangeEvent } from 'react'
-import { makeStyles, Theme, createStyles, Tabs, Tab } from '@material-ui/core'
-import { useLocation, useHistory } from 'react-router-dom'
+import React, { FC, ChangeEvent } from 'react';
+import { makeStyles, Theme, createStyles, Tabs, Tab } from '@material-ui/core';
+import { useLocation, useHistory } from 'react-router-dom';
 
 interface NavigationProps {
-  vertical?: boolean
-  color?: 'primary' | 'secondary'
+  vertical?: boolean;
+  color?: 'primary' | 'secondary';
 }
 
 export const Navigation: FC<NavigationProps> = ({ vertical, color = 'primary' }) => {
-  const c = useStyles({ vertical, color })
-  const location = useLocation()
-  const history = useHistory()
+  const c = useStyles({ vertical, color });
+  const location = useLocation();
+  const history = useHistory();
 
   function handleChange(e: ChangeEvent<{}>, route: string) {
-    history.push(route)
+    history.push(route);
   }
 
   return (
@@ -31,8 +31,8 @@ export const Navigation: FC<NavigationProps> = ({ vertical, color = 'primary' })
       <Tab label='Рефералы' value='/affiliate' className={c.tab} />
       <Tab label='Вывод' value='/payout' className={c.tab} />
     </Tabs>
-  )
-}
+  );
+};
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,4 +70,4 @@ export const useStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);

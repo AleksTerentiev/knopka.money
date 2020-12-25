@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   makeStyles,
   Theme,
@@ -10,21 +10,21 @@ import {
   Typography,
   Divider,
   Hidden,
-} from '@material-ui/core'
-import illustration from 'img/illustration.svg'
-import figures from 'img/figures.svg'
-import clsx from 'clsx'
-import { CreateInvestment } from './investments/create-investment'
-import howToStartStepImg1 from 'img/enter.svg'
-import howToStartStepImg2 from 'img/enroll.svg'
-import howToStartStepImg3 from 'img/copy.svg'
-import howToStartStepImg4 from 'img/coins.svg'
-import { LoginButton } from './auth/login-button'
+} from '@material-ui/core';
+import illustration from 'img/illustration.svg';
+import figures from 'img/figures.svg';
+import clsx from 'clsx';
+import { CreateInvestment } from './investments/create-investment';
+import howToStartStepImg1 from 'img/enter.svg';
+import howToStartStepImg2 from 'img/enroll.svg';
+import howToStartStepImg3 from 'img/copy.svg';
+import howToStartStepImg4 from 'img/coins.svg';
+import { LoginButton } from './auth/login-button';
 
 export const Landing = () => {
-  const c = useStyles()
-  const theme = useTheme()
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'))
+  const c = useStyles();
+  const theme = useTheme();
+  const smUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Container className={c.root} disableGutters>
@@ -58,7 +58,7 @@ export const Landing = () => {
           <Box className={c.howToStartStep}>
             <LoginButton>
               <Box className={clsx(c.howToStartStepImg, c.howToStartStepLoginImg)}>
-                <img src={howToStartStepImg1} alt='step1img'/>
+                <img src={howToStartStepImg1} alt='step1img' />
               </Box>
             </LoginButton>
             <Box>
@@ -73,7 +73,7 @@ export const Landing = () => {
           </Box>
           <Box className={c.howToStartStep}>
             <Box className={c.howToStartStepImg}>
-              <img src={howToStartStepImg2} alt='step2img'/>
+              <img src={howToStartStepImg2} alt='step2img' />
             </Box>
             <Box>
               <Typography variant='h4' gutterBottom>
@@ -87,7 +87,7 @@ export const Landing = () => {
           </Box>
           <Box className={c.howToStartStep}>
             <Box className={c.howToStartStepImg}>
-              <img src={howToStartStepImg3} alt='step3img'/>
+              <img src={howToStartStepImg3} alt='step3img' />
             </Box>
             <Box>
               <Typography variant='h4' gutterBottom>
@@ -101,7 +101,7 @@ export const Landing = () => {
           </Box>
           <Box className={c.howToStartStep}>
             <Box className={c.howToStartStepImg}>
-              <img src={howToStartStepImg4} alt='step4img'/>
+              <img src={howToStartStepImg4} alt='step4img' />
             </Box>
             <Box>
               <Typography variant='h4' gutterBottom>
@@ -174,10 +174,10 @@ export const Landing = () => {
         </Hidden>
       </Container>
     </Container>
-  )
-}
+  );
+};
 
-const horizontalModeBreakpointPx = 1200
+const horizontalModeBreakpointPx = 1200;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {},
@@ -350,4 +350,4 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);

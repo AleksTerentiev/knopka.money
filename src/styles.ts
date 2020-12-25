@@ -1,4 +1,4 @@
-import { makeStyles, Theme, createStyles } from '@material-ui/core'
+import { makeStyles, Theme, createStyles } from '@material-ui/core';
 
 export const useGlobalStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -72,4 +72,4 @@ export const useGlobalStyles = makeStyles((theme: Theme) =>
       },
     },
   })
-)
+);

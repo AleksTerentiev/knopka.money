@@ -1,5 +1,5 @@
-import React from 'react'
-import { useInvestments } from 'gql'
+import React from 'react';
+import { useInvestments } from 'gql';
 import {
   makeStyles,
   Theme,
@@ -8,16 +8,16 @@ import {
   Card,
   Typography,
   Divider,
-} from '@material-ui/core'
-import { CreateInvestment } from 'components/investments/create-investment'
-import { Investment } from 'components/investments/investment'
-import { useGlobalStyles } from 'styles'
+} from '@material-ui/core';
+import { CreateInvestment } from 'components/investments/create-investment';
+import { Investment } from 'components/investments/investment';
+import { useGlobalStyles } from 'styles';
 
 export const InvestmentsPage = () => {
-  const { investments, refetch: refetchInvestments } = useInvestments()
+  const { investments, refetch: refetchInvestments } = useInvestments();
 
-  const gc = useGlobalStyles({})
-  const c = useStyles()
+  const gc = useGlobalStyles();
+  const c = useStyles();
 
   return (
     <Box className={gc.page}>
@@ -56,8 +56,8 @@ export const InvestmentsPage = () => {
         )}
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -86,4 +86,4 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.grey[500],
     },
   })
-)
+);

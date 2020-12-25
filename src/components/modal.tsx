@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 import {
   makeStyles,
   Theme,
@@ -10,19 +10,19 @@ import {
   Box,
   useTheme,
   Divider,
-} from '@material-ui/core'
-import CloseIcon from 'img/close.svg'
+} from '@material-ui/core';
+import CloseIcon from 'img/close.svg';
 
 export const Modal: FC<{
-  open: boolean
-  header: React.ReactNode
-  children: any
-  onClose: () => void
+  open: boolean;
+  header: React.ReactNode;
+  children: any;
+  onClose: () => void;
 }> = ({ open, header, children, onClose }) => {
-  const c = useStyles()
-  const theme = useTheme()
-  const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+  const c = useStyles();
+  const theme = useTheme();
+  const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Dialog onClose={onClose} open={open} fullScreen={xsDown}>
@@ -44,8 +44,8 @@ export const Modal: FC<{
 
       <Box pt={4}>{children}</Box>
     </Dialog>
-  )
-}
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,4 +59,4 @@ const useStyles = makeStyles((theme: Theme) =>
       right: 0,
     },
   })
-)
+);
