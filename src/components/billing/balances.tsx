@@ -1,5 +1,5 @@
 import React from 'react'
-import { Currency } from 'view/billing/currency'
+import { Currency } from 'components/billing/currency'
 import { useBalance } from 'gql'
 
 export interface BalancesProps extends React.HTMLAttributes<HTMLDivElement> {}

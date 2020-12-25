@@ -8,8 +8,8 @@ import {
   Avatar,
   Typography,
 } from '@material-ui/core'
-import { Currency } from 'view/billing/currency'
-import { FDate } from 'view/fdate'
+import { Currency } from 'components/billing/currency'
+import { FDate } from 'components/fdate'
 
 export const Accruals: FC = () => {
   const c = useStyles({})

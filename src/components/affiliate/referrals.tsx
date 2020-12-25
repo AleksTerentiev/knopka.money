@@ -8,7 +8,7 @@ import {
   Avatar,
   Typography,
 } from '@material-ui/core'
-import { Currency } from 'view/billing/currency'
+import { Currency } from 'components/billing/currency'
 
 export const Referrals: FC = () => {
   const c = useStyles({})

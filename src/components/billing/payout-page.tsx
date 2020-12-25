@@ -8,7 +8,7 @@ import qiwiImg from 'img/billing/qiwi.svg'
 import yandexMoneyImg from 'img/billing/yandex-money.svg'
 import { PayoutCreate } from './payout-create'
 import { PayoutsList } from './payouts-list'
-import { Modal } from 'view/modal'
+import { Modal } from 'components/modal'
 
 export const PayoutPage = () => {
   const gc = useGlobalStyles({})

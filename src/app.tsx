@@ -1,15 +1,15 @@
 import React from 'react'
 import { useAccount } from 'gql'
 import { Container } from '@material-ui/core'
-import { AppBar } from 'view/app-bar'
+import { AppBar } from 'components/app-bar'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
-import { Preloader } from 'view/preloader'
-import { Landing } from 'view/landing'
-import { InvestmentsPage } from 'view/investments/investments-page'
-import { RefillPage } from 'view/billing/refill-page'
-import { AffiliatePage } from 'view/affiliate/affiliate-page'
-import { PayoutPage } from 'view/billing/payout-page'
-import { Footer } from 'view/footer'
+import { Preloader } from 'components/preloader'
+import { Landing } from 'components/landing'
+import { InvestmentsPage } from 'components/investments/investments-page'
+import { RefillPage } from 'components/billing/refill-page'
+import { AffiliatePage } from 'components/affiliate/affiliate-page'
+import { PayoutPage } from 'components/billing/payout-page'
+import { Footer } from 'components/footer'
 
 export function App() {
   const { account, loading } = useAccount()

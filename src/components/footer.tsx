@@ -16,8 +16,8 @@ import logoImg from 'img/logo.svg'
 import { Navigation } from './navigation'
 import freeKassaImg from 'img/free-kassa.svg'
 import clsx from 'clsx'
-// import { AuthSocial } from 'view/auth/auth-social'
-import { LoginButton } from 'view/auth/login-button'
+// import { AuthSocial } from 'components/auth/auth-social'
+import { LoginButton } from 'components/auth/login-button'
 
 export function Footer() {
   const { account } = useAccount()

@@ -14,10 +14,10 @@ import { useStyles } from './create-investment.c'
 import fireIcon from 'img/fire.svg'
 import flashIcon from 'img/flash.svg'
 import magicIcon from 'img/magic.svg'
-import { LoginButton } from 'view/auth/login-button'
+import { LoginButton } from 'components/auth/login-button'
 import plural from 'plural-ru'
-import { Currency } from 'view/billing/currency'
-import { FDate } from 'view/fdate'
+import { Currency } from 'components/billing/currency'
+import { FDate } from 'components/fdate'
 
 export const CreateInvestment: FC<{ secondary?: boolean }> = ({ secondary }) => {
   const currencyId = 'RUB'

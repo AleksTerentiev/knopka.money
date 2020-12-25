@@ -16,11 +16,11 @@ import {
   Popover,
   Divider,
 } from '@material-ui/core'
-import { Balances } from 'view/billing/balances'
+import { Balances } from 'components/billing/balances'
 import logoImg from 'img/logo.svg'
 import { Navigation } from './navigation'
-import { LoginButton } from 'view/auth/login-button'
-import { LogoutButton } from 'view/auth/logout-button'
+import { LoginButton } from 'components/auth/login-button'
+import { LogoutButton } from 'components/auth/logout-button'
 import { Link as RouterLink } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 import { Route } from 'react-router-dom'

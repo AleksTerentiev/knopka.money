@@ -11,10 +11,10 @@ import {
   useMediaQuery,
 } from '@material-ui/core'
 import { useGlobalStyles } from 'styles'
-import { Currency } from 'view/billing/currency'
+import { Currency } from 'components/billing/currency'
 import Timer from 'react-compound-timer'
 import { InvestmentData } from 'gql/types/InvestmentData'
-import { FDate } from 'view/fdate'
+import { FDate } from 'components/fdate'
 import plural from 'plural-ru'
 import moment from 'moment'
 import clsx from 'clsx'

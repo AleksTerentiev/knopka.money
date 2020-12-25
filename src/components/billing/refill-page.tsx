@@ -14,8 +14,8 @@ import {
 } from '@material-ui/core'
 import clsx from 'clsx'
 import { useGlobalStyles } from 'styles'
-import { Currency } from 'view/billing/currency'
-import { FDate } from 'view/fdate'
+import { Currency } from 'components/billing/currency'
+import { FDate } from 'components/fdate'
 
 export const RefillPage = () => {
   const gc = useGlobalStyles({})
