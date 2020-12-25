@@ -8,14 +8,14 @@ export const LoginButton: FC<ButtonProps & {
   children?: ReactNode;
   text?: string;
 }> = props => {
-  const [open, setOpen] = useState(false);
+  const [loginMethodModalOpen, setLoginMethodModalOpen] = useState(false);
   const { loginWithPopup } = useAuthPopup();
 
   function handleClick() {
-    setOpen(true);
+    setLoginMethodModalOpen(true);
   }
   function handleClose() {
-    setOpen(false);
+    setLoginMethodModalOpen(false);
   }
 
   return (
@@ -31,7 +31,7 @@ export const LoginButton: FC<ButtonProps & {
       )}
 
       <Modal
-        open={open}
+        open={loginMethodModalOpen}
         onClose={handleClose}
         header={
           <Box mr={4}>

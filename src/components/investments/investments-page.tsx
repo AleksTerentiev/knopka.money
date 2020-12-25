@@ -9,9 +9,9 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core';
+import { useGlobalStyles } from 'styles';
 import { CreateInvestment } from 'components/investments/create-investment';
 import { Investment } from 'components/investments/investment';
-import { useGlobalStyles } from 'styles';
 
 export const InvestmentsPage = () => {
   const { investments, refetch: refetchInvestments } = useInvestments();

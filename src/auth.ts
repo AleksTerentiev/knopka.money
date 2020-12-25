@@ -36,7 +36,6 @@ export const useAuthPopup = () => {
       if (popupWindow) {
         popupWindow.close();
       }
-      // apolloClient.resetStore()
       apolloClient.reFetchObservableQueries();
       history.push('/');
     }

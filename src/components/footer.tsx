@@ -16,7 +16,6 @@ import logoImg from 'img/logo.svg';
 import { Navigation } from './navigation';
 import freeKassaImg from 'img/free-kassa.svg';
 import clsx from 'clsx';
-// import { AuthSocial } from 'components/auth/auth-social'
 import { LoginButton } from 'components/auth/login-button';
 
 export function Footer() {
@@ -24,14 +23,7 @@ export function Footer() {
   const history = useHistory();
   const theme = useTheme();
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'));
-  // const down650px = useMediaQuery('(max-width: 650px)')
   const c = useStyles({ isLoggedIn: !!account });
-
-  const FreeKassaBanner = () => (
-    <a href='https://www.free-kassa.ru' target='_blank' rel='noopener noreferrer'>
-      <img src={freeKassaImg} alt='We accept FREE-KASSA' />
-    </a>
-  );
 
   return (
     <>
@@ -40,24 +32,13 @@ export function Footer() {
           <img src={logoImg} className={c.logoIcon} alt='Logo' />
           <Typography className={c.logoText}>Кнопка</Typography>
         </Box>
-
-        {account && (
+        {account ? (
           <Box className={c.navigation}>
             <Navigation color='secondary' vertical={xsDown} />
           </Box>
+        ) : (
+          <LoginButton text='Личный Кабинет' style={{ borderRadius: 24 }} />
         )}
-
-        {account && <FreeKassaBanner />}
-        {/* {!accountData && !down650px && (
-          <Box display='flex' alignItems='center'>
-            <Typography variant='body2' color='textSecondary'>
-              Войти через
-            </Typography>
-            <Box pl={3} />
-            <AuthSocial />
-          </Box>
-        )} */}
-        {!account && <LoginButton style={{ borderRadius: 24 }} text='Личный Кабинет' />}
       </Container>
 
       <Container className={c.container} style={{ paddingTop: 0, paddingBottom: 0 }}>
@@ -69,7 +50,11 @@ export function Footer() {
           Copyright © 2020 knopka.money
         </Typography>
 
-        {!account && <FreeKassaBanner />}
+        {!account && (
+          <a href='https://www.free-kassa.ru' target='_blank' rel='noopener noreferrer'>
+            <img src={freeKassaImg} alt='We accept FREE-KASSA' />
+          </a>
+        )}
       </Container>
     </>
   );

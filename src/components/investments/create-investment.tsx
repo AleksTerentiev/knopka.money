@@ -9,8 +9,8 @@ import {
   InputAdornment,
   Typography,
 } from '@material-ui/core';
-import _ from 'lodash';
 import { useStyles } from './create-investment.c';
+import _ from 'lodash';
 import fireIcon from 'img/fire.svg';
 import flashIcon from 'img/flash.svg';
 import magicIcon from 'img/magic.svg';

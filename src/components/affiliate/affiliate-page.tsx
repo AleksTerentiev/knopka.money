@@ -1,12 +1,11 @@
 import React, { ChangeEvent, useState, useMemo } from 'react';
 import { useAffiliateTotals, useAffiliateReferrals } from 'gql';
 import { Box, Typography, Tabs, Tab, Divider } from '@material-ui/core';
-import { Share } from 'components/affiliate/share';
-// import { Currency } from 'components/billing/currency'
-import { Referrals } from 'components/affiliate/referrals';
-import { Accruals } from 'components/affiliate/accruals';
 import { useGlobalStyles } from 'styles';
 import { useStyles } from './affiliate-page.c';
+import { Share } from 'components/affiliate/share';
+import { Referrals } from 'components/affiliate/referrals';
+import { Accruals } from 'components/affiliate/accruals';
 
 export const AffiliatePage = () => {
   const gc = useGlobalStyles();

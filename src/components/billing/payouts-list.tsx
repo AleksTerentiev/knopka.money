@@ -10,8 +10,8 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core';
-import clsx from 'clsx';
 import { useGlobalStyles } from 'styles';
+import clsx from 'clsx';
 import { Currency } from 'components/billing/currency';
 import { FDate } from 'components/fdate';
 

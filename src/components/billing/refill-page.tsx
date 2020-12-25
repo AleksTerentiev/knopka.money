@@ -12,8 +12,8 @@ import {
   Button,
   Divider,
 } from '@material-ui/core';
-import clsx from 'clsx';
 import { useGlobalStyles } from 'styles';
+import clsx from 'clsx';
 import { Currency } from 'components/billing/currency';
 import { FDate } from 'components/fdate';
 
@@ -48,7 +48,7 @@ const limits = {
 };
 
 export const CreateInvoice = () => {
-  const c = useCreateInvoiceStyles({});
+  const c = useCreateInvoiceStyles();
   const { refetch: refetchInvoices } = useInvoices();
   const { refetch: refetchBalances } = useBalance();
   const [amount, setAmount] = useState(1000);
@@ -79,9 +79,9 @@ export const CreateInvoice = () => {
     window.addEventListener('message', payWindowMessageListener);
     return () => {
       window.removeEventListener('message', payWindowMessageListener);
-      // if (payWindow) {
-      //   payWindow.close()
-      // }
+      if (payWindow) {
+        payWindow.close();
+      }
     };
   }, []);
 
@@ -152,7 +152,7 @@ const useCreateInvoiceStyles = makeStyles((theme: Theme) =>
 
 export const Invoices = () => {
   const gc = useGlobalStyles();
-  const c = useInvoicesStyles({});
+  const c = useInvoicesStyles();
   const { invoices } = useInvoices();
 
   return (
