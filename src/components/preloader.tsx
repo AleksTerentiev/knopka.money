@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core'
 import PreloaderSvg from 'img/preloader.svg'
 
 export const Preloader: React.FC = () => {
-  const c = useStyles({})
+  const c = useStyles()
 
   return (
     <>

@@ -22,7 +22,7 @@ import howToStartStepImg4 from 'img/coins.svg'
 import { LoginButton } from './auth/login-button'
 
 export const Landing = () => {
-  const c = useStyles({})
+  const c = useStyles()
   const theme = useTheme()
   const smUp = useMediaQuery(theme.breakpoints.up('sm'))
 

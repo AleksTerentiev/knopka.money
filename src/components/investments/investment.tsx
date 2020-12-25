@@ -32,7 +32,7 @@ export function Investment({
 }: InvestmentData & { onTimerEnds?: () => void }) {
   const [closeInvestment, { loading: closing }] = useCloseInvestment()
   const gc = useGlobalStyles({})
-  const c = useStyles({})
+  const c = useStyles()
 
   function handlePayout() {
     closeInvestment({ variables: { id } })

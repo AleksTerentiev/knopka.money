@@ -1,6 +1,5 @@
 import React, { PropsWithChildren } from 'react'
 import { makeStyles, createStyles, Button } from '@material-ui/core'
-// import { useTranslation } from 'react-i18next'
 
 export function LogoutButton({
   size = 'medium',
@@ -9,9 +8,7 @@ export function LogoutButton({
   size?: 'small' | 'medium' | 'large' | undefined
   onClick?: () => void
 }>) {
-  // const apolloClient = useApolloClient()
-  // const { t } = useTranslation()
-  const c = useStyles({})
+  const c = useStyles()
 
   function handleClick() {
     if (onClick) {
@@ -20,9 +17,7 @@ export function LogoutButton({
 
     fetch(`${process.env.REACT_APP_API_ORIGIN}/auth/destroy`, {
       credentials: 'include',
-    }).finally(() => {
-      // apolloClient.clearStore()
-      // apolloClient.resetStore()
+    }).then(() => {
       window.location.reload()
     })
   }

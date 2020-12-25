@@ -10,7 +10,7 @@ import { useStyles } from './affiliate-page.c'
 
 export const AffiliatePage = () => {
   const gc = useGlobalStyles({})
-  const c = useStyles({})
+  const c = useStyles()
   const { affiliateTotals } = useAffiliateTotals()
   const { affiliateReferrals } = useAffiliateReferrals()
   const [currentTab, setCurrentTab] = useState('referrals')

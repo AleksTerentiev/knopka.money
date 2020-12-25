@@ -28,7 +28,7 @@ import TelegramIcon from 'img/telegram.svg'
 import WhatsappIcon from 'img/whatsapp.svg'
 
 export const Share: FC = () => {
-  const c = useStyles({})
+  const c = useStyles()
   const { account } = useAccount()
   const [snackbarIsOpen, setSnackbarIsOpen] = useState(false)
   const theme = useTheme()

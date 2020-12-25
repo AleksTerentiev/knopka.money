@@ -17,7 +17,7 @@ export const InvestmentsPage = () => {
   const { investments, refetch: refetchInvestments } = useInvestments()
 
   const gc = useGlobalStyles({})
-  const c = useStyles({})
+  const c = useStyles()
 
   return (
     <Box className={gc.page}>

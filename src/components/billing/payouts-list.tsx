@@ -17,7 +17,7 @@ import { FDate } from 'components/fdate'
 
 export const PayoutsList = () => {
   const gc = useGlobalStyles({})
-  const c = useStyles({})
+  const c = useStyles()
   const down340px = useMediaQuery('(max-width: 340px)')
 
   const { payouts } = usePayouts()

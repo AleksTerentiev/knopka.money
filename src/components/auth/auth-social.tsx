@@ -14,7 +14,7 @@ import MailruIcon from 'img/social/mailru.svg'
 import { AuthProvider, useAuthPopup } from 'auth'
 
 export const AuthSocial = () => {
-  const c = useStyles({})
+  const c = useStyles()
   const { loginWithPopup } = useAuthPopup()
 
   function handleClick(provider: AuthProvider) {

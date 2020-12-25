@@ -11,7 +11,7 @@ import {
 import { Currency } from 'components/billing/currency'
 
 export const Referrals: FC = () => {
-  const c = useStyles({})
+  const c = useStyles()
 
   const { affiliateReferrals } = useAffiliateReferrals()
 

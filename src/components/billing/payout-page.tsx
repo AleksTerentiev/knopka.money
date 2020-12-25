@@ -12,7 +12,7 @@ import { Modal } from 'components/modal'
 
 export const PayoutPage = () => {
   const gc = useGlobalStyles({})
-  const c = useStyles({})
+  const c = useStyles()
   const { payoutMethods } = usePayoutMethods()
   const [method, setMethod] = useState<GetPayoutMethods_payoutMethods>()
   const [createModalOpen, setCreateModalOpen] = useState(false)

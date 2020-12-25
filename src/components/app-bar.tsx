@@ -30,7 +30,7 @@ export function AppBar() {
   const { account } = useAccount()
   const { balance } = useBalance('RUB')
 
-  const c = useStyles({})
+  const c = useStyles()
 
   return (
     <>

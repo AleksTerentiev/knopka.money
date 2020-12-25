@@ -15,7 +15,7 @@ import {
 export const PayoutCreate: FC<{
   method: GetPayoutMethods_payoutMethods
 }> = ({ method }) => {
-  const c = useStyles({})
+  const c = useStyles()
   const [amount, setAmount] = useState(0)
   const [details, setDetails] = useState('')
   const [createSuccess, setCreateSuccess] = useState(false)

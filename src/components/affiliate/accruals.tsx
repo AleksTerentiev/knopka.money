@@ -12,7 +12,7 @@ import { Currency } from 'components/billing/currency'
 import { FDate } from 'components/fdate'
 
 export const Accruals: FC = () => {
-  const c = useStyles({})
+  const c = useStyles()
   const { affiliateAccruals } = useAffiliateAccruals()
 
   return (

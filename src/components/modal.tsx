@@ -19,7 +19,7 @@ export const Modal: FC<{
   children: any
   onClose: () => void
 }> = ({ open, header, children, onClose }) => {
-  const c = useStyles({})
+  const c = useStyles()
   const theme = useTheme()
   const xsDown = useMediaQuery(theme.breakpoints.down('xs'))
   const smDown = useMediaQuery(theme.breakpoints.down('sm'))
